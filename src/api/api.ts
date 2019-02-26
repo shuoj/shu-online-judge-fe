@@ -7,7 +7,7 @@ export default {
   updateProblem: (data: {id: string, problem: any}) => axios.put(`/api/v1/problems/${data.id}`, data.problem),
   getTags: () => axios.get('/api/v1/tags'),
   // 状态
-  getStatus: (data: {}) => axios.get('/api/v1/commits', { params: data }),
+  getStatus: (data: {}) => axios.get('/api/v1/submissions', { params: data }),
   // 比赛
   getAllTags: (data: {}) => axios.get('/api/v1/tags', { params: data }),
   getContests: (data: {}) => axios.get('/api/v1/contests', { params: data }),
@@ -52,11 +52,11 @@ export default {
   setVisibleContest: (data: { id: string, visible: boolean }) => axios.patch(`/api/v1/contests/${data.id}?visible=${data.visible}`),
   setStatusContest: (data: { id: string, option: any }) => axios.patch(`/api/v1/contests/${data.id}/status?option=${data.option}`),
   sendPassword: (data: { id: string, password: any }) => axios.post(`/api/v1/contests/${data.id}/join?password=${data.password}`),
-  contestCommit: (data: { contestId: string, problemId: string, code: string, language: string }) => axios.post(`/api/v1/contests/${data.contestId}/problems/${data.problemId}/commits`, {
+  contestCommit: (data: { contestId: string, problemId: string, code: string, language: string }) => axios.post(`/api/v1/contests/${data.contestId}/problems/${data.problemId}/submissions`, {
     code: data.code,
     language: data.language
   }),
-  getContestSubmission: (data: { contestId: string, problemId: string }) => axios.get(`/api/v1/contests/${data.contestId}/problems/${data.problemId}/commits`),
+  getContestSubmission: (data: { contestId: string, problemId: string }) => axios.get(`/api/v1/contests/${data.contestId}/problems/${data.problemId}/submissions`),
   // 公告
   getAllAnnouncements: (data: {}) => axios.get('/api/v1/announcements', { params: data }),
   getAnnouncement: (data: { id: string }) => axios.get(`/api/v1/announcements/${data.id}`),
@@ -91,12 +91,12 @@ export default {
   addUserToGroup: (data: { id: string, userId: string }) => axios.post(`/api/v1/groups/${data.id}/members`,
     [data.userId]),
   getSpecificGroup: (data: { id: string }) => axios.get(`/api/v1/groups/${data.id}`),
-  createCommit: (data: { id: string, code: string, language: string }) => axios.post(`/api/v1/problems/${data.id}/commits`, {
+  createCommit: (data: { id: string, code: string, language: string }) => axios.post(`/api/v1/problems/${data.id}/submissions`, {
     code: data.code,
     language: data.language
   }),
-  getSpecificCommit: (data: { id: string }) => axios.get(`/api/v1/problems/${data.id}/commits`),
-  getCommit: (data: { id: string }) => axios.get(`/api/v1/commits/${data.id}`),
+  getSpecificCommit: (data: { id: string }) => axios.get(`/api/v1/problems/${data.id}/submissions`),
+  getCommit: (data: { id: string }) => axios.get(`/api/v1/submissions/${data.id}`),
   getAllQuestions: () => axios.get('/api/v1/questions'),
   setAnswers: (data: {}) => axios.post('/api/v1/questions', data),
   deleteAnswers: (data: {}) => axios.delete('/api/v1/questions')
