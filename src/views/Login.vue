@@ -70,10 +70,10 @@ export default class Login extends Vue {
             console.log(this.$route.query);
             if (Object.getOwnPropertyNames(this.$route.query).length === 0) {
               this.$router.push({
-                path: `/problems`
+                path: '/problems'
               });
             } else {
-              this.$router.replace(this.$route.query.redirect);
+              this.$router.replace('/problems');
             }
           })
           .catch(() => {
