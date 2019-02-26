@@ -6,7 +6,6 @@ import iView from 'iview';
 import 'iview/dist/styles/iview.css';
 import VueWangeditor from 'vue-wangeditor-simple';
 import VueHighlightJS from 'vue-highlightjs';
-import axios from 'axios';
 
 Vue.config.productionTip = false;
 Vue.use(iView);
