@@ -145,7 +145,7 @@ export default class ContestDetail extends Vue {
   ranking: any = [];
   problemNumber: any = '';
 
-  timetrans(time: any) {
+  timetrans(time: string) {
     const date = new Date(time);
     const h = ((date.getHours() - 8) < 10 ? '0' + (date.getHours() - 8) : (date.getHours() - 8));
     const m = (date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes());
