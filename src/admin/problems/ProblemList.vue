@@ -20,7 +20,7 @@
         <Col span="4">{{problem.rate}}</Col>
         <Col span="4">
           <Button type="info" @click="editor(problem.index)">编辑</Button>
-          <Button type="info" style="margin-left: 8px">提交</Button>
+          <Button type="info" style="margin-left: 8px" @click="deleteProblem(problem.index)">删除</Button>
         </Col>
       </Row>
       <Row class-name="last-row">
@@ -110,6 +110,15 @@ export default class Problemlist extends Vue {
       console.log(err, 'err');
     });
     this.editorProblem = false;
+  }
+
+  deleteProblem(id: string) {
+    api.deleteProblem({ id: id }).then(() => {
+      (this as any).$Message.success('删除成功');
+      this.getProblems(this.page, this.pageSize);
+    }).catch(() => {
+      (this as any).$Message.error('删除失败');
+    });
   }
 
   backToList() {

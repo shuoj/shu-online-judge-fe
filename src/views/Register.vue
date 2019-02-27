@@ -85,16 +85,11 @@ export default class About extends Vue {
           school: this.register.school
         })
           .then((res: any) => {
-            console.log('注册成功');
-            if (res.data.code === 0) {
-              (this as any).$Message.success(res.data.message);
-              this.handleReset();
-            } else {
-              (this as any).$Message.error(res.data.message);
-            }
+            (this as any).$Message.success('注册成功');
+            this.handleReset();
           })
           .catch((err: any) => {
-            console.log(err);
+            console.log(err, 'err_register');
             (this as any).$Message.error('服务器错误！');
           });
       }
