@@ -1,4 +1,5 @@
 const { BASE_URL } = process.env;
+const webpack = require('webpack');
 module.exports = {
   devServer: {
     proxy: {
@@ -16,9 +17,7 @@ module.exports = {
       config.devtool = 'nosources-source-map';
 
       const CompressionWebpackPlugin = require('compression-webpack-plugin');
-      config.plugins.push(
-        new CompressionWebpackPlugin()
-      );
+      config.plugins.push(new CompressionWebpackPlugin());
     } else if (process.env.NODE_ENV === 'analyzer') {
       // 有点问题没有用
       const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
