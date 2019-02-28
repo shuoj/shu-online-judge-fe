@@ -21,7 +21,11 @@ export default class Createproblem extends Vue {
     const id = this.$store.state.userInfo.id;
     data.authorId = id;
     api.createProblem(data).then((res: any) => {
-      (this as any).$Message.success('创建成功');
+      if (res.code === 0) {
+        (this as any).$Message.success('创建成功');
+      } else {
+        (this as any).$Message.error('创建失败');
+      }
       // this.problemDetail = {
       //   authorId: '',
       //   title: '',
