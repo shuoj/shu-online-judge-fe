@@ -24,14 +24,14 @@
         <FormItem style="width: 100px">
           <h2>难度</h2>
           <Select v-model="problemData.difficulty" style="width: 100px;">
-            <Option value="HIGH">简单</Option>
+            <Option value="LOW">简单</Option>
             <Option value="MEDIUM">中等</Option>
-            <Option value="LOW">难</Option>
+            <Option value="HIGH">难</Option>
           </Select>
         </FormItem>
         <FormItem style="width: 10%; margin-left: 48px">
           <h2>前台是否可见</h2>
-          <i-switch v-model="problemData.enabled" size="large">
+          <i-switch v-model="problemData.visible" size="large">
             <span slot="open">ON</span>
             <span slot="close">OFF</span>
           </i-switch>
