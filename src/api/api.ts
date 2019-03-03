@@ -3,6 +3,7 @@ export default {
   // 获取分类
   getProblems: (data: {}) => axios.get('/api/v1/problems', { params: data }),
   getProblemsDetail: (data: { id: string }) => axios.get(`/api/v1/problems/${data.id}`),
+  deleteProblem: (data: {id: string}) => axios.delete(`/api/v1/problems/${data.id}`),
   createProblem: (data: {}) => axios.post('/api/v1/problems', data),
   updateProblem: (data: {id: string, problem: any}) => axios.put(`/api/v1/problems/${data.id}`, data.problem),
   getTags: () => axios.get('/api/v1/tags'),
