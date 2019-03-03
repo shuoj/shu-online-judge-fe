@@ -16,7 +16,7 @@
                   <span v-else>{{user.signature}}</span>
                 </p>
               </Col>
-              <Col span="6" offset="4">
+              <Col span="10" offset="2">
                 <p style="font-weight: normal;font-size: 14px">
                   <Icon type="md-body" /><span style="padding-left: 10px">{{user.firstname}} {{user.lastname}}</span>
                 </p>

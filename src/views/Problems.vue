@@ -17,7 +17,7 @@
           <ul v-for="(problem, index) in problems" :key="problem.id" class="pro-table"
               :class="[index % 2 ===0 ? 'bg': '']">
             <li></li>
-            <li class="id" @click="problemDetail(problem)">{{index+1}}</li>
+            <li class="id" @click="problemDetail(problem)">{{problem.index}}</li>
             <li class="title" @click="problemDetail(problem)">{{problem.title}}</li>
             <li class="diff">{{problem.level}}</li>
             <li>{{problem.rate}}</li>
@@ -100,14 +100,15 @@ export default class Problems extends Vue {
     api.getProblems({
       page: page,
       size: pageSize,
-      tags: tagIds
+      tags: tagIds,
+      visible: true
     }).then((res: any) => {
       // console.log(res.data);
       this.total = res.data.total;
       const that = this;
       res.data.list.forEach(function (item: any) {
         that.problems.push({
-          'index': item.id,
+          'index': item.idx,
           'title': item.title,
           'level': item.difficulty,
           'rate': item.acceptRate + '%(' + String(item.acceptCount) + ' / ' + String(item.submitCount) + ')'

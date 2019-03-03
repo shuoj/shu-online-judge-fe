@@ -66,13 +66,14 @@ export default class Problemlist extends Vue {
     this.problems.splice(0, this.problems.length);
     api.getProblems({
       page: page,
-      size: pageSize
+      size: pageSize,
+      visible: this.canSee
     }).then((res: any) => {
       this.totalPage = res.data.total;
       const that = this;
       res.data.list.forEach(function (item: any) {
         that.problems.push({
-          'index': item.id,
+          'index': item.idx,
           'title': item.title,
           'level': item.difficulty,
           'rate': item.acceptRate + '%(' + String(item.acceptCount) + ' / ' + String(item.submitCount) + ')',
@@ -86,10 +87,9 @@ export default class Problemlist extends Vue {
     });
   }
 
-  canSeeChange(now: boolean) {
+  canSeeChange() {
     // 可见选中
-    console.log(now, 'now');
-    console.log(this.canSee, 'can');
+    this.getProblems();
   }
 
   pageChange(pages: number) {
