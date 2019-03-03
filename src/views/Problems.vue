@@ -110,6 +110,7 @@ export default class Problems extends Vue {
         that.problems.push({
           'index': item.idx,
           'title': item.title,
+          'id': item.id,
           'level': item.difficulty,
           'rate': item.acceptRate + '%(' + String(item.acceptCount) + ' / ' + String(item.submitCount) + ')'
         });
@@ -142,7 +143,7 @@ export default class Problems extends Vue {
 
   problemDetail(data: any) {
     this.$router.push({
-      path: `/problems/${data.index}`
+      path: `/problems/${data.id}`
     });
   }
 

@@ -79,7 +79,7 @@ export default class Problemlist extends Vue {
           'rate': item.acceptRate + '%(' + String(item.acceptCount) + ' / ' + String(item.submitCount) + ')',
           'create': item.createDate,
           'author': item.authorName,
-          'canSee': item.enabled ? '可见' : '不可见'
+          'canSee': item.visible ? '可见' : '不可见'
         });
       });
     }).catch((err: any) => {
