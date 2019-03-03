@@ -162,7 +162,7 @@ export default class CodeMirror extends Vue {
   }
 
   submitCode() {
-    this.code = this.code.replace(/\n/g, '\\n');
+    this.code = this.code.replace(/\n/g, '\\n ');
     this.$emit('codeSubmit', {
       code: this.code,
       language: this.codeLanguage
