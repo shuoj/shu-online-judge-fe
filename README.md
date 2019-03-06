@@ -1,7 +1,6 @@
 # 上海大学 Online Judge Frontend
 [![Build Status](https://travis-ci.org/shuoj/shu-online-judge-fe.svg?branch=master)](https://travis-ci.org/shuoj/shu-online-judge-fe)
 
-> 本仓库由 [@zhangyuiris](https://github.com/zhangyuiris) 从原仓库迁移.
 > 
 > 原仓库贡献：
 > 
