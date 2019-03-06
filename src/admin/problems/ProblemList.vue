@@ -19,8 +19,8 @@
         <Col span="2">{{problem.canSee}}</Col>
         <Col span="4">{{problem.rate}}</Col>
         <Col span="4">
-          <Button type="info" @click="editor(problem.index)">编辑</Button>
-          <Button type="info" style="margin-left: 8px" @click="deleteProblem(problem.index)">删除</Button>
+          <Button type="info" @click="editor(problem.id)">编辑</Button>
+          <Button type="info" style="margin-left: 8px" @click="deleteProblem(problem.id)">删除</Button>
         </Col>
       </Row>
       <Row class-name="last-row">
@@ -74,6 +74,7 @@ export default class Problemlist extends Vue {
       res.data.list.forEach(function (item: any) {
         that.problems.push({
           'index': item.idx,
+          'id': item.id,
           'title': item.title,
           'level': item.difficulty,
           'rate': item.acceptRate*100 + '%(' + String(item.acceptCount) + ' / ' + String(item.submitCount) + ')',

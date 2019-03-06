@@ -68,8 +68,8 @@ import api from '../api/api';
 
 @Component
 export default class Index extends Vue {
-  acCount: any = '';
-  submitCount: any = '';
+  acCount: any = 0;
+  submitCount: any = 0;
   ranks: any = [];
   page: number = 0;
   pageSize: number = 10;
@@ -86,8 +86,10 @@ export default class Index extends Vue {
   }
 
   getInfo() {
-    this.acCount = this.$store.state.userInfo.acCount;
-    this.submitCount = this.$store.state.userInfo.submitCount;
+    const { userInfo } = this.$store.state
+    const { acCount, submitCount } = userInfo;
+    this.submitCount = submitCount;
+    this.acCount = acCount;
   }
 
   getRanking(page: any = 0, pageSize: any = 10) {
@@ -97,7 +99,6 @@ export default class Index extends Vue {
     }).then((res: any) => {
       const that = this;
       this.total = res.data.total;
-      console.log(res.data);
       res.data.list.forEach(function (item: any) {
         that.ranks.push({
           'id': item.id,
@@ -105,7 +106,7 @@ export default class Index extends Vue {
           'ac': item.acCount,
           'sign': item.signature,
           'submit': item.submitCount,
-          'rate': (item.acCount / item.submitCount * 100).toFixed(0) + '%'
+          'rate': (item.submitCount !== 0) ? (item.acCount / item.submitCount * 100).toFixed(0) + '%' : '0%'
         });
       });
     }).catch((err: any) => {
