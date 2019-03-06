@@ -86,7 +86,7 @@ export default class Index extends Vue {
   }
 
   getInfo() {
-    const { userInfo } = this.$store.state
+    const { userInfo } = this.$store.state;
     const { acCount, submitCount } = userInfo;
     this.submitCount = submitCount;
     this.acCount = acCount;

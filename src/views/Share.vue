@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <h2>代码分享({{title}}):</h2>
+    <h2>代码分享自题目：{{ title }} </h2>
     <div v-highlightjs="sourceCode">
       <pre>
         <code class="cpp"></code>
@@ -21,7 +21,7 @@ export default class Share extends Vue {
   mounted() {
     const params = this.$route.params;
     api.getCommit({ id: params.id }).then(res => {
-      this.sourceCode = res.data.code;
+      this.sourceCode = res.data.code.replace(/\\n/g, '\n');
       this.title = res.data.problemTitle;
     }).catch(err => {
       console.log(err);
