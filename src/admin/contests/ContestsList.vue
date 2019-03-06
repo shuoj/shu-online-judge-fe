@@ -288,8 +288,21 @@
     computeDate(date: string) {
       const start = new Date(date);
       const year = start.getFullYear();
-      const month = start.getMonth() + 1;
-      const day = start.getDate();
+      const mon = start.getMonth() + 1;
+      const month = () => {
+        if (mon < 10) {
+          return '0' + mon;
+        } else {
+          return mon;
+        }
+      };
+      const day = () => {
+        if (start.getDate() < 10) {
+          return '0' + start.getDate();
+        } else {
+          return start.getDate();
+        }
+      };
       const hour = () => {
         if (start.getHours() < 10) {
           return '0' + start.getHours();
@@ -311,7 +324,7 @@
           return start.getSeconds();
         }
       };
-      return year + '-' + month + '-' + day + ' ' + hour() + ':' + min() + ':' + second();
+      return year + '-' + month() + '-' + day() + ' ' + hour() + ':' + min() + ':' + second();
     }
 
     updateContest() {

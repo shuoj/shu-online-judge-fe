@@ -54,7 +54,7 @@
             <p>{{item.username}}</p>
           </Col>
           <Col span="8">
-            <p>未知{{item.firstname}} {{item.lastname}}</p>
+            <p><span v-if="!item.name">未知</span>{{item.name}}</p>
           </Col>
           <Col span="4">
             <Button type="text" style="color: #2d8cf0" @click="deleteMember(item.id)">删除</Button>
