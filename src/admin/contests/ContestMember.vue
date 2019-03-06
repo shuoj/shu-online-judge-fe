@@ -25,7 +25,6 @@
                       style="width: 300px;" placement="bottom">
           <Option v-for="(item, index) in searchData" :value="item.id" :key="index">
             <div class="option-two">
-              <span>Id: {{item.id}}   </span>
               <span>用户名: {{item.username}}</span>
             </div>
           </Option>
@@ -33,10 +32,10 @@
       </Col>
       <Col span="22" offset="1" align="left">
         <Row class="list" style="color: #17233d;font-size: 14px;font-weight: 600;padding-bottom: 10px">
-          <Col span="4">
+          <Col span="2" style="text-align: center">
             <p>#</p>
           </Col>
-          <Col span="8">
+          <Col span="8" offset="2">
             <p>用户名</p>
           </Col>
           <Col span="8">
@@ -47,17 +46,17 @@
           </Col>
         </Row>
         <Row v-for="(item, index) in users" class="item" :key="index">
-          <Col span="4">
+          <Col span="2" style="text-align: center">
             <p>{{index+1}}</p>
           </Col>
-          <Col span="8">
+          <Col span="8" offset="2">
             <p>{{item.username}}</p>
           </Col>
           <Col span="8">
             <p><span v-if="!item.name">未知</span>{{item.name}}</p>
           </Col>
           <Col span="4">
-            <Button type="text" style="color: #2d8cf0" @click="deleteMember(item.id)">删除</Button>
+            <a style="color: #2d8cf0" @click="deleteMember(item.id)">删除</a>
           </Col>
         </Row>
       </Col>
@@ -202,7 +201,7 @@
   .item {
     text-align: left;
     border-bottom: 1px solid #e8eaec;
-    padding: 10px 0 10px 0;
+    padding: 15px 0 15px 0;
   }
 
   .username {

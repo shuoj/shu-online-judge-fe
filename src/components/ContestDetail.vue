@@ -47,7 +47,7 @@
                   <p v-if="user.totalTime.errorCount !== 0" >(-{{user.totalTime.errorCount}})</p>
                 </td>
                 <template v-for="(problem, index) in user.timeList">
-                  <template v-if="problem.submitted === true"  style="width:100%;height:100%;">
+                  <template v-if="problem.submitted === true">
                     <td v-if="problem.passed === true" :class="choose(problem.firstPassed)">
                       <div>{{timetrans(problem.totalTime)}}</div>
                       <div v-if="problem.errorCount !== 0">(-{{problem.errorCount}})</div>
@@ -57,7 +57,7 @@
                       <p v-if="problem.errorCount !== 0">(-{{problem.errorCount}})</p>
                     </td>
                   </template>
-                  <td v-else class="not-submitted" style="width:100%;height:100%;">
+                  <td v-else class="not-submitted">
                   </td>
                 </template>
               </tr>
