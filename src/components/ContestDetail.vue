@@ -222,7 +222,7 @@ export default class ContestDetail extends Vue {
       });
     }).catch((err: any) => {
       console.log(err);
-      if (err.status === 403) {
+      if (err.status === 400) {
         switch (err.data.code) {
           // 比赛未开始
           case -2:
