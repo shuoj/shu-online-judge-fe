@@ -46,15 +46,20 @@
                   <p v-html="timetrans(user.totalTime.totalTime)"></p>
                   <p v-if="user.totalTime.errorCount !== 0" >(-{{user.totalTime.errorCount}})</p>
                 </td>
-                <td v-for="(problem, index) in user.timeList">
-                  <div v-if="problem.submitted === true" :class="choose(problem.firstPassed)" style="width:100%;height:100%;">
-                    <p v-html="timetrans(problem.totalTime)"></p>
-                    <p v-if="problem.errorCount !== 0">(-{{problem.errorCount}})</p>
-                  </div>
-                  <div v-else-if="problem.errorCount !== 0" class="red" style="width:100%;height:100%;">
-                    <p v-if="problem.errorCount !== 0">(-{{problem.errorCount}})</p>
-                  </div>
-                </td>
+                <template v-for="(problem, index) in user.timeList">
+                  <template v-if="problem.submitted === true"  style="width:100%;height:100%;">
+                    <td v-if="problem.passed === true" :class="choose(problem.firstPassed)">
+                      <div>{{timetrans(problem.totalTime)}}</div>
+                      <div v-if="problem.errorCount !== 0">(-{{problem.errorCount}})</div>
+                    </td>
+                    <td v-else class="red">
+                      <p v-html="timetrans(problem.totalTime)"></p>
+                      <p v-if="problem.errorCount !== 0">(-{{problem.errorCount}})</p>
+                    </td>
+                  </template>
+                  <td v-else class="not-submitted" style="width:100%;height:100%;">
+                  </td>
+                </template>
               </tr>
             </tbody>
           </table>
@@ -352,19 +357,16 @@ export default class ContestDetail extends Vue {
   }
 
   .red {
-    vertical-align: middle;
     color: #a94442;
     background-color: #f2dede;
   }
 
   .deepGreen {
-    vertical-align: middle;
     background-color: #3c9;
     color: #3c763d;
   }
 
   .green {
-    vertical-align: middle;
     color: #3c763d;
     background-color: #dff0d8;
   }
