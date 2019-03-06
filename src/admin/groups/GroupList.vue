@@ -146,7 +146,6 @@ export default class GroupList extends Vue {
       if (res.data.code === -1) {
         this.noGroup = true;
       } else {
-        console.log(res.data)
         res.data.forEach((item: any) => {
           this.groups.push({
             id: item.id,
@@ -178,7 +177,6 @@ export default class GroupList extends Vue {
         username: item.firstname ? (item.lastname + item.firstname) : '未知'
       });
     });
-    console.log(this.users)
     this.groupShow = false;
   }
 
