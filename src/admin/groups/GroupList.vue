@@ -14,7 +14,7 @@
       </div>
       <ul v-for="(group, index) in groups" :key="group.id" class="pro-table"
           :class="[index % 2 ===0 ? 'bg': '']">
-        <li class="id">{{group.id}}</li>
+        <li class="id">{{index+1}}</li>
         <li class="title">{{group.name}}</li>
         <li class="time">{{group.createDate}}</li>
         <li class="id">{{group.number}}</li>
@@ -49,7 +49,7 @@
       </div>
       <ul v-for="(user, index) in users" :key="index" class="pro-table"
           :class="[index % 2 ===0 ? 'bg': '']">
-        <li class="id">{{user.id}}</li>
+        <li class="id">{{index+1}}</li>
         <li class="title">{{user.name}}</li>
         <li class="time">{{user.username}}</li>
         <li class="time">
@@ -62,8 +62,7 @@
                     style="width: 300px;" placement="bottom">
         <Option v-for="(item, index) in searchData" :value="item.id" :key="index">
           <div class="option-two">
-            <span>Id: {{item.id}}</span>
-            <span>username: {{item.username}}</span>
+            <span>用户名: {{item.username}}</span>
           </div>
         </Option>
       </AutoComplete>
@@ -147,6 +146,7 @@ export default class GroupList extends Vue {
       if (res.data.code === -1) {
         this.noGroup = true;
       } else {
+        console.log(res.data)
         res.data.forEach((item: any) => {
           this.groups.push({
             id: item.id,
@@ -178,6 +178,7 @@ export default class GroupList extends Vue {
         username: item.firstname ? (item.lastname + item.firstname) : '未知'
       });
     });
+    console.log(this.users)
     this.groupShow = false;
   }
 
