@@ -76,7 +76,7 @@ export default class Problemlist extends Vue {
           'index': item.idx,
           'title': item.title,
           'level': item.difficulty,
-          'rate': item.acceptRate + '%(' + String(item.acceptCount) + ' / ' + String(item.submitCount) + ')',
+          'rate': item.acceptRate*100 + '%(' + String(item.acceptCount) + ' / ' + String(item.submitCount) + ')',
           'create': item.createDate,
           'author': item.authorName,
           'canSee': item.visible ? '可见' : '不可见'
