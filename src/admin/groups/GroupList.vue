@@ -58,7 +58,7 @@
         </li>
       </ul>
       <h2>添加小组成员</h2>
-      <AutoComplete v-model="member" icon="ios-search" @on-change="getMemberId" @on-select="pushInto"
+      <AutoComplete v-model="member" icon="ios-search" @on-change="debounceFunc" @on-select="pushInto"
                     style="width: 300px;" placement="bottom">
         <Option v-for="(item, index) in searchData" :value="item.id" :key="index">
           <div class="option-two">
@@ -83,6 +83,7 @@
 import { Component, Vue } from 'vue-property-decorator';
 import api from '@/api/api.ts';
 import GroupForm from '@/components/CreateGroup.vue';
+import { debounce } from '@/util/util.ts';
 
 @Component({
   components: {
@@ -99,6 +100,7 @@ export default class GroupList extends Vue {
   deleteModal: boolean = false;
   member: string = '';
   searchData: Array<any> = [];
+  debounceFunc: () => void;
 
   get memberShow() {
     if (this.users) {
@@ -110,7 +112,6 @@ export default class GroupList extends Vue {
     if (this.member) {
       api.getUser({ username: this.member, size: 10, page: 0 }).then((res: any) => {
         this.searchData.splice(0, this.searchData.length);
-        console.log(res.data, 'gg');
         const list = res.data.list;
         list.forEach((item: any) => {
           this.searchData.push({
@@ -235,6 +236,7 @@ export default class GroupList extends Vue {
 
   mounted() {
     this.getGroups();
+    this.debounceFunc = debounce(this.getMemberId, 400, this);
   }
 }
 </script>
