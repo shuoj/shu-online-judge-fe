@@ -2,7 +2,10 @@
   <div id="app">
     <div class="app-content">
       <Navbar v-if="isAdmin"></Navbar>
-      <router-view/>
+      <!-- out-in 当前元素先进行过渡， 完成后新元素过渡进入 -->
+      <transition name="fade" mode="out-in">
+        <router-view/>
+      </transition>
     </div>
     <footer class="oj-footer" v-if="isAdmin">Copyright © 2018 上海大学计算机学院</footer>
   </div>
@@ -48,6 +51,23 @@ export default class App extends Vue {
 
   html, body {
     min-height: 100%;
+  }
+
+  .fade-leave-to {
+    opacity: 1;
+  }
+
+  .fade-leave-active {
+    transition: all .4s ease;
+  }
+
+  .fade-enter {
+    opacity: 1;
+    transform: translate(0, 50px);
+  }
+
+  .fade-enter-active {
+    transition: all .4s ease;
   }
 
   #app {
