@@ -1,5 +1,4 @@
 const { BASE_URL } = process.env;
-const webpack = require('webpack');
 module.exports = {
   devServer: {
     proxy: {
@@ -19,13 +18,12 @@ module.exports = {
       const CompressionWebpackPlugin = require('compression-webpack-plugin');
       config.plugins.push(new CompressionWebpackPlugin());
     } else if (process.env.NODE_ENV === 'analyzer') {
-      // 有点问题没有用
       const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
       config.plugins.push(new BundleAnalyzerPlugin());
     }
   },
   // 链式操作(高级),允许我们更细粒度的控制其内部配置
   chainWebpack: config => {
-
+    
   }
 };

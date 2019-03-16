@@ -137,67 +137,67 @@ const router = new Router({
         {
           path: 'judge-server',
           name: 'judge-server',
-          component: () => import('@/admin/index/JudgeServer.vue')
+          component: () => import(/* webpackChunkName: 'async-admin' */'@/admin/index/JudgeServer.vue')
         },
         {
           path: 'index',
           name: 'admin-index',
-          component: () => import('@/admin/index/index.vue')
+          component: () => import(/* webpackChunkName: 'async-admin' */'@/admin/index/index.vue')
         },
         {
           path: 'admin-announcement',
           name: 'admin-announcement',
-          component: () => import('@/admin/normal/Announcement.vue')
+          component: () => import(/* webpackChunkName: 'async-admin' */'@/admin/normal/Announcement.vue')
         },
         {
           path: 'problems-list',
           name: 'problems-list',
-          component: () => import('@/admin/problems/ProblemList.vue')
+          component: () => import(/* webpackChunkName: 'async-admin' */'@/admin/problems/ProblemList.vue')
         },
         {
           path: 'create-problem',
           name: 'create-problem',
-          component: () => import('@/admin/problems/CreateProblem.vue')
+          component: () => import(/* webpackChunkName: 'async-admin' */'@/admin/problems/CreateProblem.vue')
         },
         {
           path: 'create-contest',
           name: 'create-contest',
-          component: () => import('@/admin/contests/CreateContest.vue')
+          component: () => import(/* webpackChunkName: 'async-admin' */'@/admin/contests/CreateContest.vue')
         },
         {
           path: 'recommend-paper',
           name: 'recommend-paper',
-          component: () => import('@/admin/innovate/RecommendProblem.vue')
+          component: () => import(/* webpackChunkName: 'async-admin' */'@/admin/innovate/RecommendProblem.vue')
         },
         {
           path: 'contests-list',
           name: 'contests-list',
-          component: () => import('@/admin/contests/ContestsList.vue')
+          component: () => import(/* webpackChunkName: 'async-admin' */'@/admin/contests/ContestsList.vue')
         },
         {
           path: 'contest-problems/:id',
           name: 'contest-problems',
-          component: () => import('@/admin/contests/ContestProblems.vue')
+          component: () => import(/* webpackChunkName: 'async-admin' */'@/admin/contests/ContestProblems.vue')
         },
         {
           path: 'contest-member/:id',
           name: 'contest-member',
-          component: () => import('@/admin/contests/ContestMember.vue')
+          component: () => import(/* webpackChunkName: 'async-admin' */'@/admin/contests/ContestMember.vue')
         },
         {
           path: 'group-list',
           name: 'group-list',
-          component: () => import('@/admin/groups/GroupList.vue')
+          component: () => import(/* webpackChunkName: 'async-admin' */'@/admin/groups/GroupList.vue')
         },
         {
           path: 'create-group',
           name: 'create-group',
-          component: () => import('@/admin/groups/CreateGroup.vue')
+          component: () => import(/* webpackChunkName: 'async-admin' */'@/admin/groups/CreateGroup.vue')
         },
         {
           path: 'user-manager',
           name: 'user-manager',
-          component: () => import('@/admin/users/UserManager.vue')
+          component: () => import(/* webpackChunkName: 'async-admin' */'@/admin/users/UserManager.vue')
         }
       ]
     }
