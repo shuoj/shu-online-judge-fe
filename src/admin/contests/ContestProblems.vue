@@ -171,7 +171,7 @@
             'id': item.id,
             'title': item.title,
             'create': item.lastUsedDate,
-            'rate': item.acceptRate + '%(' + String(item.acceptCount) + ' / ' + String(item.submitCount) + ')'
+            'rate': item.acceptRate.toFixed(2)*100 + '%(' + String(item.acceptCount) + ' / ' + String(item.submitCount) + ')'
           });
         });
       }).catch((err: any) => {

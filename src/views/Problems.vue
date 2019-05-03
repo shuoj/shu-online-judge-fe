@@ -17,7 +17,7 @@
           <ul v-for="(problem, index) in problems" :key="problem.id" class="pro-table"
               :class="[index % 2 ===0 ? 'bg': '']">
             <li></li>
-            <li class="id" @click="problemDetail(problem)">{{problem.index}}</li>
+            <li class="id" @click="problemDetail(problem)">{{index+1}}</li>
             <li class="title" @click="problemDetail(problem)">{{problem.title}}</li>
             <li class="diff">{{problem.level}}</li>
             <li>{{problem.rate}}</li>
@@ -112,7 +112,7 @@ export default class Problems extends Vue {
           'title': item.title,
           'id': item.id,
           'level': item.difficulty,
-          'rate': item.acceptRate + '%(' + String(item.acceptCount) + ' / ' + String(item.submitCount) + ')'
+          'rate': item.acceptRate.toFixed(2)*100 + '%(' + String(item.acceptCount) + ' / ' + String(item.submitCount) + ')'
         });
       });
       that.searchProblems = that.problems;
@@ -132,7 +132,7 @@ export default class Problems extends Vue {
           'index': item.id,
           'title': item.title,
           'level': item.difficulty,
-          'rate': item.acceptRate + '%(' + String(item.acceptCount) + ' / ' + String(item.submitCount) + ')'
+          'rate': item.acceptRate.toFixed(2)*100 + '%(' + String(item.acceptCount) + ' / ' + String(item.submitCount) + ')'
         });
       });
       that.problems = temp;
