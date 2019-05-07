@@ -44,6 +44,9 @@
           <MenuItem name="/admin/user-manager" to="/admin/user-manager">
             <Icon type="md-person" />用户管理
           </MenuItem>
+          <MenuItem name="/admin/logs" to="/admin/logs">
+            <Icon type="md-person" />学习记录
+          </MenuItem>
         </MenuGroup>
       </Menu>
     </Col>

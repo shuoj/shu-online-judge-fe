@@ -198,6 +198,11 @@ const router = new Router({
           path: 'user-manager',
           name: 'user-manager',
           component: () => import(/* webpackChunkName: 'async-admin' */'@/admin/users/UserManager.vue')
+        },
+        {
+          path: 'logs',
+          name: 'logs',
+          component: () => import(/* webpackChunkName: 'async-admin' */'@/admin/users/Logs.vue')
         }
       ]
     }
