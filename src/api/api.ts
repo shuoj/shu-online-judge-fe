@@ -43,7 +43,7 @@ export default {
   deleteContest: (data: { id: string }) => axios.delete(`/api/v1/contests/${data.id}`),
   deleteProblemsInContest: (data: { id: string, problemArray: number[] }) => axios.delete(`/api/v1/contests/${data.id}/problems`, { data: data.problemArray }),
   getAllProblemsFromASpecificContest: (data: { id: string }) => axios.get(`/api/v1/contests/${data.id}/problems`),
-  setProblemsToContest: (data: { id: string, problemId: number[] }) => axios.post(`/api/v1/contests/${data.id}/problems`, data.problemId),
+  setProblemsToContest: (data: { id: string, problemId: Array<string> }) => axios.post(`/api/v1/contests/${data.id}/problems`, data.problemId),
   getProblemsIdByTitle: (data: { title: string }) => axios.get('/api/v1/problems', { params: data }),
   getRanking: (data: { id: string }) => axios.get(`/api/v1/contests/${data.id}/ranking`, { params: data }),
   addGroupsToContest: (data: { id: string, groupId: number[] }) => axios.post(`/api/v1/contests/${data.id}/groups`, data.groupId),
@@ -100,5 +100,8 @@ export default {
   getCommit: (data: { id: string }) => axios.get(`/api/v1/submissions/${data.id}`),
   getAllQuestions: () => axios.get('/api/v1/questions'),
   setAnswers: (data: {}) => axios.post('/api/v1/questions', data),
-  deleteAnswers: (data: {}) => axios.delete('/api/v1/questions')
+  deleteAnswers: (data: {}) => axios.delete('/api/v1/questions'),
+  getLogs: (data: { name: string, page: number, size: number }) => axios.get(`/api/v1/logs/auth?name=${data.name}`, { params: { page: data.page, size: data.size } }),
+  getJudgeServer: (data: {}) => axios.get('/api/v1/judge-server/status'),
+  getRecommend: (data: {}) => axios.post('/api/v1/problems/recommend', data)
 };

@@ -287,8 +287,7 @@ export default class Admin extends Vue {
   ok () {
     const params = this.$route.params;
     const contestId: any = params.id;
-    api
-      .setProblemsToContest({
+    api.setProblemsToContest({
         id: contestId,
         problemId: this.choose
       })
@@ -314,10 +313,10 @@ export default class Admin extends Vue {
       tagIdsInclude: this.include,
       tagIdsExclude: this.exclude,
       userIdList: this.userList
-    }).then((res) => {
+    }).then((res: any) => {
       this.recommendList = res.data;
       console.log(res.data);
-    }).catch(err => {
+    }).catch((err: any) => {
       console.log(err);
     });
     this.modal = true;
@@ -375,10 +374,10 @@ export default class Admin extends Vue {
   getTagId() {
     api
       .getTags()
-      .then(res => {
+      .then((res: any) => {
         this.tags = res.data;
       })
-      .catch(err => {
+      .catch((err: any) => {
         console.log(err);
       });
   }

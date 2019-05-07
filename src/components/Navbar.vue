@@ -110,7 +110,7 @@ export default class Navbar extends Vue {
       .then(() => {
         this.$router.replace('/');
       })
-      .catch(err => console.log('logout' + err));
+      .catch((err: any) => console.log('logout' + err));
   }
 }
 </script>

@@ -56,7 +56,7 @@ export default class UserManager extends Vue {
       this.total = res.data.total;
       this.logs = res.data.list;
       console.log(this.logs);
-    }).catch((err) => {
+    }).catch((err: any) => {
       console.log(err);
     });
   }
@@ -77,7 +77,7 @@ export default class UserManager extends Vue {
     }).then((res: any) => {
       this.searchArray = res.data.list;
       console.log(this.logs);
-    }).catch((err) => {
+    }).catch((err: any) => {
       console.log(err);
     });
     this.name = '';

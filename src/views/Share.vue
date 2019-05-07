@@ -20,10 +20,10 @@ export default class Share extends Vue {
 
   mounted() {
     const params = this.$route.params;
-    api.getCommit({ id: params.id }).then(res => {
+    api.getCommit({ id: params.id }).then((res: any) => {
       this.sourceCode = res.data.code.replace(/\\n/g, '\n');
       this.title = res.data.problemTitle;
-    }).catch(err => {
+    }).catch((err: any) => {
       console.log(err);
     });
   }

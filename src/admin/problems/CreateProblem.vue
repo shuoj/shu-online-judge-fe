@@ -22,7 +22,7 @@ export default class Createproblem extends Vue {
     data.authorId = id;
     api.createProblem(data).then((res: any) => {
       (this as any).$Message.success('创建成功');
-    }).catch((err) => {
+    }).catch((err: any) => {
       (this as any).$Message.error(err.message);
     });
   }
