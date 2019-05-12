@@ -25,7 +25,7 @@
         <Col span="2">
           <p style="color: #515a6e">{{index+1}}</p>
         </Col>
-        <Col span="10">
+        <Col span="8">
           <div class="list-title">
             <a @click="announcementDetail(item.id)">{{item.title}}</a>
           </div>
@@ -36,10 +36,10 @@
         <Col span="4">
           <p>{{item.authorName}}</p>
         </Col>
-        <Col span="1" align="center">
+        <Col span="2" align="center">
           <Button type="text" style="color: #2d8cf0" @click="edit(item.id)">编辑</Button>
         </Col>
-        <Col span="1" align="center">
+        <Col span="2" align="center">
           <Button type="text" style="color: #2d8cf0" @click="removeItem(item.id)">删除</Button>
         </Col>
       </Row>
@@ -84,7 +84,6 @@
     disabledA: boolean = false;
     disabledB: boolean = true;
 
-    @Watch('announcements')
     getAllAnnouncements() {
       api.getAllAnnouncements({}).then((res: any) => {
         this.announcements = res.data;
@@ -121,9 +120,6 @@
         title: this.title,
         content: this.content
       }).then((res: any) => {
-        console.log('revise');
-        console.log(res.data);
-        // 修改完毕之后，按钮的状态又会恢复到最初状态
         this.classB = 'disabled';
         this.classA = 'publish';
         this.disabledA = false;
@@ -152,6 +148,7 @@
           this.title = '';
           this.content = '';
           (this as any).$Message.success('创建成功');
+          this.getAllAnnouncements();
         }).catch((err: any) => {
           console.log(err);
           (this as any).$Message.error('创建失败');
