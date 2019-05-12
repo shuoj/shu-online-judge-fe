@@ -82,6 +82,7 @@ export default class About extends Vue {
           email: this.register.mail,
           firstname: this.register.firstname,
           lastname: this.register.lastname,
+          name: this.register.lastname + this.register.firstname,
           school: this.register.school
         })
           .then((res: any) => {

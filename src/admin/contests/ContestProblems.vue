@@ -288,9 +288,9 @@ export default class Admin extends Vue {
     const params = this.$route.params;
     const contestId: any = params.id;
     api.setProblemsToContest({
-        id: contestId,
-        problemId: this.choose
-      })
+      id: contestId,
+      problemId: this.choose
+    })
       .then((res: any) => {
         (this as any).$Message.success('添加成功');
         this.getAllProblemsFromASpecificContest();
