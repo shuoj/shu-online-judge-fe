@@ -63,7 +63,7 @@
 </template>
 
 <script lang="ts">
-  import { Component, Vue, Watch } from 'vue-property-decorator';
+  import { Component, Vue } from 'vue-property-decorator';
   import api from '../../api/api';
 
   @Component
@@ -125,6 +125,7 @@
         this.disabledA = false;
         this.disabledB = true;
         this.announcementDetail(this.id);
+        this.getAllAnnouncements();
       }).catch((err: any) => {
         console.log(err);
       });
