@@ -360,12 +360,10 @@
     deleteContest(id: string) {
       api.deleteContest({ id }).then((res: any) => {
         (this as any).$Message.success('删除成功');
-        console.log(res.data);
+        this.getContests();
       }).catch((err: any) => {
         (this as any).$Message.error('删除失败');
-        console.log(err);
       });
-      this.getContests();
     }
 
     makeVisible(id: any, visible: any) {

@@ -18,7 +18,7 @@
               </Col>
               <Col span="10" offset="2">
                 <p style="font-weight: normal;font-size: 14px">
-                  <Icon type="md-body" /><span style="padding-left: 10px">{{user.firstname}} {{user.lastname}}</span>
+                  <Icon type="md-body" /><span style="padding-left: 10px">{{user.name}}</span>
                 </p>
                 <p style="font-weight: normal;font-size: 14px">
                   <Icon type="md-mail" /><span style="padding-left: 10px">{{user.email}}</span>

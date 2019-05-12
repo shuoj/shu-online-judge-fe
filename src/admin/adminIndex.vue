@@ -2,7 +2,9 @@
   <Row>
     <Col span="4">
       <Menu theme="light"  active-name="$route.path" style="width:auto;padding-left: 20px;">
-        <div class="icon-title">SHU OJ后台</div>
+        <RouterLink to="/">
+          <div class="icon-title" style="color: #515a6e">SHU OJ</div>
+        </RouterLink>
         <MenuGroup title="首页" align="left">
           <MenuItem name="/admin/index" to="/admin/index">
             <Icon type="md-clipboard" />主页
