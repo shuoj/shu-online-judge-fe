@@ -138,7 +138,6 @@ export default class ProblemDetail extends Vue {
       this.codeLoading = true;
       const params = this.$route.params;
       api.createCommit({ id: params.id, language: code.language, code: code.code }).then((res: any) => {
-        console.log(res, 'result');
         this.codeLoading = false;
         this.codeStatus = res.data.result;
         this.submissionId = res.data.id;
@@ -156,7 +155,6 @@ export default class ProblemDetail extends Vue {
     if (name === 'submission') {
       const params = this.$route.params;
       api.getSpecificCommit({ id: params.id }).then((res: any) => {
-        console.log(res.data);
         let id = 0;
         this.submission = res.data.map((item: any) => {
           item.shareId = item.id;

@@ -125,7 +125,6 @@
 
     deleteAnswer () {
       api.deleteAnswers({}).then((res: any) => {
-        console.log(res.data);
         (this as any).$Message.success('重置成功');
       }).catch((err: any) => {
         console.log(err);

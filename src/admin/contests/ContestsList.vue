@@ -232,7 +232,6 @@
         page: page,
         size: pageSize
       }).then((res: any) => {
-        console.log(res.data.list);
         const that = this;
         that.total = res.data.total;
         let visibility = '';
@@ -255,8 +254,6 @@
       const that = this;
       that.contestId = id;
       api.getContestDetail({ id: id }).then((res: any) => {
-        console.log('编辑contest');
-        console.log(res.data);
         that.name = res.data.name;
         that.initContent = res.data.description;
         that.description = res.data.description;
@@ -350,7 +347,6 @@
         that.$router.push({
           path: `/admin/contests-list`
         });
-        console.log(res);
       }).catch((err: any) => {
         (this as any).$Message.error('修改出错');
         console.log(err);
@@ -377,7 +373,6 @@
       this.modal2 = true;
       this.modalStatus = status;
       this.modalId = id;
-      console.log(status);
     }
 
     setVisible () {

@@ -259,13 +259,11 @@ export default class ContestDetail extends Vue {
   }
 
   getContestProblems() {
-    console.log('getContestProblems');
     this.problems = [];
     const params = this.$route.params;
     const id: string = params.id;
     const that = this;
     api.getAllProblemsFromASpecificContest({ id }).then((res: any) => {
-      console.log(res.data);
       let index = -1;
       that.problems = res.data.map((item: any) => {
         index = index + 1;
@@ -296,7 +294,6 @@ export default class ContestDetail extends Vue {
       id: id,
       password: pwd
     }).then((res: any) => {
-      console.log(res.data.message);
       if (res.data.message === '密码错误') {
         (this as any).$Message.error('密码错误');
         this.password = '';
@@ -319,13 +316,11 @@ export default class ContestDetail extends Vue {
   }
 
   getContestRanking() {
-    console.log('getRanking');
     const params = this.$route.params;
     const id: string = params.id;
     const that = this;
     api.getRanking({ id }).then((res: any) => {
       this.problemNumber = res.data.rankingUserList[0].timeList.length;
-      console.log(res.data.rankingUserList);
       that.ranking = res.data.rankingUserList;
     }).catch((err: any) => {
       console.log(err);

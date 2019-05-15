@@ -169,7 +169,6 @@
         this.startDate = '';
         this.endDate = '';
         this.password = '';
-        console.log(res);
       }).catch((err: any) => {
         console.log(err);
       });

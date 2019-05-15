@@ -80,7 +80,6 @@
       if (this.member) {
         api.getUser({ username: this.member, size: 10, page: 0 }).then((res: any) => {
           this.searchData.splice(0, this.searchData.length);
-          console.log(res.data, 'gg');
           const list = res.data.list;
           list.forEach((item: any) => {
             this.searchData.push({
@@ -101,7 +100,6 @@
       if (id) {
         const userId: Array<number> = [id];
         api.addUserToContest({ id: contestId, userId: userId }).then((res: any) => {
-          console.log(res.data);
           this.users = res.data;
           (this as any).$Message.success('添加成功');
         }).catch(() => {
@@ -114,7 +112,6 @@
       this.groupAdd = [];
       const that = this;
       api.getGroups().then((res: any) => {
-        console.log(res.data);
         that.groups = res.data;
       }).catch((err: any) => {
         console.log(err);
@@ -125,7 +122,6 @@
       const params = this.$route.params;
       const id: any = params.id;
       api.getAllUserFromContest({ id }).then((res: any) => {
-        console.log(res.data);
         this.users = res.data;
       }).catch((err: any) => {
         console.log(err);
@@ -139,7 +135,6 @@
       this.groupAdd.forEach(function (item: any) {
         groupArray.push(item);
       });
-      console.log(groupArray);
       api.addGroupsToContest({
         id: id,
         groupId: groupArray
@@ -157,14 +152,12 @@
       const id: any = params.id;
       const groupArray: Array<number> = [];
       groupArray.push(userId);
-      console.log(groupArray);
       api.deleteUserFromContest({
         id: id,
         userId: groupArray
       }).then((res: any) => {
         this.getUser();
         (this as any).$Message.success('删除成功');
-        console.log(res.data);
       }).catch((err: any) => {
         (this as any).$Message.error('删除失败');
         console.log(err);

@@ -315,7 +315,6 @@ export default class Admin extends Vue {
     }).then((res: any) => {
       this.pending = false;
       this.recommendList = res.data;
-      console.log(res.data);
     }).catch((err: any) => {
       console.log(err);
     });
@@ -341,7 +340,6 @@ export default class Admin extends Vue {
           title: this.addTitle
         })
         .then((res: any) => {
-          console.log(res.data);
           this.searchData = res.data.list;
         })
         .catch((err: any) => {
@@ -392,7 +390,6 @@ export default class Admin extends Vue {
         problemArray: idArray
       })
       .then((res: any) => {
-        console.log(res.data);
         (this as any).$Message.success('删除成功');
         this.getAllProblemsFromASpecificContest();
       })

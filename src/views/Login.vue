@@ -59,15 +59,6 @@ export default class Login extends Vue {
           password: md5(this.userLogin.password)
         })
           .then(() => {
-            // this.$store.dispatch('getUser', this.userLogin.username)
-            //   .then((res) => {
-            //     console.log(res.data);
-            //     this.$router.replace('/index');
-            //   })
-            //   .catch((err) => {
-            //     console.log(err);
-            //   });
-            console.log(this.$route.query);
             if (Object.getOwnPropertyNames(this.$route.query).length === 0) {
               this.$router.push({
                 path: '/problems'

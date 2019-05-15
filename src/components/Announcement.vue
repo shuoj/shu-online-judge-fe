@@ -23,7 +23,6 @@
       const id: string = params.id;
       const that = this;
       api.getAnnouncement({ id }).then((res: any) => {
-        console.log(res.data);
         that.announcements.push({
           'authorId': res.data.authorId,
           'authorName': res.data.authorName,
@@ -32,7 +31,6 @@
           'modifiedDate': res.data.modifiedDate,
           'title': res.data.title
         });
-        console.log(this.announcements);
       }).catch((err: any) => {
         console.log(err, 'err');
       });

@@ -70,7 +70,6 @@ export default class Navbar extends Vue {
   handleInfo(status: boolean) {
     if (status) {
       api.getUserInfo().then((res: any) => {
-        console.log(res, 'res');
         this.$store.commit('setUserInfo', res.data);
       }).catch((err: any) => {
         console.log(err);

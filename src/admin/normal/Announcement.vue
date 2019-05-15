@@ -104,7 +104,6 @@
       this.classA = 'disabled';
       this.classB = 'publish';
       api.getAnnouncement({ id }).then((res: any) => {
-        console.log('edit');
         this.title = res.data.title;
         this.initContent = res.data.content;
         this.content = res.data.content;

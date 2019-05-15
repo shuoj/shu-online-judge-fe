@@ -123,7 +123,6 @@
     }
 
     getCode(code: any) {
-      // console.log(code, 'code');
       if (code.code) {
         this.codeLoading = true;
         const params = this.$route.params;
@@ -133,7 +132,6 @@
           language: code.language,
           code: code.code
         }).then((res: any) => {
-          console.log(res, 'result');
           this.codeLoading = false;
           this.codeStatus = res.data.result;
         }).catch((err: any) => {
@@ -154,7 +152,6 @@
           contestId: params.contestId,
           problemId: params.problemId
         }).then((res: any) => {
-          console.log(res.data);
           let id = 0;
           this.submission = res.data.map((item: any) => {
             id = id + 1;

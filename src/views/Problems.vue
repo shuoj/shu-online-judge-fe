@@ -70,7 +70,6 @@ export default class Problems extends Vue {
 
   getAllAnnouncements() {
     api.getAllAnnouncements({}).then((res: any) => {
-      // console.log(res.data);
       this.announcements = res.data;
     }).catch((err: any) => {
       console.log(err, 'err');
@@ -103,7 +102,6 @@ export default class Problems extends Vue {
       tags: tagIds,
       visible: true
     }).then((res: any) => {
-      // console.log(res.data);
       this.total = res.data.total;
       const that = this;
       res.data.list.forEach(function (item: any) {
@@ -125,7 +123,6 @@ export default class Problems extends Vue {
     api.getProblemsIdByTitle({ title: keyword }).then((res: any) => {
       const that = this;
       const temp: any = [];
-      // console.log(res.data);
       this.total = res.data.total;
       res.data.list.forEach(function (item: any) {
         temp.push({
