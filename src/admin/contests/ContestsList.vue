@@ -362,6 +362,7 @@
         (this as any).$Message.success('删除成功');
         this.getContests();
       }).catch((err: any) => {
+        console.log(err);
         (this as any).$Message.error('删除失败');
       });
     }

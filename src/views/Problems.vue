@@ -112,7 +112,7 @@ export default class Problems extends Vue {
           'title': item.title,
           'id': item.id,
           'level': item.difficulty,
-          'rate': item.acceptRate.toFixed(2) * 100 + '%(' + String(item.acceptCount) + ' / ' + String(item.submitCount) + ')'
+          'rate': Math.floor(item.acceptRate * 100) + '%(' + String(item.acceptCount) + ' / ' + String(item.submitCount) + ')'
         });
       });
       that.searchProblems = that.problems;
@@ -132,7 +132,7 @@ export default class Problems extends Vue {
           'index': item.id,
           'title': item.title,
           'level': item.difficulty,
-          'rate': item.acceptRate.toFixed(2) * 100 + '%(' + String(item.acceptCount) + ' / ' + String(item.submitCount) + ')'
+          'rate': Math.floor(item.acceptRate * 100) + '%(' + String(item.acceptCount) + ' / ' + String(item.submitCount) + ')'
         });
       });
       that.problems = temp;

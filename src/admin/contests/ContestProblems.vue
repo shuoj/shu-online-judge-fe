@@ -74,56 +74,51 @@
                     v-model="interval"
                   ></InputNumber>
                 </div>
-                <!--<div class="part">-->
-                <!--<h2>设置分数：</h2>-->
-                <!--<Row class="row-height title" class-name="row-title">-->
-                <!--<Col span="2" style="text-align: center">#</Col>-->
-                <!--<Col span="6">题目</Col>-->
-                <!--<Col span="4">难度</Col>-->
-                <!--<Col span="3">正确率</Col>-->
-                <!--<Col span="5">上次使用时间</Col>-->
-                <!--<Col span="4">设置分数(总分100)</Col>-->
-                <!--</Row>-->
-                <!--<Row class="row-height" v-for="problem in recommend" :key="problem.index">-->
-                <!--<Col span="2" style="text-align: center">{{problem.id}}</Col>-->
-                <!--<Col span="6">{{problem.name}}</Col>-->
-                <!--<Col span="4">{{problem.difficult}}</Col>-->
-                <!--<Col span="3">{{problem.correct}}</Col>-->
-                <!--<Col span="5">{{problem.last}}</Col>-->
-                <!--<Col span="4"><Input placeholder="" style="width: 30px"></Input></Col>-->
-                <!--</Row>-->
-                <!--<Button type="primary" style="margin-top: 10px" @click="">完成组卷</Button>-->
-                <!--</div>-->
               </Col>
               <Button type="primary" style="margin-top: 10px" @click="recommend">进行推荐</Button>
               <Modal
                 v-model="modal"
                 title="推荐"
-                width="60vw"
+                width="80%"
                 @on-ok="ok"
                 @on-cancel="cancel">
-                <div style="width: 100%;display: flex;height: 48px;font-weight: 600;font-size: 18px">
-                  <div style="width: 30%">
-                    题目
-                  </div>
-                  <div style="width: 20%">难度</div>
-                  <div>标签</div>
+                <div v-if="pending" align="center">
+                  <Loading/>
                 </div>
-                <CheckboxGroup v-model="choose" class="checkgroup">
-                  <div v-for="(item, index) in recommendList" style="width: 100%;display: flex;height: 48px">
-                    <div style="width: 30%">
-                      <Checkbox :label="item.id" :key="item.id">
-                        <span style="width: 20vw">{{ item.title }}</span>
-                      </Checkbox>
-                    </div>
-                    <div style="width: 20%">{{ item.difficulty }}</div>
-                    <template v-for="i in item.tagList">
+                <div v-else>
+                  <Row style="width: 100%;height: 48px;font-weight: 600;font-size: 18px">
+                    <Col span="8" align="left">
                       <div>
-                        <span style="height: 20px;padding: 2px 6px; border: 1px solid #2d8cf0;border-radius: 6px;color:#2d8cf0 ">{{ i.name }}</span>
+                        题目
                       </div>
-                    </template>
-                  </div>
-                </CheckboxGroup>
+                    </Col>
+                    <Col span="4" align="left">
+                      <div>难度</div>
+                    </Col>
+                    <Col span="12" align="left">
+                      <div>标签</div>
+                    </Col>
+                  </Row>
+                  <CheckboxGroup v-model="choose" class="checkgroup">
+                    <Row style="padding-bottom: 20px;">
+                      <div v-for="(item, index) in recommendList" style="width: 100%;height: 48px">
+                        <Col span="8" align="left">
+                          <Checkbox :label="item.id" :key="item.id">
+                            <span style="width: 20vw">{{ item.title }}</span>
+                          </Checkbox>
+                        </Col>
+                        <Col span="4" align="left">
+                          {{ item.difficulty }}
+                        </Col>
+                        <Col span="12" align="left">
+                          <template v-for="i in item.tagList">
+                            <span style="height: 20px;padding: 2px 6px; border: 1px solid #2d8cf0;border-radius: 6px;color:#2d8cf0;margin: 6px 4px; ">{{ i.name }}</span>
+                          </template>
+                        </Col>
+                      </div>
+                    </Row>
+                  </CheckboxGroup>
+                </div>
               </Modal>
             </Row>
           </TabPane>
@@ -210,8 +205,10 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 import api from '../../api/api';
-
-@Component
+import Loading from '../../components/Loading.vue';
+@Component({
+  components: { Loading }
+})
 export default class Admin extends Vue {
   alphabet: any = [
     'A',
@@ -255,6 +252,7 @@ export default class Admin extends Vue {
   userList: Array<string> = [];
   recommendList: Array<string> = [];
   modal: boolean = false;
+  pending: boolean = true;
 
   getAllProblemsFromASpecificContest() {
     const params = this.$route.params;
@@ -270,7 +268,7 @@ export default class Admin extends Vue {
             title: item.title,
             create: item.lastUsedDate,
             rate:
-              item.acceptRate.toFixed(2) * 100 +
+              Math.floor(item.acceptRate * 100) * 100 +
               '%(' +
               String(item.acceptCount) +
               ' / ' +
@@ -305,6 +303,7 @@ export default class Admin extends Vue {
     (this as any).$Message.info('取消');
   }
   recommend() {
+    this.pending = true;
     api.getRecommend({
       difficultDegree: this.difficulty,
       count: this.problemNum,
@@ -314,6 +313,7 @@ export default class Admin extends Vue {
       tagIdsExclude: this.exclude,
       userIdList: this.userList
     }).then((res: any) => {
+      this.pending = false;
       this.recommendList = res.data;
       console.log(res.data);
     }).catch((err: any) => {

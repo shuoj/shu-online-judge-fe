@@ -106,7 +106,7 @@ export default class Index extends Vue {
           'ac': item.acCount,
           'sign': item.signature,
           'submit': item.submitCount,
-          'rate': (item.submitCount !== 0) ? (item.acCount / item.submitCount * 100).toFixed(0) + '%' : '0%'
+          'rate': (item.submitCount !== 0) ? Math.floor(item.acCount / item.submitCount * 100) + '%' : '0%'
         });
       });
     }).catch((err: any) => {
