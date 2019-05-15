@@ -272,7 +272,6 @@ export default class Problemform extends Vue {
       };
     });
     this.problemData.sampleIOList = ioTemp;
-    console.log(this.problemData, 'hh');
     this.$emit('problem-data', this.problemData);
   }
 
