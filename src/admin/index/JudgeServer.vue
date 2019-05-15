@@ -2,7 +2,7 @@
   <Row>
     <Col span="22" offset="1" style="padding-top: 40px;text-align: left">
       <h1>判题服务器</h1>
-      <Card style="width:60%;margin-top: 40px">
+      <Card style="width:80%;margin-top: 40px">
         <p slot="title">
           <Icon type="ios-film-outline"></Icon>
           详细信息
@@ -19,7 +19,7 @@
               <p>任务数： </p>
               <p>服务器地址： </p>
             </Col>
-            <Col span="12">
+            <Col span="16">
               <p>{{status.action}}</p>
               <p>{{status.cpu}}</p>
               <p>{{status.cpu_core}}</p>
@@ -46,7 +46,7 @@ export default class UserManager extends Vue {
   status: any = {};
   getJudgeServer () {
     api.getJudgeServer({}).then((res: any) => {
-      this.status = res.data;
+      this.status = res.data[0];
     }).catch((err) => {
       console.log(err);
     });
