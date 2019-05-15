@@ -268,7 +268,7 @@ export default class Admin extends Vue {
             title: item.title,
             create: item.lastUsedDate,
             rate:
-              Math.floor(item.acceptRate * 100) * 100 +
+              Math.floor(item.acceptRate * 100) +
               '%(' +
               String(item.acceptCount) +
               ' / ' +
