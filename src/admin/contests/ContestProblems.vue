@@ -100,7 +100,7 @@
                     </Col>
                   </Row>
                   <CheckboxGroup v-model="choose" class="checkgroup">
-                    <Row style="padding-bottom: 20px;">
+                    <Row style="padding-bottom: 20px;font-size: 18px">
                       <div v-for="(item, index) in recommendList" style="width: 100%;height: 48px">
                         <Col span="8" align="left">
                           <Checkbox :label="item.id" :key="item.id">

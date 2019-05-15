@@ -140,7 +140,7 @@ export default class ContestDetail extends Vue {
       render: (h: any, obj: any) => {
         return h(
           'span',
-          obj.row.acceptRate + '%(' + String(obj.row.acceptCount) + ' / ' + String(obj.row.submitCount) + ')');
+          Math.floor(obj.row.acceptRate * 100) + '%(' + String(obj.row.acceptCount) + ' / ' + String(obj.row.submitCount) + ')');
       }
     }
   ];

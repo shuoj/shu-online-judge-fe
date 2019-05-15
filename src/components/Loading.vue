@@ -10,8 +10,8 @@ export default {
 </script>
 <style>
   img {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     display: block;
   }
 </style>
