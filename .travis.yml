@@ -1,5 +1,11 @@
 language: node_js
-node_js: 
-  - "node"
-script: 
-  - yarn run build
+node_js:
+  - 'node'
+script:
+  - docker build -t kastnerorz/shu-online-judge-fe:latest .
+deploy:
+  - on:
+      all_branches: true
+      tags: true
+    provider: script
+    script: bash docker_push
