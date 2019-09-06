@@ -17,7 +17,7 @@ RUN yarn
 COPY . .
 
 # build app for production with minification
-RUN yarn build
+RUN BASE_URL=$BASE_URL yarn build
 
-EXPOSE 8085
-CMD [ "http-server","-p","8085", "dist" ]
+EXPOSE 8080
+CMD [ "http-server","-p","8080", "dist" ]
