@@ -1,5 +1,10 @@
 FROM node:9.11.1-alpine
 
+ARG BASE_URL=http://localhost:8081
+ARG PORT=8080
+ENV VUE_APP_BASE_URL $BASE_URL
+ENV PORT $PORT
+
 # install simple http server for serving static content
 RUN yarn global add http-server
 
@@ -17,7 +22,7 @@ RUN yarn
 COPY . .
 
 # build app for production with minification
-RUN BASE_URL=$BASE_URL yarn build
+RUN yarn build
 
-EXPOSE 8080
-CMD [ "http-server","-p","8080", "dist" ]
+EXPOSE $PORT
+CMD "http-server" "-p" "$PORT" "dist"

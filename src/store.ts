@@ -7,14 +7,20 @@ Vue.use(Vuex);
 
 import api from './api/api';
 
-axios.interceptors.request.use(function (config) {
-  if (window.localStorage.getItem('token')) {
-    config.headers['Authorization'] = 'Bearer ' + window.localStorage.getItem('token');
+axios.defaults.baseURL =
+  process.env.VUE_APP_BASE_URL || 'http://localhost:8081';
+axios.interceptors.request.use(
+  function(config) {
+    if (window.localStorage.getItem('token')) {
+      config.headers['Authorization'] =
+        'Bearer ' + window.localStorage.getItem('token');
+    }
+    return config;
+  },
+  function(error) {
+    return Promise.reject(error);
   }
-  return config;
-}, function (error) {
-  return Promise.reject(error);
-});
+);
 
 axios.interceptors.response.use(
   response => {
@@ -83,28 +89,34 @@ export default new Vuex.Store({
   actions: {
     login(context, payload) {
       return new Promise((resolve, reject) => {
-        api.login(payload).then((res: any) => {
-          context.commit('login', {
-            token: res.data.token,
-            username: payload.username
+        api
+          .login(payload)
+          .then((res: any) => {
+            context.commit('login', {
+              token: res.data.token,
+              username: payload.username
+            });
+            resolve(res);
+          })
+          .catch((err: any) => {
+            reject(err);
           });
-          resolve(res);
-        }).catch((err: any) => {
-          reject(err);
-        });
       });
     },
     logout(context) {
       context.commit('logout');
     },
     refresh(context, payload) {
-      api.refresh(payload).then((res: any) => {
-        context.commit('refresh', {
-          token: res.data.token
+      api
+        .refresh(payload)
+        .then((res: any) => {
+          context.commit('refresh', {
+            token: res.data.token
+          });
+        })
+        .catch((err: any) => {
+          console.log(err, 'errRefresh');
         });
-      }).catch((err: any) => {
-        console.log(err, 'errRefresh');
-      });
     }
   }
 });
