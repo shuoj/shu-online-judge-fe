@@ -1,8 +1,6 @@
 FROM node:9.11.1-alpine
 
-ARG BASE_URL=http://localhost:8081
-ARG PORT=8080
-ENV VUE_APP_BASE_URL $BASE_URL
+ARG VUE_APP_BASE_URL=http://localhost:8081
 ENV PORT $PORT
 
 # install simple http server for serving static content

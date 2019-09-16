@@ -11,6 +11,7 @@ axios.defaults.baseURL =
   process.env.VUE_APP_BASE_URL || 'http://localhost:8081';
 axios.interceptors.request.use(
   function(config) {
+    console.log({ env: process.env });
     if (window.localStorage.getItem('token')) {
       config.headers['Authorization'] =
         'Bearer ' + window.localStorage.getItem('token');
