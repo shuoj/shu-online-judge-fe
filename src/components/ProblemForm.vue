@@ -101,7 +101,7 @@
           <a href="https://github.com/QingdaoU/OnlineJudge/wiki/%E6%B5%8B%E8%AF%95%E7%94%A8%E4%BE%8B%E4%B8%8A%E4%BC%A0"> 帮助</a></span>
         <Upload
             :headers="header"
-            action="/api/v1/upload"
+            :action="baseURL + '/api/v1/upload'"
             style="cursor: pointer"
             :on-success="uploadSucc"
             :on-error="uploadErr">
@@ -127,6 +127,7 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator';
 import CodeMirror from '@/components/CodeMirror.vue';
 import api from '@/api/api';
+import { VUE_APP_BASE_URL } from '@/api/constant';
 
 @Component({
   components: {
@@ -150,6 +151,7 @@ export default class Problemform extends Vue {
     source: '',
     specialJudged: false
   };
+  baseURL: any = VUE_APP_BASE_URL;
   @Prop({}) dataProp: any;
   tag: string = '';
   collapseList: Array<string> = ['0'];
