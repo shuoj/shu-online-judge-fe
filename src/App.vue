@@ -7,7 +7,14 @@
         <router-view/>
       </transition>
     </div>
-    <footer class="oj-footer" v-if="isAdmin">Copyright © 2018 上海大学计算机学院</footer>
+    <footer class="footer">
+      <div class="oj-footer">
+        Copyright © 2018 ~ 2019 上海大学计算机学院
+      </div>
+      <div class="oj-footer">
+        Powered by <a href="https://github.com/shuoj">OnlineJudge</a>
+      </div>
+    </footer>
   </div>
 </template>
 
@@ -104,11 +111,15 @@ export default class App extends Vue {
     font-family: code-font !important;
   }
 
+  .footer {
+    padding-top: 20px;
+  }
+
   .oj-footer {
     font-family: code-font;
     text-align: center;
     background-color: @background-base !important;
-    padding: 24px 50px;
+    padding: 0 50px 10px 50px;
   }
 
   .app-content {

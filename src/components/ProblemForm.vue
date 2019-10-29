@@ -58,11 +58,13 @@
       </div>
       <FormItem>
         <h2>输入描述</h2>
-        <Input v-model="problemData.inputDesc" type="textarea" :rows="4"/>
+        <vue-wangeditor style="text-align: left" id="input" :options="options" v-model="problemData.inputDesc"
+                        :init-content="dataProp.description" :text.sync="text"></vue-wangeditor>
       </FormItem>
       <FormItem>
         <h2>输出描述</h2>
-        <Input v-model="problemData.outputDesc" type="textarea" :rows="4"/>
+        <vue-wangeditor style="text-align: left" id="output" :options="options" v-model="problemData.outputDesc"
+                        :init-content="dataProp.description" :text.sync="text"></vue-wangeditor>
       </FormItem>
       <FormItem>
         <h2>样例
