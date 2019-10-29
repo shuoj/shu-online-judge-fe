@@ -413,7 +413,6 @@ export default class ContestDetail extends Vue {
     white-space: nowrap;
     overflow: hidden;
     td {
-      transition: background-color .2s ease-in-out;
       min-width: 0;
       height: 48px;
       box-sizing: border-box;

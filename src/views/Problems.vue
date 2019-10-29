@@ -17,7 +17,7 @@
           <ul v-for="(problem, index) in problems" :key="problem.id" class="pro-table"
               :class="[index % 2 ===0 ? 'bg': '']">
             <li></li>
-            <li class="id" @click="problemDetail(problem)">{{index+1}}</li>
+            <li class="id" @click="problemDetail(problem)">{{problem.id}}</li>
             <li class="title" @click="problemDetail(problem)">{{problem.title}}</li>
             <li class="diff">{{problem.level}}</li>
             <li>{{problem.rate}}</li>

@@ -33,10 +33,13 @@
     <Col span="20" offset="2">
       <a @click="contestDetail(item.id)" v-for="(item, index) in contests"  :key="item.id">
         <Row class="list">
+          <Col span="1">
+            <div class="idx">{{item.id}}</div>
+          </Col>
           <Col span="2">
             <img src="../assets/contest.png" style="width:40px;margin-top:10px;"/>
           </Col>
-          <Col span="9">
+          <Col span="8">
             <div class="list-title">
               <p style="color: #515a6e">{{item.name}}</p>
             </div>
@@ -220,6 +223,12 @@ export default class About extends Vue {
     margin-top: 40px;
     margin-bottom: 40px;
     text-align: left;
+  }
+
+  .idx {
+    font-size: 24px;
+    color: #666;
+    font-weight: 700;
   }
 
   .tag-padding {

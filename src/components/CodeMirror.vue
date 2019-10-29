@@ -35,7 +35,7 @@
       <Row class="footer-submit">
         <router-link to="/login" v-if="!logined">您还没有登录不能提交代码
         </router-link>
-        <Button @click="submitCode" class="btn" :disabled="!logined" :loading="myloading">Submit</Button>
+        <Button @click="submitCode" class="btn" :disabled="!logined" :loading="myloading">提交</Button>
       </Row>
     </card>
   </div>
