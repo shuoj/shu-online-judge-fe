@@ -10,7 +10,7 @@
     "analyzer": "vue-cli-service build --mode analyzer"
   },
   "dependencies": {
-    "axios": "^0.18.0",
+    "axios": "^0.18.1",
     "iview": "3.1.0",
     "js-md5": "^0.7.3",
     "vue": "^2.5.17",
