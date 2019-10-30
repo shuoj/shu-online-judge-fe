@@ -5,7 +5,6 @@ axios.defaults.baseURL =
   process.env.VUE_APP_BASE_URL;
 axios.interceptors.request.use(
   function(config) {
-    console.log({ env: process.env });
     if (window.localStorage.getItem('token')) {
       config.headers['Authorization'] =
         'Bearer ' + window.localStorage.getItem('token');
@@ -130,6 +129,7 @@ export default {
   modifyGroup: (data: { id: string, name: string }) => axios.put(`/api/v1/groups/${data.id}/`, {
     name: data.name
   }),
+  createMembers: (data: { groupId: string, quantity: string }) => axios.post('/api/v1/users/generate', data),
   deleteGroup: (data: { id: string }) => axios.delete(`/api/v1/groups/${data.id}`),
   getUser: (data: { username: string, page: number, size: number }) => axios.get('/api/v1/users', { params: data }),
   addUserToGroup: (data: { id: string, userId: string }) => axios.post(`/api/v1/groups/${data.id}/members`,

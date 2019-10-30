@@ -17,7 +17,7 @@
           <ul v-for="(problem, index) in problems" :key="problem.id" class="pro-table"
               :class="[index % 2 ===0 ? 'bg': '']">
             <li></li>
-            <li class="id" @click="problemDetail(problem)">{{problem.id}}</li>
+            <li class="id" @click="problemDetail(problem)">{{problem.idx}}</li>
             <li class="title" @click="problemDetail(problem)">{{problem.title}}</li>
             <li class="diff">{{problem.level}}</li>
             <li>{{problem.rate}}</li>
@@ -109,6 +109,7 @@ export default class Problems extends Vue {
           'index': item.idx,
           'title': item.title,
           'id': item.id,
+          'idx': item.idx,
           'level': item.difficulty,
           'rate': Math.floor(item.acceptRate * 100) + '%(' + String(item.acceptCount) + ' / ' + String(item.submitCount) + ')'
         });

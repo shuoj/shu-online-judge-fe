@@ -33,8 +33,8 @@
     <Col span="20" offset="2">
       <a @click="contestDetail(item.id)" v-for="(item, index) in contests"  :key="item.id">
         <Row class="list">
-          <Col span="1">
-            <div class="idx">{{item.id}}</div>
+          <Col span="2">
+            <div class="idx">{{item.idx}}</div>
           </Col>
           <Col span="2">
             <img src="../assets/contest.png" style="width:40px;margin-top:10px;"/>
@@ -52,7 +52,7 @@
               </p>
             </div>
           </Col>
-          <Col span="4" offset="2">
+          <Col span="4" offset="1">
             <div class="type">
               <span v-if="item.contestType === 'SECRET_WITH_PASSWORD'"><Icon type="md-unlock" color="#515a6e"/>私有赛(可加入)</span>
               <span v-else-if="item.contestType === 'PUBLIC'"><Icon type="ios-unlock-outline" color="#515a6e"/>公开赛</span>
@@ -185,6 +185,7 @@ export default class About extends Vue {
           'description': item.description,
           'enable': item.enable,
           'id': item.id,
+          'idx': item.idx,
           'judgeType': item.judgeType,
           'name': item.name,
           'status': item.status

@@ -35,9 +35,14 @@
           返回
         </Button>
       </div>
-      <h2>
-        小组成员管理
-      </h2>
+      <div style="display: flex">
+        <h2>
+          小组成员管理
+        </h2>
+        <Button type="primary" style="height: 36px" @click="modal = true">
+          批量创建成员
+        </Button>
+      </div>
       <ul style="font-weight: 700" class="pro-table">
         <li class="id">ID</li>
         <li class="title">用户名</li>
@@ -57,7 +62,7 @@
           <Button type="error" @click="deleteUser(user)"> 移除</Button>
         </li>
       </ul>
-      <h2>添加小组成员</h2>
+      <h2 style="padding-top: 40px">添加小组成员</h2>
       <AutoComplete v-model="member" icon="ios-search" @on-change="debounceFunc" @on-select="pushInto"
                     style="width: 300px;" placement="bottom">
         <Option v-for="(item, index) in searchData" :value="item.id" :key="index">
@@ -76,6 +81,14 @@
         <GroupForm :typeProp="2" :dataProp="thisGroup"></GroupForm>
       </div>
     </div>
+    <Modal
+      v-model="modal"
+      title="批量添加数目"
+      width="40%"
+      @on-ok="createMembers"
+      @on-cancel="modal = false">
+      <Input v-model="quantity" placeholder="请输入数目"/>
+    </Modal>
   </div>
 </template>
 
@@ -101,6 +114,9 @@ export default class GroupList extends Vue {
   member: string = '';
   searchData: Array<any> = [];
   debounceFunc: () => void;
+  modal: boolean = false;
+  quantity: string = '';
+
 
   get memberShow() {
     if (this.users) {
@@ -139,6 +155,19 @@ export default class GroupList extends Vue {
         (this as any).$Message.error('添加失败');
       });
     }
+  }
+
+  createMembers() {
+    const { id } = this.thisGroup;
+    console.log(id)
+    api.createMembers({
+      groupId: id,
+      quantity: '10'
+    }).then((res: any) => {
+      console.log(res)
+    }).catch((err) => {
+      (this as any).$Message.error(err || '出错啦');
+    })
   }
 
   getGroups() {
