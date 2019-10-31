@@ -162,9 +162,9 @@ export default class GroupList extends Vue {
     console.log(id)
     api.createMembers({
       groupId: id,
-      quantity: '10'
+      quantity: this.quantity
     }).then((res: any) => {
-      console.log(res)
+      this.groupDetail(this.thisGroup)
     }).catch((err) => {
       (this as any).$Message.error(err || '出错啦');
     })
