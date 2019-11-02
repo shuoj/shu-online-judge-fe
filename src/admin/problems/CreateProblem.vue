@@ -25,6 +25,9 @@ export default class Createproblem extends Vue {
         (this as any).$Message.error(res.data.message);
       } else {
         (this as any).$Message.success('创建成功');
+        this.$router.push({
+          path: `/admin/problems-list`
+        });
       }
     }).catch((err: any) => {
       (this as any).$Message.error(err.data.message);
