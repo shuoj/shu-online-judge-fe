@@ -1,118 +1,124 @@
 <template>
-  <div class="index">
-    <div v-if="groupShow&&modifyShow">
-      <div style="display: flex">
-        <h2>小组管理</h2>
-        <div>
-          <Button type="primary" class="create-btn" @click="createModal = true">创建小组</Button>
-        </div>
-      </div>
-      <ul style="font-weight: 700" class="pro-table">
-        <li class="id">ID</li>
-        <li class="title">名称</li>
-        <li class="time">创建时间</li>
-        <li class="id">人数</li>
-        <li class="time">操作</li>
-      </ul>
-      <div class="no-member" v-if="noGroup">
-        没有群组
-      </div>
-      <ul v-for="(group, index) in groups" :key="group.id" class="pro-table"
-          :class="[index % 2 ===0 ? 'bg': '']">
-        <li class="id">{{index+1}}</li>
-        <li class="title">{{group.name}}</li>
-        <li class="time">{{group.createDate}}</li>
-        <li class="id">{{group.number}}</li>
-        <li class="time">
-          <Button @click="groupDetail(group)">详情</Button>
-          <Button @click="modify(group)" type="info" style="margin-left: 8px">修改群组</Button>
-          <Button @click="deleteGroup(group)" type="error" style="margin-left: 8px">删除群组</Button>
-        </li>
-      </ul>
-    </div>
-    <Modal v-model="deleteModal" @on-ok="confirmDelete">
-      确认删除这个群组吗?
-    </Modal>
-    <div v-if="!groupShow">
-      <div style="text-align: left">
-        <Button @click="backToList" class="btn-top">
-          <Icon type="md-arrow-round-back" size="28"/>
-          返回
-        </Button>
-      </div>
-      <div style="display: flex">
-        <h2>
-          小组成员管理
-        </h2>
-        <Button type="primary" style="height: 36px" @click="modal = true">
-          批量创建成员
-        </Button>
-        <Button type="primary" style="height: 36px;margin-left:10px">
-          <Upload
-            :headers="header"
-            :action="baseURL + '/api/v1/upload'"
-            style="line-height: 1.5;"
-            :on-success="uploadMembers"
-            :on-error="uploadErr">
-            <span>批量上传文件创建用户</span>
-          </Upload>
-        </Button>
-      </div>
-      <ul style="font-weight: 700" class="pro-table">
-        <li class="id">ID</li>
-        <li class="title">用户名</li>
-        <li class="time">真实姓名</li>
-        <li class="time">操作</li>
-      </ul>
-      <div v-if="memberShow" class="no-member">
-        <span>暂无成员</span>
-      </div>
-      <ul v-for="(user, index) in users" :key="index" class="pro-table"
-          :class="[index % 2 ===0 ? 'bg': '']">
-        <li class="id">{{index+1}}</li>
-        <li class="title">{{user.name}}</li>
-        <li class="time">{{user.username}}</li>
-        <li class="time">
-          <!--<Button style="margin-right: 8px">设为管理员</Button>-->
-          <Button type="error" @click="deleteUser(user)"> 移除</Button>
-        </li>
-      </ul>
-      <h2 style="padding-top: 40px">添加小组成员</h2>
-      <AutoComplete v-model="member" icon="ios-search" @on-change="debounceFunc" @on-select="pushInto"
-                    style="width: 300px;" placement="bottom">
-        <Option v-for="(item, index) in searchData" :value="item.id" :key="index">
-          <div class="option-two">
-            <span>用户名: {{item.username}}</span>
+  <Row>
+    <Col span="20" offset="2">
+      <div class="index">
+        <div v-if="groupShow&&modifyShow">
+          <div style="display: flex">
+            <h2>小组管理</h2>
+            <div>
+              <Button type="primary" class="create-btn" @click="createModal = true">创建小组</Button>
+            </div>
           </div>
-        </Option>
-      </AutoComplete>
-    </div>
-    <div v-if="!modifyShow">
-      <div style="text-align: left">
-        <Button @click="modifyBackToList" class="btn-top">
-          <Icon type="md-arrow-round-back" size="28"/>
-          返回
-        </Button>
-        <GroupForm :typeProp="2" :dataProp="thisGroup"></GroupForm>
+          <ul style="font-weight: 700" class="pro-table">
+            <li class="id"></li>
+            <li class="id">ID</li>
+            <li class="title">名称</li>
+            <li class="time">创建时间</li>
+            <li class="id">人数</li>
+            <li class="time">操作</li>
+          </ul>
+          <div class="no-member" v-if="noGroup">
+            没有群组
+          </div>
+          <ul v-for="(group, index) in groups" :key="group.id" class="pro-table"
+              :class="[index % 2 ===0 ? 'bg': '']">
+            <li class="id"></li>
+            <li class="id">{{index+1}}</li>
+            <li class="title">{{group.name}}</li>
+            <li class="time">{{group.createDate}}</li>
+            <li class="id">{{group.number}}</li>
+            <li class="time">
+              <Button @click="groupDetail(group)">详情</Button>
+              <Button @click="modify(group)" type="info" style="margin-left: 8px">修改群组</Button>
+              <Button @click="deleteGroup(group)" type="error" style="margin-left: 8px">删除群组</Button>
+            </li>
+          </ul>
+        </div>
+        <Modal v-model="deleteModal" @on-ok="confirmDelete">
+          确认删除这个群组吗?
+        </Modal>
+        <div v-if="!groupShow">
+          <div style="text-align: left">
+            <Button @click="backToList" class="btn-top">
+              <Icon type="md-arrow-round-back" size="28"/>
+              返回
+            </Button>
+          </div>
+          <div style="display: flex">
+            <h2>
+              小组成员管理
+            </h2>
+            <Button type="primary" style="height: 36px" @click="modal = true">
+              批量创建成员
+            </Button>
+            <Button type="primary" style="height: 36px;margin-left:10px">
+              <Upload
+                :headers="header"
+                :action="baseURL + '/api/v1/upload'"
+                style="line-height: 1.5;"
+                :on-success="uploadMembers"
+                :on-error="uploadErr">
+                <span>批量上传文件创建用户</span>
+              </Upload>
+            </Button>
+          </div>
+          <ul style="font-weight: 700" class="pro-table">
+            <li class="id">ID</li>
+            <li class="title">用户名</li>
+            <li class="time">真实姓名</li>
+            <li class="time">操作</li>
+          </ul>
+          <div v-if="memberShow" class="no-member">
+            <span>暂无成员</span>
+          </div>
+          <ul v-for="(user, index) in users" :key="index" class="pro-table"
+              :class="[index % 2 ===0 ? 'bg': '']">
+            <li class="id">{{index+1}}</li>
+            <li class="title">{{user.name}}</li>
+            <li class="time">{{user.username}}</li>
+            <li class="time">
+              <!--<Button style="margin-right: 8px">设为管理员</Button>-->
+              <Button type="error" @click="deleteUser(user)"> 移除</Button>
+            </li>
+          </ul>
+          <h2 style="padding-top: 40px">添加小组成员</h2>
+          <AutoComplete v-model="member" icon="ios-search" @on-change="debounceFunc" @on-select="pushInto"
+                        style="width: 300px;" placement="bottom">
+            <Option v-for="(item, index) in searchData" :value="item.id" :key="index">
+              <div class="option-two">
+                <span>用户名: {{item.username}}</span>
+              </div>
+            </Option>
+          </AutoComplete>
+        </div>
+        <div v-if="!modifyShow">
+          <div style="text-align: left">
+            <Button @click="modifyBackToList" class="btn-top">
+              <Icon type="md-arrow-round-back" size="28"/>
+              返回
+            </Button>
+            <GroupForm :typeProp="2" :dataProp="thisGroup"></GroupForm>
+          </div>
+        </div>
+        <Modal
+          v-model="modal"
+          title="批量添加数目"
+          width="40%"
+          @on-ok="createMembers"
+          @on-cancel="modal = false">
+          <Input v-model="quantity" placeholder="请输入数目"/>
+        </Modal>
+        <Modal
+          v-model="createModal"
+          title="群组名称"
+          width="40%"
+          @on-ok="createGroup"
+          @on-cancel="createModal = false">
+          <Input v-model="groupName" placeholder="请输入群组名称"/>
+        </Modal>
       </div>
-    </div>
-    <Modal
-      v-model="modal"
-      title="批量添加数目"
-      width="40%"
-      @on-ok="createMembers"
-      @on-cancel="modal = false">
-      <Input v-model="quantity" placeholder="请输入数目"/>
-    </Modal>
-    <Modal
-      v-model="createModal"
-      title="群组名称"
-      width="40%"
-      @on-ok="createGroup"
-      @on-cancel="createModal = false">
-      <Input v-model="groupName" placeholder="请输入群组名称"/>
-    </Modal>
-  </div>
+    </Col>
+  </Row>
 </template>
 
 <script lang="ts">
@@ -298,7 +304,7 @@ export default class GroupList extends Vue {
       this.users = res.data;
       (that as any).$Message.success('删除成功');
     }).catch((err: any) => {
-      (that as any).$Message.error('删除失败');
+      (that as any).$Message.error(err.data.message);
     });
   }
 
@@ -348,7 +354,6 @@ export default class GroupList extends Vue {
   }
 
   .index {
-    width: 1140px;
     height: 100vh;
     margin: 0 auto;
     text-align: left;
