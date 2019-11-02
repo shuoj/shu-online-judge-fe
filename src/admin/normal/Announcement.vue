@@ -123,7 +123,11 @@
         this.classA = 'publish';
         this.disabledA = false;
         this.disabledB = true;
-        this.announcementDetail(this.id);
+        this.title = '';
+        this.content = '';
+        this.initContent = '';
+        (this as any).$Message.success('修改成功');
+        this.getAllAnnouncements();
       }).catch((err: any) => {
         console.log(err);
       });
@@ -147,6 +151,7 @@
         }).then((res: any) => {
           this.title = '';
           this.content = '';
+          this.initContent = '';
           (this as any).$Message.success('创建成功');
           this.getAllAnnouncements();
         }).catch((err: any) => {

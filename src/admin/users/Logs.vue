@@ -16,6 +16,9 @@
         <Button type="primary" @click="search">查询</Button>
         <div v-if="searchArray.length > 0" style="padding-top: 30px">
           <Table :columns="columns" :data="searchArray"></Table>
+          <div style="margin-top: 36px;">
+            <Page :total="totalStudent" show-sizer @on-change="pageChangeStudent" @on-page-size-change="pageSizeChangeStudent"/>
+          </div>
         </div>
       </Col>
     </Row>
@@ -46,6 +49,9 @@ export default class UserManager extends Vue {
   total: number = 10;
   pageSize: number = 10;
   page: number = 0;
+  totalStudent: number = 10;
+  pageSizeStudent: number = 10;
+  pageStudent: number = 0;
   name: string = '';
   searchArray: Array<any> = [];
 
@@ -69,10 +75,19 @@ export default class UserManager extends Vue {
     this.getLogs(this.page, size);
     this.pageSize = size;
   }
+  pageChangeStudent(pages: number) {
+    this.page = pages - 1;
+    this.search(pages - 1, this.pageSizeStudent);
+  }
 
-  search() {
+  pageSizeChange(size: number) {
+    this.search(this.page, size);
+    this.pageSize = size;
+  }
+
+  search(page: number, pageSize: number) {
     api.getLogs({
-      name: name, size: 30, page: 0
+      name: this.name, size: pageSize, page: page
     }).then((res: any) => {
       this.searchArray = res.data.list;
     }).catch((err: any) => {
