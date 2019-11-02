@@ -114,6 +114,8 @@ export default class Status extends Vue {
     {
       title: '结果',
       key: 'result',
+      width: 350,
+      align: 'center',
       filters: [
         {
           label: 'Accepted',
