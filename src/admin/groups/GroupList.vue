@@ -26,7 +26,7 @@
             <li class="id">{{index+1}}</li>
             <li class="title">{{group.name}}</li>
             <li class="time">{{group.createDate}}</li>
-            <li class="id">{{group.number}}</li>
+            <li class="id">{{group.number || 0}}</li>
             <li class="time">
               <Button @click="groupDetail(group)">详情</Button>
               <Button @click="modify(group)" type="info" style="margin-left: 8px">修改群组</Button>
@@ -199,8 +199,8 @@ export default class GroupList extends Vue {
       api.createMembers({
         groupId: id,
         quantity: this.quantity
-      }).then(() => {
-        this.groupDetail(this.thisGroup);
+      }).then((res) => {
+        this.users = res.data.list;
       }).catch((err) => {
         (this as any).$Message.error(err || '出错啦');
       });
@@ -212,7 +212,7 @@ export default class GroupList extends Vue {
   createGroup() {
     if (this.groupName) {
       api.createGroup({ name: this.groupName }).then((res: any) => {
-        this.getGroups();
+        this.groups.push(res.data);
         (this as any).$Message.success('创建成功!');
       }).catch(() => {
         (this as any).$Message.error('创建失败!');
@@ -265,14 +265,7 @@ export default class GroupList extends Vue {
     };
     this.users.splice(0, this.users.length);
     const list = group.userList || group.jwtUserList;
-    list.forEach((item: any) => {
-      this.users.push({
-        groupId: group.id,
-        id: item.id,
-        name: item.username,
-        username: item.firstname ? (item.lastname + item.firstname) : '未知'
-      });
-    });
+    this.users = list
     this.groupShow = false;
   }
 
