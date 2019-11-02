@@ -165,7 +165,8 @@ export default class ProblemDetail extends Vue {
           item.shareId = item.id;
           id = id + 1;
           item.id = id;
-          item.duration += 'ms';
+          const duration = item.duration || 0;
+          item.duration = duration + 'ms';
           if (item.result === 'ACCEPTED') {
             return {
               ...item,

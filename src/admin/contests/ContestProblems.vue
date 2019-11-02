@@ -307,7 +307,7 @@ export default class Admin extends Vue {
     api.getRecommend({
       difficultDegree: this.difficulty,
       count: this.problemNum,
-      duration: this.duration,
+      duration: this.duration || 0,
       interval: this.interval,
       tagIdsInclude: this.include,
       tagIdsExclude: this.exclude,
