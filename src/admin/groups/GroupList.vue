@@ -50,7 +50,7 @@
         <Button type="primary" style="height: 36px;margin-left:10px">
           <Upload
             :headers="header"
-            :action="'http://10.0.3.31:53927' + '/api/v1/upload'"
+            :action="baseURL + '/api/v1/upload'"
             style="line-height: 1.5;"
             :on-success="uploadMembers"
             :on-error="uploadErr">
