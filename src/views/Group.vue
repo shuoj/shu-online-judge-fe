@@ -35,8 +35,7 @@ export default class Group extends Vue {
     },
     {
       title: '创建者',
-      key: 'creator'
-
+      key: 'authorName'
     },
     {
       title: '创建时间',
@@ -51,8 +50,7 @@ export default class Group extends Vue {
         item.index = index;
         return {
           ...item,
-          index: index,
-          creator: 'root'
+          index: index
         };
       });
 
