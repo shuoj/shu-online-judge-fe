@@ -1,16 +1,20 @@
 <template>
-  <div class="container">
-    <h2>代码分享自题目：{{ title }} </h2>
-    <div v-highlightjs="sourceCode">
+  <Row>
+    <Col span="18" offset="3">
+      <div class="container">
+        <h2>代码分享自题目：{{ title }} </h2>
+        <div v-highlightjs="sourceCode">
       <pre>
         <code class="cpp"></code>
       </pre>
-    </div>
-    <h2>错误信息</h2>
-    <h4>信息：{{errMsg.message}}</h4>
-    <h4>错误：{{errMsg.error}}</h4>
-    <h4>结果：{{errMsg.result}}</h4>
-  </div>
+        </div>
+        <h2>错误信息</h2>
+        <h4>信息：{{errMsg.message}}</h4>
+        <h4>错误：{{errMsg.error}}</h4>
+        <h4>结果：{{errMsg.result}}</h4>
+      </div>
+    </Col>
+  </Row>
 </template>
 
 <script lang="ts">
@@ -37,13 +41,6 @@ export default class Share extends Vue {
 </script>
 
 <style lang="less" scoped>
-@media (min-width: 1200px) {
-    .container {
-      width: 1170px;
-      margin: 0 auto;
-      padding-top: 24px;
-    }
-}
 h2 {
   font-weight: 500;
   font-size: 36px;
@@ -54,6 +51,7 @@ h4 {
   margin: 10px auto 10px 0;
 }
 .container {
+  padding-top: 24px;
   text-align: left;
 }
 </style>

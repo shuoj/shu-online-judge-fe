@@ -1,52 +1,56 @@
 <template>
-  <div class="container">
-    <Tabs @on-click="getSubmission">
-      <TabPane label="题目" name="problem">
-        <h1>{{problem.title}}</h1>
-        <p class="problem-description">发布时间:{{problem.createDate}}&nbsp;&nbsp;最后更新:{{problem.lastUsedDate}}&nbsp;&nbsp;时间限制:{{problem.timeLimit}}ms&nbsp;&nbsp;内存限制:{{problem.ramLimit}}M</p>
-        <div>
-          <div class="problem-section">
-            <h3>描述</h3>
-            <p v-html="problem.description"></p>
-          </div>
-          <div class="problem-section">
-            <h3>输入</h3>
-            <p v-html="problem.inputDesc"></p>
-          </div>
-          <div class="problem-section">
-            <h3>输出</h3>
-            <p v-html="problem.outputDesc"></p>
-          </div>
-          <div class="problem-section" v-for="(example, index) in sampleList" :key="index">
-            <h3>样例输入{{index + 1}}</h3>
-            <pre>{{example.input}}</pre>
-            <h3>样例输出{{index + 1}}</h3>
-            <pre>{{example.output}}</pre>
-          </div>
-          <div style="display: flex;justify-content: left;">
-            <Button type="info" @click="hideInfo" v-if="!hide">查看隐藏信息</Button>
-          </div>
-          <div class="problem-section" v-if="hide" style="clear: both">
-            <h3>标签</h3>
-            <p>
-              <Tag type="dot" v-for="(tag, index) in problem.tagList" :key="index" color="success">{{tag.name}}</Tag>
-            </p>
-          </div>
-        </div>
-        <code-mirror @codeSubmit="getCode" logined="logined" :myloading="codeLoading"></code-mirror>
-        <Card v-if="codeStatus" class="pro-status">
-          Run Code Status: <span :style="{color: codeColor}">{{codeStatus}}</span>&nbsp;&nbsp;
-          <!-- <a target="_blank">查看详情</a> -->
-          <router-link :to="shareRoute" target="_blank">查看详情</router-link>
-        </Card>
-      </TabPane>
-      <TabPane label="提交" name="submission">
-        <h1>{{problem.title}}</h1>
-        <p class="problem-description">发布时间:{{problem.createDate}}&nbsp;&nbsp;最后更新:{{problem.lastUsedDate}}&nbsp;&nbsp;时间限制:{{problem.timeLimit || 0}}ms&nbsp;&nbsp;内存限制:{{problem.ramLimit}}M</p>
-        <Table :columns="title" :data="submission" border></Table>
-      </TabPane>
-    </Tabs>
-  </div>
+  <Row>
+    <Col span="18" offset="3">
+      <div class="container">
+        <Tabs @on-click="getSubmission">
+          <TabPane label="题目" name="problem">
+            <h1>{{problem.title}}</h1>
+            <p class="problem-description">发布时间:{{problem.createDate}}&nbsp;&nbsp;最后更新:{{problem.lastUsedDate}}&nbsp;&nbsp;时间限制:{{problem.timeLimit}}ms&nbsp;&nbsp;内存限制:{{problem.ramLimit}}M</p>
+            <div>
+              <div class="problem-section">
+                <h3>描述</h3>
+                <p v-html="problem.description"></p>
+              </div>
+              <div class="problem-section">
+                <h3>输入</h3>
+                <p v-html="problem.inputDesc"></p>
+              </div>
+              <div class="problem-section">
+                <h3>输出</h3>
+                <p v-html="problem.outputDesc"></p>
+              </div>
+              <div class="problem-section" v-for="(example, index) in sampleList" :key="index">
+                <h3>样例输入{{index + 1}}</h3>
+                <pre>{{example.input}}</pre>
+                <h3>样例输出{{index + 1}}</h3>
+                <pre>{{example.output}}</pre>
+              </div>
+              <div style="display: flex;justify-content: left;">
+                <Button type="info" @click="hideInfo" v-if="!hide">查看隐藏信息</Button>
+              </div>
+              <div class="problem-section" v-if="hide" style="clear: both">
+                <h3>标签</h3>
+                <p>
+                  <Tag type="dot" v-for="(tag, index) in problem.tagList" :key="index" color="success">{{tag.name}}</Tag>
+                </p>
+              </div>
+            </div>
+            <code-mirror @codeSubmit="getCode" logined="logined" :myloading="codeLoading"></code-mirror>
+            <Card v-if="codeStatus" class="pro-status">
+              Run Code Status: <span :style="{color: codeColor}">{{codeStatus}}</span>&nbsp;&nbsp;
+              <!-- <a target="_blank">查看详情</a> -->
+              <router-link :to="shareRoute" target="_blank">查看详情</router-link>
+            </Card>
+          </TabPane>
+          <TabPane label="提交" name="submission">
+            <h1>{{problem.title}}</h1>
+            <p class="problem-description">发布时间:{{problem.createDate}}&nbsp;&nbsp;最后更新:{{problem.lastUsedDate}}&nbsp;&nbsp;时间限制:{{problem.timeLimit || 0}}ms&nbsp;&nbsp;内存限制:{{problem.ramLimit}}M</p>
+            <Table :columns="title" :data="submission" border></Table>
+          </TabPane>
+        </Tabs>
+      </div>
+    </Col>
+  </Row>
 </template>
 
 <script lang="ts">
@@ -213,12 +217,8 @@ export default class ProblemDetail extends Vue {
     margin-top: 32px;
   }
 
-  @media (min-width: 1200px) {
-    .container {
-      width: 1170px;
-      margin: 0 auto;
-      padding-top: 24px;
-    }
+  .container {
+    padding-top: 24px;
   }
 
   h1 {

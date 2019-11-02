@@ -124,7 +124,6 @@
         this.disabledA = false;
         this.disabledB = true;
         this.announcementDetail(this.id);
-        this.getAllAnnouncements();
       }).catch((err: any) => {
         console.log(err);
       });
@@ -133,6 +132,7 @@
     removeItem(id: string) {
       api.removeAnnouncement({ id }).then((res: any) => {
         (this as any).$Message.success('删除成功');
+        this.getAllAnnouncements();
       }).catch((err: any) => {
         console.log(err);
         (this as any).$Message.error('删除失败');

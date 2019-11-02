@@ -78,7 +78,17 @@
       },
       {
         title: '提交时间',
-        key: 'createDate'
+        key: 'createDate',
+        render: (h: any, obj: any) => {
+          return h(
+            'span', {
+              on: {
+                click: () => {
+                  this.toShare(obj.row.id);
+                }
+              }
+            }, obj.row.id);
+        }
       },
       {
         title: '语言',
@@ -178,6 +188,11 @@
       }
     }
 
+    toShare(id: string) {
+      const routeData = this.$router.resolve({ name: 'share', params: { id: id } });
+      window.open(routeData.href, '_blank');
+    }
+
     toContest() {
       const params = this.$route.params;
       this.$router.push({
@@ -205,14 +220,6 @@
   .pro-status {
     text-align: left;
     margin-top: 32px;
-  }
-
-  @media (min-width: 1200px) {
-    .container {
-      width: 1170px;
-      margin: 0 auto;
-      padding-top: 24px;
-    }
   }
 
   h1 {
