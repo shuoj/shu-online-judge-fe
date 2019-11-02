@@ -42,6 +42,15 @@
         <Button type="primary" style="height: 36px" @click="modal = true">
           批量创建成员
         </Button>
+        <Upload
+          :headers="header"
+          :action="'http://10.0.3.31:53927' + '/api/v1/upload'"
+          style="cursor: pointer"
+          :on-success="uploadMembers"
+          :on-error="uploadErr">
+          <Icon type="ios-cloud-upload" size="52"></Icon>
+          <p>批量上传文件创建用户</p>
+        </Upload>
       </div>
       <ul style="font-weight: 700" class="pro-table">
         <li class="id">ID</li>
@@ -58,7 +67,7 @@
         <li class="title">{{user.name}}</li>
         <li class="time">{{user.username}}</li>
         <li class="time">
-          <Button style="margin-right: 8px">设为管理员</Button>
+          <!--<Button style="margin-right: 8px">设为管理员</Button>-->
           <Button type="error" @click="deleteUser(user)"> 移除</Button>
         </li>
       </ul>
@@ -97,6 +106,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import api from '@/api/api.ts';
 import GroupForm from '@/components/CreateGroup.vue';
 import { debounce } from '@/util/util.ts';
+import { VUE_APP_BASE_URL } from '@/api/constant';
 
 @Component({
   components: {
@@ -116,14 +126,18 @@ export default class GroupList extends Vue {
   debounceFunc: () => void;
   modal: boolean = false;
   quantity: string = '';
-
+  baseURL: any = VUE_APP_BASE_URL;
 
   get memberShow() {
     if (this.users) {
       return this.users.length === 0;
     }
   }
-
+  get header() {
+    return {
+      Authorization: 'Bearer ' + window.localStorage.getItem('token')
+    };
+  }
   getMemberId() {
     if (this.member) {
       api.getUser({ username: this.member, size: 10, page: 0 }).then((res: any) => {
@@ -159,17 +173,35 @@ export default class GroupList extends Vue {
 
   createMembers() {
     const { id } = this.thisGroup;
-    console.log(id)
-    api.createMembers({
-      groupId: id,
-      quantity: this.quantity
-    }).then((res: any) => {
-      this.groupDetail(this.thisGroup)
-    }).catch((err) => {
-      (this as any).$Message.error(err || '出错啦');
-    })
+    if (this.users.length === 0) {
+      api.createMembers({
+        groupId: id,
+        quantity: this.quantity
+      }).then(() => {
+        this.groupDetail(this.thisGroup);
+      }).catch((err) => {
+        (this as any).$Message.error(err || '出错啦');
+      });
+    } else {
+      (this as any).$Message.error('群组已经有成员了，不能再批量添加啦');
+    }
   }
 
+  uploadMembers (response: any, file: any, fileList: any) {
+    const { id } = this.thisGroup;
+    api.createMembers({
+      groupId: id,
+      fileToken: response.data
+    }).then(() => {
+      this.groupDetail(this.thisGroup);
+    }).catch((err) => {
+      (this as any).$Message.error(err || '出错啦');
+    });
+  }
+
+  uploadErr(response: any, file: any, fileList: any) {
+    (this as any).$Message.error('上传失败');
+  }
   getGroups() {
     this.groups.splice(0, this.groups.length);
     api.getGroups().then((res: any) => {

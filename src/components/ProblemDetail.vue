@@ -17,7 +17,7 @@
             <h3>输出</h3>
             <p>{{problem.outputDesc}}</p>
           </div>
-          <div class="problem-section" v-for="(example, index) in problem.sampleIOList" :key="index">
+          <div class="problem-section" v-for="(example, index) in JSON.parse(problem.sampleIO)" :key="index">
             <h3>样例输入{{index + 1}}</h3>
             <pre>{{example.input}}</pre>
             <h3>样例输出{{index + 1}}</h3>

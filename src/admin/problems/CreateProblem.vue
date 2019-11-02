@@ -27,7 +27,7 @@ export default class Createproblem extends Vue {
         (this as any).$Message.success('创建成功');
       }
     }).catch((err: any) => {
-      (this as any).$Message.error(err.message);
+      (this as any).$Message.error(err.data.message);
     });
   }
 }

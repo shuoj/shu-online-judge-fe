@@ -17,8 +17,7 @@
       api.getUser({
         username: '', size: 10, page: 0
       }).then((res: any) => {
-        console.log(res.data)
-        this.users = res.data.list
+        this.users = res.data.list;
       }).catch((err) => {
         console.log(err);
       });
