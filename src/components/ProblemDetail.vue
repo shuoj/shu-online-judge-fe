@@ -11,11 +11,11 @@
           </div>
           <div class="problem-section">
             <h3>输入</h3>
-            <p>{{problem.inputDesc}}</p>
+            <p v-html="problem.inputDesc"></p>
           </div>
           <div class="problem-section">
             <h3>输出</h3>
-            <p>{{problem.outputDesc}}</p>
+            <p v-html="problem.outputDesc"></p>
           </div>
           <div class="problem-section" v-for="(example, index) in JSON.parse(problem.sampleIO)" :key="index">
             <h3>样例输入{{index + 1}}</h3>
@@ -42,7 +42,7 @@
       </TabPane>
       <TabPane label="提交" name="submission">
         <h1>{{problem.title}}</h1>
-        <p class="problem-description">发布时间:{{problem.createDate}}&nbsp;&nbsp;最后更新:{{problem.lastUsedDate}}&nbsp;&nbsp;时间限制:{{problem.timeLimit}}ms&nbsp;&nbsp;内存限制:{{problem.ramLimit}}M</p>
+        <p class="problem-description">发布时间:{{problem.createDate}}&nbsp;&nbsp;最后更新:{{problem.lastUsedDate}}&nbsp;&nbsp;时间限制:{{problem.timeLimit || 0}}ms&nbsp;&nbsp;内存限制:{{problem.ramLimit}}M</p>
         <Table :columns="title" :data="submission" border></Table>
       </TabPane>
     </Tabs>

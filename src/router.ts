@@ -216,7 +216,8 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(res => res.meta.requireAuth)) {
-    const role: any = localStorage.getItem('role');
+    // @ts-ignore
+    const role: any = window.localStorage.getItem('role');
     if (role.indexOf('USER') === -1) {
       next();
     } else {

@@ -85,7 +85,7 @@
         render: (h: any, obj: any) => {
           return h(
             'span',
-            obj.row.duration + ' ms'
+            (obj.row.duration || 0) + ' ms'
           );
         }
       },

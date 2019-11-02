@@ -3,9 +3,7 @@
     <div class="app-content">
       <Navbar v-if="isAdmin"></Navbar>
       <!-- out-in 当前元素先进行过渡， 完成后新元素过渡进入 -->
-      <transition name="fade" mode="out-in">
-        <router-view/>
-      </transition>
+      <router-view/>
     </div>
     <footer class="footer">
       <div class="oj-footer">

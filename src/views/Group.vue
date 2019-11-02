@@ -34,10 +34,6 @@ export default class Group extends Vue {
       }
     },
     {
-      title: '加入方式',
-      key: 'joinWay'
-    },
-    {
       title: '创建者',
       key: 'creator'
 
@@ -56,8 +52,7 @@ export default class Group extends Vue {
         return {
           ...item,
           index: index,
-          creator: 'root',
-          joinWay: '需要申请'
+          creator: 'root'
         };
       });
 

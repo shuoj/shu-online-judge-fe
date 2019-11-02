@@ -33,7 +33,7 @@
     <Col span="20" offset="2">
       <a @click="contestDetail(item.id)" v-for="(item, index) in contests"  :key="item.id">
         <Row class="list">
-          <Col span="2">
+          <Col span="1">
             <div class="idx">{{item.idx}}</div>
           </Col>
           <Col span="2">
@@ -47,12 +47,12 @@
               <p style="width:200px;float: left">
                 <Icon type="ios-calendar-outline" color="#2db7f5"/>{{item.startDate}}
               </p>
-              <p style="float: left">
+              <p style="float: left;">
                 <Icon type="ios-clock-outline" color="#2db7f5"/>{{item.interval}}
               </p>
             </div>
           </Col>
-          <Col span="4" offset="1">
+          <Col span="4" offset="2">
             <div class="type">
               <span v-if="item.contestType === 'SECRET_WITH_PASSWORD'"><Icon type="md-unlock" color="#515a6e"/>私有赛(可加入)</span>
               <span v-else-if="item.contestType === 'PUBLIC'"><Icon type="ios-unlock-outline" color="#515a6e"/>公开赛</span>
@@ -173,6 +173,7 @@ export default class About extends Vue {
       list.forEach(function (item: any) {
         const sd = new Date(Date.parse(item.startDate.replace(/-/g, '/')));
         const ed = new Date(Date.parse(item.endDate.replace(/-/g, '/')));
+        const rest = new Date();
         const interval = that.countInterval(sd, ed);
         that.contests.push({
           'authorId': item.authorId,
@@ -188,6 +189,7 @@ export default class About extends Vue {
           'idx': item.idx,
           'judgeType': item.judgeType,
           'name': item.name,
+          'rest': rest,
           'status': item.status
         });
       });

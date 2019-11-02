@@ -68,25 +68,42 @@
       </FormItem>
       <FormItem>
         <h2>样例
-          <Button @click="addPanel">添加</Button>
+          <Button @click="addModal = true">添加</Button>
         </h2>
-        <Collapse v-model="collapseList">
-          <Panel v-for="(panel, index) in problemData.sampleIOList" :key="index+1" :name="panel.id">
+        <div>
+          <div v-for="(panel, index) in sampleList" :key="index+1" :name="panel.id">
             <span>样例{{index + 1}}</span>
             <Button @click.stop="deleteSample(index)" style="float: right; margin-right: 12px;" type="warning">删除
             </Button>
             <div slot="content" class="form-horizontal">
               <div style="width: 45%;">
                 <h2>样例输入</h2>
-                <Input v-model="panel.input" type="textarea" :rows="4"/>
+                <div>{{panel.input}}</div>
               </div>
               <div style="width: 45%; margin-left: 5%">
                 <h2>样例输出</h2>
-                <Input v-model="panel.output" type="textarea" :rows="4"/>
+                <div>{{panel.output}}</div>
               </div>
             </div>
-          </Panel>
-        </Collapse>
+          </div>
+        </div>
+        <Modal
+          v-model="addModal"
+          title="添加样例"
+          width="80%"
+          @on-ok="addPanel"
+          @on-cancel="addModal = false">
+          <div class="form-horizontal">
+            <div style="width: 45%;">
+              <h2>样例输入</h2>
+              <Input v-model="input" type="textarea" :rows="4"/>
+            </div>
+            <div style="width: 45%; margin-left: 5%">
+              <h2>样例输出</h2>
+              <Input v-model="output" type="textarea" :rows="4"/>
+            </div>
+          </div>
+        </Modal>
       </FormItem>
       <FormItem>
         <h2>Special Judge
@@ -147,17 +164,18 @@ export default class Problemform extends Vue {
     tagList: [],
     inputDesc: '',
     outputDesc: '',
-    sampleIOList: [{ input: '', output: '', id: '0' }],
+    sampleIO: '',
     testData: '',
     hint: '',
     source: '',
     specialJudged: false
   };
-  baseURL: any = VUE_APP_BASE_URL;
+  // baseURL: any = VUE_APP_BASE_URL;
+  baseURL: any = 'http://10.0.3.31:53927';
+  sampleList: Array<object> = [];
   @Prop({}) dataProp: any;
   tag: string = '';
   collapseList: Array<string> = ['0'];
-  sampleListLen: number = 1;
   allTags: any = [];
   myDropdown: boolean = false;
   options: any = {
@@ -166,6 +184,9 @@ export default class Problemform extends Vue {
   };
   initContent = '题目描述';
   text: any = ''; // 不含html标签，纯文本
+  addModal: boolean = false;
+  input: string = '';
+  output: string = '';
 
   @Watch('dataProp')
   handleData() {
@@ -176,12 +197,9 @@ export default class Problemform extends Vue {
         tags.push(item);
       });
       this.problemData = this.dataProp;
-      let count = 0;
-      this.problemData.sampleIOList = this.dataProp.sampleIOList.map((value: any) => {
-        value.id = String(count);
-        count++;
-        return value;
-      });
+      if (this.dataProp.sampleIO) {
+        this.sampleList = JSON.parse(this.dataProp.sampleIO);
+      }
       this.problemData.tagList = tags;
     }
   }
@@ -223,12 +241,12 @@ export default class Problemform extends Vue {
   }
 
   addPanel() {
-    this.problemData.sampleIOList.push({
-      id: String(this.sampleListLen),
-      input: '',
-      output: ''
+    this.sampleList.push({
+      input: this.input,
+      output: this.output
     });
-    this.sampleListLen++;
+    this.problemData.sampleIOList = this.sampleList;
+    this.addModal = false;
   }
 
   uploadSucc(response: any, file: any, fileList: any) {
@@ -241,12 +259,12 @@ export default class Problemform extends Vue {
   }
 
   deleteSample(index: number) {
-    if (this.problemData.sampleIOList.length === 1) {
+    if (this.sampleList.length === 1) {
       (this as any).$Notice.open({
         title: '这是最后一条了，不能删除'
       });
     } else {
-      this.problemData.sampleIOList.splice(index, 1);
+      this.problemData.sampleIOList = this.sampleList.splice(index, 1);
     }
   }
 
@@ -269,13 +287,15 @@ export default class Problemform extends Vue {
       }
     });
     this.problemData.tagList = temp;
-    const ioTemp = this.problemData.sampleIOList.map((item: any) => {
+    const sampleList = JSON.parse(this.problemData.sampleIO) || [];
+    const ioTemp = sampleList.map((item: any) => {
       return {
         input: item.input,
         output: item.input
       };
     });
-    this.problemData.sampleIOList = ioTemp;
+
+    this.problemData.sampleIO = JSON.stringify(ioTemp);
     this.$emit('problem-data', this.problemData);
   }
 

@@ -316,7 +316,7 @@ export default class Admin extends Vue {
       this.pending = false;
       this.recommendList = res.data;
     }).catch((err: any) => {
-      console.log(err);
+      (this as any).$Message.error(err.data.message);
     });
     this.modal = true;
   }

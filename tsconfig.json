@@ -32,7 +32,8 @@
     "src/**/*.tsx",
     "src/**/*.vue",
     "tests/**/*.ts",
-    "tests/**/*.tsx"
+    "tests/**/*.tsx",
+    "../../../Library/Application Support/JetBrains/Toolbox/apps/WebStorm/ch-0/183.4284.130/WebStorm.app/Contents/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.es5.d.ts"
   ],
   "exclude": [
     "node_modules"
