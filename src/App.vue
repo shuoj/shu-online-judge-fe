@@ -58,9 +58,11 @@ export default class App extends Vue {
     box-sizing: border-box;
   }
   html, body {
-    min-height: 100%;
+    min-height: 100vh;
   }
-
+  ::-webkit-scrollbar {
+    display: none;
+  }
   .fade-leave-to {
     opacity: 1;
   }
