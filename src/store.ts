@@ -36,6 +36,7 @@ export default new Vuex.Store({
     },
     setUserInfo(state, payload) {
       state.userInfo = payload;
+      window.localStorage.setItem('userInfo', JSON.stringify(payload));
     },
     setRole(state, payload) {
       state.role = payload;

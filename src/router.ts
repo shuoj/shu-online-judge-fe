@@ -26,7 +26,12 @@ import contestProblemCommit from '@/components/ContestProblemCommit.vue';
 import adminIndex from '@/admin/adminIndex.vue';
 
 Vue.use(Router);
-
+const routerPush = Router.prototype.push;
+Router.prototype.push = function push(location: any) {
+  // @ts-ignore
+  return routerPush.call(this, location).then(() => {
+  }).catch((error: any) => error);
+};
 // @ts-ignore
 const router = new Router({
   routes: [
@@ -131,7 +136,7 @@ const router = new Router({
       component: adminIndex,
       redirect: '/admin/index',
       meta: {
-        requireAuthAdmin: true
+        requireAuth: true
       },
       children: [
         {
@@ -209,4 +214,19 @@ const router = new Router({
   ]
 });
 
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(res => res.meta.requireAuth)) {
+    const role: any = localStorage.getItem('role');
+    if (role.indexOf('USER') === -1) {
+      next();
+    } else {
+      next({
+        path: '/',
+        query: { redirect: to.fullPath }
+      });
+    }
+  } else {
+    next();
+  }
+});
 export default router;

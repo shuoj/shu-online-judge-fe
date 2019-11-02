@@ -48,6 +48,7 @@
     ],
     "no-arg": true,
     "no-bitwise": true,
+    "no-floating-promises": false,
     "no-console": [
       true,
       "info",

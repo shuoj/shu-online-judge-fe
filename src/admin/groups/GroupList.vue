@@ -3,7 +3,9 @@
     <div v-if="groupShow&&modifyShow">
       <div style="display: flex">
         <h2>小组管理</h2>
-        <Button type="primary" class="height: 50px" @click="createModal = true">创建小组</Button>
+        <div>
+          <Button type="primary" class="create-btn" @click="createModal = true">创建小组</Button>
+        </div>
       </div>
       <ul style="font-weight: 700" class="pro-table">
         <li class="id">ID</li>
@@ -45,15 +47,16 @@
         <Button type="primary" style="height: 36px" @click="modal = true">
           批量创建成员
         </Button>
-        <Upload
-          :headers="header"
-          :action="'http://10.0.3.31:53927' + '/api/v1/upload'"
-          style="cursor: pointer"
-          :on-success="uploadMembers"
-          :on-error="uploadErr">
-          <Icon type="ios-cloud-upload" size="52"></Icon>
-          <p>批量上传文件创建用户</p>
-        </Upload>
+        <Button type="primary" style="height: 36px;margin-left:10px">
+          <Upload
+            :headers="header"
+            :action="'http://10.0.3.31:53927' + '/api/v1/upload'"
+            style="line-height: 1.5;"
+            :on-success="uploadMembers"
+            :on-error="uploadErr">
+            <span>批量上传文件创建用户</span>
+          </Upload>
+        </Button>
       </div>
       <ul style="font-weight: 700" class="pro-table">
         <li class="id">ID</li>
@@ -328,6 +331,10 @@ export default class GroupList extends Vue {
 </script>
 
 <style lang="less" scoped>
+  .create-btn {
+    margin-top: 20px;
+    height: 40px;
+  }
 
   .option-two {
     display: flex;
