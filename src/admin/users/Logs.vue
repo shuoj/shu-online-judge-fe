@@ -13,10 +13,10 @@
       <Col span="11" offset="2">
         <h2>查询某学生的学习记录</h2>
         <Input v-model="name" placeholder="输入姓名" style="width: 300px" />
-        <Button type="primary" @click="search">查询</Button>
+        <Button type="primary" @click="search(pageStudent, pageSizeStudent)">查询</Button>
         <div v-if="searchArray.length > 0" style="padding-top: 30px">
           <Table :columns="columns" :data="searchArray"></Table>
-          <div style="margin-top: 36px;">
+          <div style="margin-top: 36px;text-align: center">
             <Page :total="totalStudent" show-sizer @on-change="pageChangeStudent" @on-page-size-change="pageSizeChangeStudent"/>
           </div>
         </div>
@@ -75,25 +75,26 @@ export default class UserManager extends Vue {
     this.getLogs(this.page, size);
     this.pageSize = size;
   }
+
   pageChangeStudent(pages: number) {
-    this.page = pages - 1;
+    this.pageStudent = pages - 1;
     this.search(pages - 1, this.pageSizeStudent);
   }
 
-  pageSizeChange(size: number) {
-    this.search(this.page, size);
-    this.pageSize = size;
+  pageSizeChangeStudent(size: number) {
+    this.search(this.pageStudent, size);
+    this.pageSizeStudent = size;
   }
 
   search(page: number, pageSize: number) {
     api.getLogs({
       name: this.name, size: pageSize, page: page
     }).then((res: any) => {
+      this.totalStudent = res.data.total;
       this.searchArray = res.data.list;
     }).catch((err: any) => {
       console.log(err);
     });
-    this.name = '';
   }
 
   mounted() {

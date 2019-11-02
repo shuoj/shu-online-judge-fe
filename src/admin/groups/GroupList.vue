@@ -264,8 +264,7 @@ export default class GroupList extends Vue {
       name: group.name
     };
     this.users.splice(0, this.users.length);
-    const list = group.userList || group.jwtUserList;
-    this.users = list
+    this.users = group.userList || group.jwtUserList;
     this.groupShow = false;
   }
 
