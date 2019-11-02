@@ -295,21 +295,10 @@ export default class GroupList extends Vue {
   deleteUser(user: any) {
     const that = this;
     api.deleteMember({ id: user.groupId, memberId: user.id }).then((res: any) => {
-      const groupId = this.users[0].groupId;
-      this.users.splice(0, this.users.length);
-      const list = res.data.jwtUserList;
-      list.forEach((item: any) => {
-        this.users.push({
-          groupId: groupId,
-          id: item.id,
-          name: item.username,
-          username: item.firstname ? (item.lastname + item.firstname) : '未知'
-        });
-      });
+      this.users = res.data;
       (that as any).$Message.success('删除成功');
     }).catch((err: any) => {
-      console.log(err);
-      (that as any).$Message.success('删除失败');
+      (that as any).$Message.error('删除失败');
     });
   }
 
