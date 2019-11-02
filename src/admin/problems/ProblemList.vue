@@ -54,7 +54,7 @@ import ProblemForm from '@/components/ProblemForm.vue';
 })
 export default class Problemlist extends Vue {
   problems: Array<any> = [];
-  canSee: boolean = true;
+  canSee: boolean = false;
   pageSize: number = 10;
   page: number = 0;
   editorProblem: boolean = true;
