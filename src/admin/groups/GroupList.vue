@@ -1,7 +1,10 @@
 <template>
   <div class="index">
     <div v-if="groupShow&&modifyShow">
-      <h2>小组管理</h2>
+      <div style="display: flex">
+        <h2>小组管理</h2>
+        <Button type="primary" class="height: 50px" @click="createModal = true">创建小组</Button>
+      </div>
       <ul style="font-weight: 700" class="pro-table">
         <li class="id">ID</li>
         <li class="title">名称</li>
@@ -98,6 +101,14 @@
       @on-cancel="modal = false">
       <Input v-model="quantity" placeholder="请输入数目"/>
     </Modal>
+    <Modal
+      v-model="createModal"
+      title="群组名称"
+      width="40%"
+      @on-ok="createGroup"
+      @on-cancel="createModal = false">
+      <Input v-model="groupName" placeholder="请输入群组名称"/>
+    </Modal>
   </div>
 </template>
 
@@ -127,6 +138,8 @@ export default class GroupList extends Vue {
   modal: boolean = false;
   quantity: string = '';
   baseURL: any = VUE_APP_BASE_URL;
+  createModal: boolean = false;
+  groupName: string = '';
 
   get memberShow() {
     if (this.users) {
@@ -187,6 +200,19 @@ export default class GroupList extends Vue {
     }
   }
 
+  createGroup() {
+    if (this.groupName) {
+      api.createGroup({ name: this.groupName }).then((res: any) => {
+        this.getGroups();
+        (this as any).$Message.success('创建成功!');
+      }).catch(() => {
+        (this as any).$Message.error('创建失败!');
+      });
+    } else {
+      (this as any).$Message.error('群组已经有成员了，不能再批量添加啦');
+    }
+  }
+
   uploadMembers (response: any, file: any, fileList: any) {
     const { id } = this.thisGroup;
     api.createMembers({
@@ -218,7 +244,6 @@ export default class GroupList extends Vue {
           });
         });
       }
-
     }).catch((err: any) => {
       console.log(err);
     });

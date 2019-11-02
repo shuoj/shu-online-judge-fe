@@ -38,9 +38,6 @@
           <MenuItem name="/admin/group-list" to="/admin/group-list">
             <Icon type="md-list" />小组列表
           </MenuItem>
-          <MenuItem name="/admin/create-group" to="/admin/create-group">
-            <Icon type="ios-create" />创建小组
-          </MenuItem>
         </MenuGroup>
         <MenuGroup title="用户" align="left">
           <MenuItem name="/admin/user-manager" to="/admin/user-manager">
