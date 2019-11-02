@@ -19,7 +19,11 @@
             <li></li>
             <li class="id" @click="problemDetail(problem)">{{problem.idx}}</li>
             <li class="title" @click="problemDetail(problem)">{{problem.title}}</li>
-            <li class="diff">{{problem.level}}</li>
+            <li class="diff">
+              <span :class="problem.level">
+                {{level(problem.level)}}
+              </span>
+            </li>
             <li>{{problem.rate}}</li>
           </ul>
         </Col>
@@ -80,6 +84,17 @@ export default class Problems extends Vue {
     this.$router.push({
       path: `/announcement/${id}`
     });
+  }
+
+  level(level: string) {
+    switch (level) {
+      case 'LOW':
+        return '简单';
+      case 'MEDIUM':
+        return '中等';
+      case 'HIGH':
+        return '困难';
+    }
   }
 
   pageChange(pages: number) {
@@ -169,6 +184,23 @@ export default class Problems extends Vue {
 
 <style lang="less" scoped>
   @import '../style/base';
+  .LOW {
+    background-color: #74b567;
+    padding: 6px 10px;
+    border-radius: 10px;
+  }
+
+  .MEDIUM {
+    background-color: #e7af5f;
+    padding: 6px 10px;
+    border-radius: 10px;
+  }
+
+  .HIGH {
+    background-color: #ca5c55;
+    padding: 6px 10px;
+    border-radius: 10px;
+  }
 
   .card-margin {
     margin-top: 20px;
@@ -218,7 +250,9 @@ export default class Problems extends Vue {
       }
     }
     .diff {
-      width: 90px;
+      width: 130px;
+      color: white;
+      text-align: center;
     }
   }
 

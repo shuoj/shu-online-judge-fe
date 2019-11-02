@@ -99,6 +99,7 @@ export default class Index extends Vue {
     }).then((res: any) => {
       const that = this;
       this.total = res.data.total;
+      that.ranks = [];
       res.data.list.forEach(function (item: any) {
         that.ranks.push({
           'id': item.id,

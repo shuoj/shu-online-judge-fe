@@ -17,7 +17,7 @@
             <h3>输出</h3>
             <p v-html="problem.outputDesc"></p>
           </div>
-          <div class="problem-section" v-for="(example, index) in JSON.parse(problem.sampleIO)" :key="index">
+          <div class="problem-section" v-for="(example, index) in sampleList" :key="index">
             <h3>样例输入{{index + 1}}</h3>
             <pre>{{example.input}}</pre>
             <h3>样例输出{{index + 1}}</h3>
@@ -66,6 +66,7 @@ export default class ProblemDetail extends Vue {
   codeLoading: boolean = false;
   codeStatus: string = '';
   submissionId: string = '1';
+  sampleList: Array<any> = [];
   title: any = [
     {
       title: '#',
@@ -188,6 +189,11 @@ export default class ProblemDetail extends Vue {
     const params = this.$route.params;
     api.getProblemsDetail({ id: params.id }).then((res: any) => {
       this.problem = res.data;
+      if (this.problem.sampleIO) {
+        this.sampleList = JSON.parse(this.problem.sampleIO);
+      } else {
+        this.sampleList = [];
+      }
     }).catch((err: any) => {
       console.log(err, 'err');
     });

@@ -1,7 +1,7 @@
 <template>
   <Row>
     <Col span="4">
-      <Menu theme="light"  active-name="$route.path" style="width:auto;padding-left: 20px;">
+      <Menu theme="light"  active-name="$route.path" style="width:auto;padding-left: 20px;height:100vh">
         <RouterLink to="/">
           <div class="icon-title" style="color: #515a6e">SHU OJ</div>
         </RouterLink>
@@ -50,7 +50,9 @@
       </Menu>
     </Col>
     <Col span="18" offset="1">
-      <router-view></router-view>
+      <div class="admin">
+        <router-view></router-view>
+      </div>
     </Col>
   </Row>
 </template>
@@ -67,6 +69,10 @@ export default class Admin extends Vue {
 <style lang="less" scoped>
   @import '../style/base';
 
+  .admin {
+    height: 100vh;
+    overflow-y: scroll;
+  }
   .icon-title {
     font-size: 24px;
     font-weight: 500;

@@ -5,7 +5,7 @@
       <!-- out-in 当前元素先进行过渡， 完成后新元素过渡进入 -->
       <router-view/>
     </div>
-    <footer class="footer">
+    <footer class="footer"  v-if="isAdmin">
       <div class="oj-footer">
         Copyright © 2018 ~ 2019 上海大学计算机学院
       </div>
@@ -54,6 +54,9 @@ export default class App extends Vue {
 <style lang="less">
   @import './style/base';
 
+  * {
+    box-sizing: border-box;
+  }
   html, body {
     min-height: 100%;
   }
@@ -121,6 +124,7 @@ export default class App extends Vue {
   }
 
   .app-content {
+    height: 100vh;
     flex: 1;
   }
 </style>
