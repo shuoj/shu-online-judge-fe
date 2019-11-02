@@ -204,8 +204,7 @@ export default class CodeMirror extends Vue {
     padding-top: 16px;
     width: 100%;
     .card-class {
-      box-shadow: 0 1px 6px rgba(0, 0, 0, .2);
-      border-color: #eee;
+      border: 1px solid rgba(0, 0, 0, .2);
     }
     .text-left {
       text-align: left !important;
