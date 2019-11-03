@@ -287,16 +287,9 @@ export default class Problemform extends Vue {
       }
     });
     this.problemData.tagList = temp;
-    if (this.dataProp.sampleIO) {
-      const sampleList = JSON.parse(this.problemData.sampleIO) || [];
-      const ioTemp = sampleList.map((item: any) => {
-        return {
-          input: item.input,
-          output: item.input
-        };
-      });
-      this.problemData.sampleIO = JSON.stringify(ioTemp);
-      this.problemData.sampleIOList = ioTemp;
+    if (this.sampleList) {
+      this.problemData.sampleIO = JSON.stringify(this.sampleList);
+      this.problemData.sampleIOList = this.sampleList;
     }
     this.$emit('problem-data', this.problemData);
   }
