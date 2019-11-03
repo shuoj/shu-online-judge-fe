@@ -3,7 +3,7 @@
     <div style="display: flex;">
       <h2>用户管理</h2>
       <div style="height:80px;padding-top: 10px;">
-        <Button type="primary">创建用户</Button>
+        <Button type="primary" @click="">创建用户</Button>
       </div>
     </div>
     <Row>
@@ -26,26 +26,19 @@
           <li class="diff">{{(user.acRate * 100).toFixed(2)}}%</li>
           <li class="rate">{{getRole(user.authorities[0].authority)}}</li>
           <li class="rate">
-            <Button type="primary" class="btn-primary" @click="reviseModal = true">修改信息</Button>
+            <Button type="primary" class="btn-primary" @click="reviseModal = true, userInfo = user">修改信息</Button>
             <Button type="primary" class="btn-primary" @click="deleteUser(user.id)">删除</Button>
           </li>
         </ul>
       </Col>
       <Modal
         v-model="reviseModal"
-        title="修改用户信息"
+        title="创建用户"
         width="80%"
-        @on-ok="reviseUser"
-        @on-cancel="addModal = false">
+        @on-ok="handleUser"
+        @on-cancel="reviseModal = false">
         <div class="form-horizontal">
-          <div style="width: 45%;">
-            <h2>样例输入</h2>
-            <Input v-model="input" type="textarea" :rows="4"/>
-          </div>
-          <div style="width: 45%; margin-left: 5%">
-            <h2>样例输出</h2>
-            <Input v-model="output" type="textarea" :rows="4"/>
-          </div>
+          {{userInfo.id}}
         </div>
       </Modal>
       <Col span="24" class="card-margin">
@@ -65,6 +58,7 @@
     pageSize: number = 10;
     page: number = 0;
     total: any = 0;
+    userInfo: any = {};
     reviseModal: boolean = false;
 
     getRole(type: string) {
@@ -87,7 +81,7 @@
       this.pageSize = size;
     }
 
-    reviseUser(id: string) {
+    handleUser(id: string) {
       api.deleteUser({
         list: [id]
       }).then((res) => {

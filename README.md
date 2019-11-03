@@ -1,18 +1,12 @@
 # 上海大学 Online Judge Frontend
 [![Build Status](https://travis-ci.org/shuoj/shu-online-judge-fe.svg?branch=master)](https://travis-ci.org/shuoj/shu-online-judge-fe)
 
-> 
-> 原仓库贡献：
-> 
-> [@Ctum](https://github.com/Ctum): `11,633 ++  1,839 --` with 49 Commits.
-> 
-> [@zhangyuiris](https://github.com/zhangyuiris): `7,921 ++  3,784 --` with 135 Commits.
+
+# 开发运行
+1. 将`vue.config.js`中`devServer`里的`target`设置为本地的后端接口
+2. `yarn / npm install`
+3. `yarn / npm run serve`
 
 
-待完成&修正
-
-- [X] 手动组卷
-- [X] 自动组卷
-- [X] 题目编号Fix
-- [X] 上传样例
-- [X] submission改名字
+# 编译部署
+1. `VUE_APP_BASE_URL=https://xxxxxx npm run build`

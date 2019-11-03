@@ -10,7 +10,7 @@
         Copyright © 2018 ~ 2019 上海大学计算机学院
       </div>
       <div class="oj-footer">
-        Powered by <a href="https://github.com/shuoj">OnlineJudge</a>
+        Powered by <a href="https://github.com/shuoj">SHUOnlineJudge</a>
       </div>
     </footer>
   </div>

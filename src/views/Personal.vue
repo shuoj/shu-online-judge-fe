@@ -40,10 +40,36 @@
             </Col>
             <Col span="8">
               <p>Rate</p>
-              <p>{{user.acRate}}</p>
+              <p>{{user.acRate * 100}} %</p>
             </Col>
           </Row>
         </Card>
+        <div style="text-align: right;padding-top: 10px;" v-if="user.id === userInfo.id">
+          <Button type="info" @click="reviseModal = true">修改信息</Button>
+        </div>
+        <Modal
+          v-model="reviseModal"
+          title="修改个人信息"
+          width="50%"
+          @on-ok="reviseUserInfo"
+          @on-cancel="reviseModal = false">
+          <div style="display: flex;">
+            <div style="display: flex;height: 150px;padding-top:10px;width: 30px;flex-direction: column;justify-content: space-between">
+              <div>姓名</div>
+              <div>邮箱</div>
+              <div>姓</div>
+              <div>名</div>
+              <div>学校</div>
+            </div>
+            <div>
+              <Input v-model="reviseUser.username"/>
+              <Input v-model="reviseUser.email"/>
+              <Input v-model="reviseUser.firstname"/>
+              <Input v-model="reviseUser.lastname"/>
+              <Input v-model="reviseUser.school"/>
+            </div>
+          </div>
+        </Modal>
       </div>
     </Col>
   </Row>
@@ -55,12 +81,35 @@
 
   @Component
   export default class Personal extends Vue {
-    user: any = '';
+    user: any = {};
+    reviseUser: any = {};
+    reviseModal: boolean = false;
 
     @Watch('$route')
     handleRoute() {
       // 直接输路由时都没有变化
       this.updateUserInfo();
+    }
+
+    get userInfo() {
+      return this.$store.state.userInfo;
+    }
+
+    reviseUserInfo() {
+      api.updateUserInfo({
+        username: this.reviseUser.username,
+        email: this.reviseUser.mail,
+        firstname: this.reviseUser.firstname,
+        lastname: this.reviseUser.lastname,
+        name: this.reviseUser.lastname + this.reviseUser.firstname,
+        school: this.reviseUser.school
+      }).then((res) => {
+        this.user = res.data;
+        this.reviseUser = res.data;
+        (this as any).$Message.success('修改成功');
+      }).catch((err) => {
+        (this as any).$Message.error(err.data.message);
+      });
     }
 
     updateUserInfo() {
@@ -71,12 +120,14 @@
           id: params.id
         }).then((res: any) => {
           this.user = res.data;
+          this.reviseUser = res.data;
         }).catch((err: any) => {
           console.log(err);
         });
       } else {
         api.getUserInfo().then((res: any) => {
           this.user = res.data;
+          this.reviseUser = res.data;
         }).catch((err: any) => {
           console.log(err);
         });
