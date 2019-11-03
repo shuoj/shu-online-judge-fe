@@ -122,7 +122,7 @@ export default {
   login: (data: {}) => axios.post('/api/v1/auth', data),
   refresh: (data: {}) => axios.post('/api/v1/refresh', data),
   getUserInfo: () => axios.get('/api/v1/me'),
-  updateUserInfo: (data: {}) => axios.put('/api/v1/users', { params: data }),
+  updateUserInfo: (data: {}) => axios.put('/api/v1/me', data),
   getOtherUserInfo: (data: { id: string }) => axios.get(`/api/v1/users/${data.id}`),
   getOwnQuestion: (data: { username: string }) => axios.get(`/api/v1/questions/random?username=${data.username}`),
   checkAnswer: (data: { username: string, id: any, answer: any }) => axios.post(`/api/v1/questions/checkAnswer?username=${data.username}`, { id: data.id, answer: data.answer }),

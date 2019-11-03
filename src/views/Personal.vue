@@ -104,8 +104,8 @@
         name: this.reviseUser.lastname + this.reviseUser.firstname,
         school: this.reviseUser.school
       }).then((res) => {
-        this.user = res.data;
-        this.reviseUser = res.data;
+        this.user = JSON.parse(JSON.stringify(res.data));
+        this.reviseUser = JSON.parse(JSON.stringify(res.data));
         (this as any).$Message.success('修改成功');
       }).catch((err) => {
         (this as any).$Message.error(err.data.message);
@@ -120,14 +120,14 @@
           id: params.id
         }).then((res: any) => {
           this.user = res.data;
-          this.reviseUser = res.data;
+          this.reviseUser = JSON.parse(JSON.stringify(res.data));
         }).catch((err: any) => {
           console.log(err);
         });
       } else {
         api.getUserInfo().then((res: any) => {
-          this.user = res.data;
-          this.reviseUser = res.data;
+          this.user = JSON.parse(JSON.stringify(res.data));
+          this.reviseUser = JSON.parse(JSON.stringify(res.data));
         }).catch((err: any) => {
           console.log(err);
         });

@@ -3,7 +3,7 @@
     <div style="display: flex;">
       <h2>用户管理</h2>
       <div style="height:80px;padding-top: 10px;">
-        <Button type="primary" @click="">创建用户</Button>
+        <Button type="primary" @click="newMoal = true">创建用户</Button>
       </div>
     </div>
     <Row>
@@ -32,13 +32,49 @@
         </ul>
       </Col>
       <Modal
-        v-model="reviseModal"
+        v-model="newModal"
         title="创建用户"
-        width="80%"
-        @on-ok="handleUser"
+        width="50%"
+        @on-ok="reviseUserInfo"
         @on-cancel="reviseModal = false">
-        <div class="form-horizontal">
-          {{userInfo.id}}
+        <div style="display: flex;">
+          <div style="display: flex;height: 150px;padding-top:10px;width: 30px;flex-direction: column;justify-content: space-between">
+            <div>姓名</div>
+            <div>邮箱</div>
+            <div>姓</div>
+            <div>名</div>
+            <div>学校</div>
+          </div>
+          <div>
+            <Input v-model="newUser.username"/>
+            <Input v-model="newUser.email"/>
+            <Input v-model="newUser.firstname"/>
+            <Input v-model="newUser.lastname"/>
+            <Input v-model="newUser.school"/>
+          </div>
+        </div>
+      </Modal>
+      <Modal
+        v-model="reviseModal"
+        title="修改用户信息"
+        width="50%"
+        @on-ok="reviseUserInfo"
+        @on-cancel="reviseModal = false">
+        <div style="display: flex;">
+          <div style="display: flex;height: 150px;padding-top:10px;width: 30px;flex-direction: column;justify-content: space-between">
+            <div>姓名</div>
+            <div>邮箱</div>
+            <div>姓</div>
+            <div>名</div>
+            <div>学校</div>
+          </div>
+          <div>
+            <Input v-model="reviseUser.username"/>
+            <Input v-model="reviseUser.email"/>
+            <Input v-model="reviseUser.firstname"/>
+            <Input v-model="reviseUser.lastname"/>
+            <Input v-model="reviseUser.school"/>
+          </div>
         </div>
       </Modal>
       <Col span="24" class="card-margin">
@@ -59,6 +95,7 @@
     page: number = 0;
     total: any = 0;
     userInfo: any = {};
+    newModal: boolean = true;
     reviseModal: boolean = false;
 
     getRole(type: string) {
