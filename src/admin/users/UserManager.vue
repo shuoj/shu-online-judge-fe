@@ -82,7 +82,7 @@
             <Input v-model="reviseUser.lastname"/>
             <Input v-model="reviseUser.school"/>
             <Select v-model="role">
-              <Option v-for="item in roleList" :value="item.label" :key="item.label">{{ item.value }}</Option>
+              <Option v-for="item in roleList" :value="item.value" :key="item.value">{{ item.label }}</Option>
             </Select>
           </div>
         </div>
@@ -112,16 +112,16 @@
     role: string = '';
     roleList: Array<any> = [
       {
-        value: '学生',
-        label: 'ROLE_USER'
+        label: '学生',
+        value: 'ROLE_USER'
       },
       {
-        value: '老师',
-        label: 'ROLE_STUFF'
+        label: '老师',
+        value: 'ROLE_STUFF'
       },
       {
-        value: '管理员',
-        label: 'ROLE_ADMIN'
+        label: '管理员',
+        value: 'ROLE_ADMIN'
       }
     ];
 
