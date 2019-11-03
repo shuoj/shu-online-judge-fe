@@ -38,13 +38,14 @@
         @on-ok="createUser"
         @on-cancel="newModal = false">
         <div style="display: flex;">
-          <div style="display: flex;height: 180px;padding-top:10px;width: 30px;flex-direction: column;justify-content: space-between">
-            <div>姓名</div>
+          <div style="display: flex;height: 220px;padding-top:10px;width: 40px;flex-direction: column;justify-content: space-between">
+            <div>用户名</div>
             <div>密码</div>
             <div>邮箱</div>
             <div>姓</div>
             <div>名</div>
             <div>学校</div>
+            <div>角色</div>
           </div>
           <div>
             <Input v-model="newUser.username"/>
@@ -53,6 +54,9 @@
             <Input v-model="newUser.firstname"/>
             <Input v-model="newUser.lastname"/>
             <Input v-model="newUser.school"/>
+            <Select v-model="role" style="width:200px">
+              <Option v-for="item in roleList" :value="item.value" :key="item.value">{{ item.label }}</Option>
+            </Select>
           </div>
         </div>
       </Modal>
@@ -63,12 +67,13 @@
         @on-ok="reviseUserInfo"
         @on-cancel="reviseModal = false">
         <div style="display: flex;">
-          <div style="display: flex;height: 150px;padding-top:10px;width: 30px;flex-direction: column;justify-content: space-between">
-            <div>姓名</div>
+          <div style="display: flex;height: 180px;padding-top:10px;width: 50px;flex-direction: column;justify-content: space-between">
+            <div>用户名</div>
             <div>邮箱</div>
             <div>姓</div>
             <div>名</div>
             <div>学校</div>
+            <div>角色</div>
           </div>
           <div>
             <Input v-model="reviseUser.username"/>
@@ -76,6 +81,9 @@
             <Input v-model="reviseUser.firstname"/>
             <Input v-model="reviseUser.lastname"/>
             <Input v-model="reviseUser.school"/>
+            <Select v-model="role">
+              <Option v-for="item in roleList" :value="item.label" :key="item.label">{{ item.value }}</Option>
+            </Select>
           </div>
         </div>
       </Modal>
@@ -101,6 +109,21 @@
     newUser: any = {};
     newModal: boolean = false;
     reviseModal: boolean = false;
+    role: string = '';
+    roleList: Array<any> = [
+      {
+        value: '学生',
+        label: 'ROLE_USER'
+      },
+      {
+        value: '老师',
+        label: 'ROLE_STUFF'
+      },
+      {
+        value: '管理员',
+        label: 'ROLE_ADMIN'
+      }
+    ];
 
     reviseInfo(user: any) {
       this.reviseUser = JSON.parse(JSON.stringify(user));
@@ -110,7 +133,10 @@
     createUser() {
       api.createUser({
         ...this.newUser,
-        password: md5(this.newUser.password)
+        password: md5(this.newUser.password),
+        authorities: [
+          { 'authority': this.role }
+        ]
       }).then((res) => {
         (this as any).$Message.success('创建成功');
         this.newUser = {};

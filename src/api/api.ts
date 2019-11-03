@@ -126,6 +126,7 @@ export default {
   createUser: (data: {}) => axios.post('/api/v1/users', data),
   updateUserInfo: (data: { id: string }) => axios.put(`/api/v1/users/${data.id}`, data),
   getOtherUserInfo: (data: { id: string }) => axios.get(`/api/v1/users/${data.id}`),
+  // 问题
   getOwnQuestion: (data: { username: string }) => axios.get(`/api/v1/questions/random?username=${data.username}`),
   checkAnswer: (data: { username: string, id: any, answer: any }) => axios.post(`/api/v1/questions/checkAnswer?username=${data.username}`, { id: data.id, answer: data.answer }),
   forgetPassword: (data: { password: string }) => axios.post(`/api/v1/forgotPassword?password=${data.password}`),
