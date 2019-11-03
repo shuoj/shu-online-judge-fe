@@ -2,7 +2,7 @@
   <div>
     <Row>
       <Col span="4" style="overflow-y: scroll;height:100vh;">
-        <Menu theme="light"  active-name="$route.path" style="width:auto;padding-left: 20px;">
+        <Menu theme="light"  active-name="$route.path" style="width:auto;padding-left: 20px;height:100vh;">
           <RouterLink to="/">
             <div class="icon-title" style="color: #515a6e">SHU OJ</div>
           </RouterLink>

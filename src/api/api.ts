@@ -5,9 +5,10 @@ axios.defaults.baseURL =
   process.env.VUE_APP_BASE_URL;
 axios.interceptors.request.use(
   function(config) {
+    // @ts-ignore
     if (window.localStorage.getItem('token')) {
-      config.headers['Authorization'] =
-        'Bearer ' + window.localStorage.getItem('token');
+      // @ts-ignore
+      config.headers['Authorization'] = 'Bearer ' + window.localStorage.getItem('token');
     }
     return config;
   },
@@ -24,10 +25,15 @@ axios.interceptors.response.use(
     if (error.response) {
       switch (error.response.status) {
         case 401:
+          // @ts-ignore
           if (!window.localStorage.getItem('times')) {
+            // @ts-ignore
             window.localStorage.setItem('times', 'done');
+            // @ts-ignore
             window.localStorage.setItem('token', '');
+            // @ts-ignore
             window.localStorage.setItem('username', '');
+            // @ts-ignore
             window.localStorage.setItem('role', '');
             const lastRoute = router.currentRoute.fullPath;
             router.replace({
@@ -132,6 +138,7 @@ export default {
   createMembers: (data: {}) => axios.post('/api/v1/users/generate', data),
   deleteGroup: (data: { id: string }) => axios.delete(`/api/v1/groups/${data.id}`),
   getUser: (data: { username: string, page: number, size: number }) => axios.get('/api/v1/users', { params: data }),
+  deleteUser: (data: {}) => axios.delete('/api/v1/users', data),
   addUserToGroup: (data: { id: string, userId: string }) => axios.post(`/api/v1/groups/${data.id}/members`,
     [data.userId]),
   getSpecificGroup: (data: { id: string }) => axios.get(`/api/v1/groups/${data.id}`),

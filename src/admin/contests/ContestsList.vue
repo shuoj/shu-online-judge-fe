@@ -177,6 +177,7 @@
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
   import api from '../../api/api';
+  import md5 from 'js-md5';
 
   @Component
   export default class Index extends Vue {
@@ -340,7 +341,7 @@
           visible: that.visible,
           startDate: start,
           endDate: end,
-          password: that.password
+          password: md5(that.password)
         }
       }).then((res: any) => {
         (this as any).$Message.success('修改成功');

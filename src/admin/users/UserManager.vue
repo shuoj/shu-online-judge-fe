@@ -1,6 +1,11 @@
 <template>
   <div style="padding-top: 30px;" class="user-manage">
-    <h2>用户管理</h2>
+    <div style="display: flex;">
+      <h2>用户管理</h2>
+      <div style="height:80px;padding-top: 10px;">
+        <Button type="primary">创建用户</Button>
+      </div>
+    </div>
     <Row>
       <Col span="24">
         <ul style="font-weight: 700" class="pro-table">
@@ -10,6 +15,7 @@
           <li class="diff">提交</li>
           <li class="diff">通过率</li>
           <li class="rate">角色</li>
+          <li class="rate">操作</li>
         </ul>
         <ul v-for="(user, index) in users" :key="user.id" class="pro-table"
             :class="[index % 2 ===0 ? 'bg': '']">
@@ -19,8 +25,29 @@
           <li class="diff">{{user.acCount}}/{{user.submitCount}}</li>
           <li class="diff">{{(user.acRate * 100).toFixed(2)}}%</li>
           <li class="rate">{{getRole(user.authorities[0].authority)}}</li>
+          <li class="rate">
+            <Button type="primary" class="btn-primary" @click="reviseModal = true">修改信息</Button>
+            <Button type="primary" class="btn-primary" @click="deleteUser(user.id)">删除</Button>
+          </li>
         </ul>
       </Col>
+      <Modal
+        v-model="reviseModal"
+        title="修改用户信息"
+        width="80%"
+        @on-ok="reviseUser"
+        @on-cancel="addModal = false">
+        <div class="form-horizontal">
+          <div style="width: 45%;">
+            <h2>样例输入</h2>
+            <Input v-model="input" type="textarea" :rows="4"/>
+          </div>
+          <div style="width: 45%; margin-left: 5%">
+            <h2>样例输出</h2>
+            <Input v-model="output" type="textarea" :rows="4"/>
+          </div>
+        </div>
+      </Modal>
       <Col span="24" class="card-margin">
         <Page :total="total" show-sizer @on-change="pageChange" @on-page-size-change="pageSizeChange"/>
       </Col>
@@ -38,6 +65,7 @@
     pageSize: number = 10;
     page: number = 0;
     total: any = 0;
+    reviseModal: boolean = false;
 
     getRole(type: string) {
       switch (type) {
@@ -57,6 +85,28 @@
     pageSizeChange(size: number) {
       this.getUsers(this.page, size);
       this.pageSize = size;
+    }
+
+    reviseUser(id: string) {
+      api.deleteUser({
+        list: [id]
+      }).then((res) => {
+        console.log(res);
+        (this as any).$Message.success('修改成功');
+      }).catch((err) => {
+        (this as any).$Message.error(err.data.message);
+      });
+    }
+
+    deleteUser(id: string) {
+      api.deleteUser({
+        list: [id]
+      }).then((res) => {
+        console.log(res);
+        (this as any).$Message.success('修改成功');
+      }).catch((err) => {
+        (this as any).$Message.error(err.data.message);
+      });
     }
 
     getUsers (page: number, size: number) {
@@ -121,7 +171,10 @@
   }
   .rate {
     width: 20%;
-    text-align: right;
+    text-align: center;
+  }
+  .btn-primary {
+    margin-left: 10px;
   }
 }
 h2 {

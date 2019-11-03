@@ -2,7 +2,9 @@
   <Row>
     <Col span="18" offset="3">
       <div class="container">
-        <h2>代码分享自题目：{{ title }} </h2>
+        <h2>代码分享自题目：
+          <RouterLink :to=" '/share/' + $route.params.id">{{ title }} </RouterLink>
+        </h2>
         <div v-highlightjs="sourceCode">
           <pre>
             <code class="cpp"></code>
