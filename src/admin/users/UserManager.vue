@@ -15,7 +15,7 @@
           <li class="diff">提交</li>
           <li class="diff">通过率</li>
           <li class="rate">角色</li>
-          <li class="rate">操作</li>
+          <!--<li class="rate">操作</li>-->
         </ul>
         <ul v-for="(user, index) in users" :key="user.id" class="pro-table"
             :class="[index % 2 ===0 ? 'bg': '']">
@@ -25,10 +25,10 @@
           <li class="diff">{{user.acCount}}/{{user.submitCount}}</li>
           <li class="diff">{{(user.acRate * 100).toFixed(2)}}%</li>
           <li class="rate">{{getRole(user)}}</li>
-          <li class="rate">
-            <Button type="primary" class="btn-primary" @click="reviseInfo(user)">修改信息</Button>
-            <Button type="danger" class="btn-primary" @click="deleteUser(user.id)">删除</Button>
-          </li>
+          <!--<li class="rate">-->
+            <!--<Button type="primary" class="btn-primary" @click="reviseInfo(user)">修改信息</Button>-->
+            <!--<Button type="danger" class="btn-primary" @click="deleteUser(user.id)">删除</Button>-->
+          <!--</li>-->
         </ul>
       </Col>
       <Modal
