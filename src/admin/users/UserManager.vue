@@ -2,9 +2,9 @@
   <div style="padding-top: 30px;" class="user-manage">
     <div style="display: flex;">
       <h2>用户管理</h2>
-      <!--<div style="height:80px;padding-top: 10px;">-->
-        <!--<Button type="primary" @click="newModal = true">创建用户</Button>-->
-      <!--</div>-->
+      <div style="height:80px;padding-top: 10px;">
+        <Button type="primary" @click="newModal = true">创建用户</Button>
+      </div>
     </div>
     <Row>
       <Col span="24">
@@ -15,7 +15,7 @@
           <li class="diff">提交</li>
           <li class="diff">通过率</li>
           <li class="rate">角色</li>
-          <!--<li class="rate">操作</li>-->
+          <li class="rate">操作</li>
         </ul>
         <ul v-for="(user, index) in users" :key="user.id" class="pro-table"
             :class="[index % 2 ===0 ? 'bg': '']">
@@ -25,10 +25,10 @@
           <li class="diff">{{user.acCount}}/{{user.submitCount}}</li>
           <li class="diff">{{(user.acRate * 100).toFixed(2)}}%</li>
           <li class="rate">{{getRole(user)}}</li>
-          <!--<li class="rate">-->
-            <!--<Button type="primary" class="btn-primary" @click="reviseInfo(user)">修改信息</Button>-->
+          <li class="rate">
+            <Button type="primary" class="btn-primary" @click="reviseInfo(user)">修改信息</Button>
             <!--<Button type="danger" class="btn-primary" @click="deleteUser(user.id)">删除</Button>-->
-          <!--</li>-->
+          </li>
         </ul>
       </Col>
       <Modal
@@ -49,7 +49,7 @@
           </div>
           <div>
             <Input v-model="newUser.username"/>
-            <Input v-model="newUser.password" type="password"/>
+            <Input v-model="newUser.password"/>
             <Input v-model="newUser.email"/>
             <Input v-model="newUser.firstname"/>
             <Input v-model="newUser.lastname"/>
@@ -146,7 +146,15 @@
     }
 
     reviseUserInfo() {
-      api.updateUserInfo(this.reviseUser).then((res) => {
+      const user: any = {
+        ...this.reviseUser,
+        password: md5(this.reviseUser.password),
+        authorities: [
+          { 'authority': this.role }
+        ]
+      };
+      console.log(user);
+      api.updateUserInfo(user).then((res) => {
         console.log(res);
         this.reviseUser = {};
       });

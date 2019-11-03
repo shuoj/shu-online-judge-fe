@@ -15,11 +15,11 @@
             </div>
             <div class="problem-section">
               <h3>输入</h3>
-              <p>{{problem.inputDesc}}</p>
+              <p v-html="problem.inputDesc"></p>
             </div>
             <div class="problem-section">
               <h3>输出</h3>
-              <p>{{problem.outputDesc}}</p>
+              <p v-html="problem.outputDesc"></p>
             </div>
             <div class="problem-section" v-for="(example, index) in problem.sampleIOList" :key="index">
               <h3>样例输入{{index + 1}}</h3>
