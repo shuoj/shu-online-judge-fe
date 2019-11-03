@@ -96,7 +96,7 @@
     }
 
     reviseUserInfo() {
-      api.updateUserInfo({
+      api.updateMyInfo({
         username: this.reviseUser.username,
         email: this.reviseUser.mail,
         firstname: this.reviseUser.firstname,

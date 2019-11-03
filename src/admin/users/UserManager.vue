@@ -3,7 +3,7 @@
     <div style="display: flex;">
       <h2>用户管理</h2>
       <div style="height:80px;padding-top: 10px;">
-        <Button type="primary" @click="newMoal = true">创建用户</Button>
+        <Button type="primary" @click="newModal = true">创建用户</Button>
       </div>
     </div>
     <Row>
@@ -24,10 +24,10 @@
           <li class="mail">{{user.email}}</li>
           <li class="diff">{{user.acCount}}/{{user.submitCount}}</li>
           <li class="diff">{{(user.acRate * 100).toFixed(2)}}%</li>
-          <li class="rate">{{getRole(user.authorities[0].authority)}}</li>
+          <li class="rate">{{getRole(user)}}</li>
           <li class="rate">
-            <Button type="primary" class="btn-primary" @click="reviseModal = true, userInfo = user">修改信息</Button>
-            <Button type="primary" class="btn-primary" @click="deleteUser(user.id)">删除</Button>
+            <Button type="primary" class="btn-primary" @click="reviseInfo(user)">修改信息</Button>
+            <Button type="danger" class="btn-primary" @click="deleteUser(user.id)">删除</Button>
           </li>
         </ul>
       </Col>
@@ -35,11 +35,12 @@
         v-model="newModal"
         title="创建用户"
         width="50%"
-        @on-ok="reviseUserInfo"
-        @on-cancel="reviseModal = false">
+        @on-ok="createUser"
+        @on-cancel="newModal = false">
         <div style="display: flex;">
-          <div style="display: flex;height: 150px;padding-top:10px;width: 30px;flex-direction: column;justify-content: space-between">
+          <div style="display: flex;height: 180px;padding-top:10px;width: 30px;flex-direction: column;justify-content: space-between">
             <div>姓名</div>
+            <div>密码</div>
             <div>邮箱</div>
             <div>姓</div>
             <div>名</div>
@@ -47,6 +48,7 @@
           </div>
           <div>
             <Input v-model="newUser.username"/>
+            <Input v-model="newUser.password" type="password"/>
             <Input v-model="newUser.email"/>
             <Input v-model="newUser.firstname"/>
             <Input v-model="newUser.lastname"/>
@@ -87,6 +89,7 @@
 <script lang="ts">
   import { Component, Vue } from 'vue-property-decorator';
   import api from '@/api/api';
+  import md5 from 'js-md5';
 
   @Component
   export default class UserManager extends Vue {
@@ -94,18 +97,50 @@
     pageSize: number = 10;
     page: number = 0;
     total: any = 0;
-    userInfo: any = {};
-    newModal: boolean = true;
+    reviseUser: any = {};
+    newUser: any = {};
+    newModal: boolean = false;
     reviseModal: boolean = false;
 
-    getRole(type: string) {
-      switch (type) {
-        case 'ROLE_ADMIN':
-          return '管理员';
-        case 'ROLE_USER':
-          return '普通用户';
-        case 'ROLE_STUFF':
-          return '教师';
+    reviseInfo(user: any) {
+      this.reviseUser = JSON.parse(JSON.stringify(user));
+      this.reviseModal = true;
+    }
+
+    createUser() {
+      api.createUser({
+        ...this.newUser,
+        password: md5(this.newUser.password)
+      }).then((res) => {
+        (this as any).$Message.success('创建成功');
+        this.newUser = {};
+      }).catch((err) => {
+        (this as any).$Message.error(err.data.message);
+      });
+    }
+
+    reviseUserInfo() {
+      api.updateUserInfo(this.reviseUser).then((res) => {
+        console.log(res);
+        this.reviseUser = {};
+      });
+    }
+
+    getRole(user: any) {
+      const type = user.authorities[0];
+      if (type) {
+        switch (type.authority) {
+          case 'ROLE_ADMIN':
+            return '管理员';
+          case 'ROLE_USER':
+            return '普通用户';
+          case 'ROLE_STUFF':
+            return '教师';
+          default:
+            return '';
+        }
+      } else {
+        return '';
       }
     }
     pageChange(pages: number) {
@@ -116,17 +151,6 @@
     pageSizeChange(size: number) {
       this.getUsers(this.page, size);
       this.pageSize = size;
-    }
-
-    handleUser(id: string) {
-      api.deleteUser({
-        list: [id]
-      }).then((res) => {
-        console.log(res);
-        (this as any).$Message.success('修改成功');
-      }).catch((err) => {
-        (this as any).$Message.error(err.data.message);
-      });
     }
 
     deleteUser(id: string) {
