@@ -4,7 +4,7 @@ ARG VUE_APP_BASE_URL=http://localhost:8081
 ENV PORT $PORT
 
 # install simple http server for serving static content
-RUN npm -g i http-server
+RUN npm i -g http-server
 
 # make the 'app' folder the current working directory
 WORKDIR /app
