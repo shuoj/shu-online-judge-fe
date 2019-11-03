@@ -20,9 +20,7 @@ export default class Createproblem extends Vue {
   getData(data: any) {
     const id = this.$store.state.userInfo.id;
     data.authorId = id;
-    console.log(data)
     api.createProblem(data).then((res: any) => {
-      console.log(res)
       if (res.data.code) {
         (this as any).$Message.error(res.data.message);
       } else {

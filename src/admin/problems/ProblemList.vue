@@ -128,7 +128,6 @@ export default class Problemlist extends Vue {
   }
 
   getData(data: any) {
-    console.log(data)
     data.sampleIO = JSON.stringify(data.sampleIOList);
     api.updateProblem({
       id: this.problemDetail.id,
