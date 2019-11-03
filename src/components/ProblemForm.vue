@@ -170,8 +170,7 @@ export default class Problemform extends Vue {
     source: '',
     specialJudged: false
   };
-  // baseURL: any = VUE_APP_BASE_URL;
-  baseURL: any = 'http://10.0.3.31:53927';
+  baseURL: any = VUE_APP_BASE_URL;
   sampleList: Array<object> = [];
   @Prop({}) dataProp: any;
   tag: string = '';
