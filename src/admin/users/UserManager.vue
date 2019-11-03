@@ -2,9 +2,9 @@
   <div style="padding-top: 30px;" class="user-manage">
     <div style="display: flex;">
       <h2>用户管理</h2>
-      <div style="height:80px;padding-top: 10px;">
-        <Button type="primary" @click="newModal = true">创建用户</Button>
-      </div>
+      <!--<div style="height:80px;padding-top: 10px;">-->
+        <!--<Button type="primary" @click="newModal = true">创建用户</Button>-->
+      <!--</div>-->
     </div>
     <Row>
       <Col span="24">
