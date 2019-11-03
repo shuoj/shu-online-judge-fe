@@ -4,23 +4,23 @@ ARG VUE_APP_BASE_URL=http://localhost:8081
 ENV PORT $PORT
 
 # install simple http server for serving static content
-RUN yarn global add http-server
+RUN npm -g i http-server
 
 # make the 'app' folder the current working directory
 WORKDIR /app
 
 # copy both 'package.json' and 'package-lock.json' (if available)
 COPY package*.json ./
-COPY yarn.lock ./
+COPY package-lock.json ./
 
 # install project dependencies
-RUN yarn
+RUN npm i
 
 # copy project files and folders to the current working directory (i.e. 'app' folder)
 COPY . .
 
 # build app for production with minification
-RUN yarn build
+RUN npm run build
 
 EXPOSE $PORT
 CMD "http-server" "-p" "$PORT" "dist"
