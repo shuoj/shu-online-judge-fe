@@ -225,6 +225,8 @@ export default class ContestDetail extends Vue {
     const id: any = params.id;
     const that = this;
     api.getContestDetail({ id }).then((res: any) => {
+      console.log(res.data);
+      this.$store.state.currentContest = res.data;
       that.contest = res.data;
       const status = this.findStatus(res.data.status);
       const t = res.data.contestType;

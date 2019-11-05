@@ -206,7 +206,13 @@
       api.getProblemsDetail({ id: params.problemId }).then((res: any) => {
         this.problem = res.data;
       }).catch((err: any) => {
-        console.log(err, 'err');
+        (this as any).$Message.error('不在参赛列表内，正在尝试加入比赛');
+        api.addUserToContest({
+          id: params.contestId,
+          userId: this.$store.state.userInfo.userId,
+        }).then((res) => {
+          console.log(res.data)
+        })
       });
     }
 

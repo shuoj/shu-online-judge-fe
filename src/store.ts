@@ -11,7 +11,8 @@ export default new Vuex.Store({
     username: '',
     loginStatus: '',
     role: '',
-    contestList: []
+    contestList: [],
+    currentContest: {}
   },
   // 修改全局变量必须通过mutations中的方法
   // mutations只能采用同步方法

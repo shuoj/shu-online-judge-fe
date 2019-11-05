@@ -37,7 +37,7 @@
             <div class="idx">{{item.idx}}</div>
           </Col>
           <Col span="2">
-            <img src="../assets/contest.png" style="width:40px;margin-top:10px;"/>
+            <img src="../assets/contest.png" style="width:40px;margin-top:10px;height:40px;"/>
           </Col>
           <Col span="8">
             <div class="list-title">
@@ -243,6 +243,7 @@ export default class About extends Vue {
     border-bottom: 1px solid #ddd;
     font-weight: 400;
     padding: 20px 0 20px 0;
+    box-sizing: border-box;
     .list-title {
       text-align: left;
       font-size: 24px;

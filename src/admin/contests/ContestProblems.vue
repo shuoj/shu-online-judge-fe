@@ -343,14 +343,6 @@ export default class Admin extends Vue {
     })[0].judgeType;
   }
 
-  getJudgeType() {
-    const params = this.$route.params;
-    const id: string = params.id;
-    this.judgeType = this.$store.state.contestList.filter((item: any) => {
-      return item.id === id;
-    })[0].judgeType;
-  }
-
   getAllProblemsFromASpecificContest() {
     const params = this.$route.params;
     const id: string = params.id;
@@ -438,7 +430,6 @@ export default class Admin extends Vue {
     } else {
       this.problemDetail.sample = [];
     }
-    console.log(this.problemDetail)
     this.detailModal = true;
   }
 
@@ -447,7 +438,6 @@ export default class Admin extends Vue {
     const params = this.$route.params;
     const contestId: any = params.id;
     let problemId = this.problemDetail.id;
-    console.log(1212, this.problemDetail)
     api.setProblemsToContest({
       id: contestId,
       problemId: [problemId]
