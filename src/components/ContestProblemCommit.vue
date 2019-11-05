@@ -203,7 +203,10 @@
     getProblemDetail() {
       this.codeLoading = false;
       const params = this.$route.params;
-      api.getProblemsDetail({ id: params.problemId }).then((res: any) => {
+      api.getContestProblemsDetail({
+        cid: params.contestId,
+        pid: params.problemId
+      }).then((res: any) => {
         this.problem = res.data;
       }).catch((err: any) => {
         (this as any).$Message.error('不在参赛列表内，正在尝试加入比赛');
@@ -211,10 +214,14 @@
           id: params.contestId,
           userId: [this.$store.state.userInfo.id],
         }).then((res) => {
-          api.getProblemsDetail({ id: params.problemId }).then((res: any) => {
+          console.log('加入成功', res);
+          api.getContestProblemsDetail({
+            cid: params.contestId,
+            pid: params.problemId
+          }).then((res: any) => {
             this.problem = res.data;
           }).catch((err) => {
-            (this as any).$Message.error('加入失败');
+            (this as any).$Message.error('拿题目失败');
           })
         })
       });
