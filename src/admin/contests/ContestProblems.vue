@@ -140,7 +140,7 @@
                 >
                   <Option
                     v-for="(item, index) in searchData"
-                    :value="item.id"
+                    :value="item.idx"
                     :key="index"
                   >
                     <div class="option-two">
@@ -253,7 +253,7 @@
             </div>
             <span v-else>无</span>
           </div>
-          <div class="problem-section" style="clear: both">
+          <div class="problem-section" style="clear: both" v-if="judgeType === 'DELAY'">
             <h3>设置分数</h3>
             <InputNumber :max="100" :min="10" :step="10" v-model="score"></InputNumber>
           </div>
@@ -413,7 +413,7 @@ export default class Admin extends Vue {
   getProblemsByTitle() {
     if (this.addTitle !== '') {
       api.getProblemsIdByTitle({
-        title: this.addTitle
+        idx: this.addTitle
       }).then((res: any) => {
         this.searchData = res.data.list;
       }).catch((err: any) => {
@@ -422,8 +422,8 @@ export default class Admin extends Vue {
     }
   }
 
-  pushInto(id: any) {
-    const problem = this.searchData.filter((item: any) => item.id === id)[0];
+  pushInto(idx: any) {
+    const problem = this.searchData.filter((item: any) => item.idx === idx)[0];
     this.problemDetail = { ...problem };
     if (this.problemDetail.hasOwnProperty('sampleIO')) {
       this.problemDetail.sample = JSON.parse(problem.sampleIO);
@@ -438,29 +438,28 @@ export default class Admin extends Vue {
     const params = this.$route.params;
     const contestId: any = params.id;
     let problemId = this.problemDetail.id;
-    api.setProblemsToContest({
-      id: contestId,
-      problemId: [problemId]
-    }).then((res: any) => {
-      console.log(11, res)
-      if (this.judgeType === 'DELAY') {
-        api.setProblemScore({
-          id: contestId,
-          problemId: problemId,
-          score: this.score
-        }).then(() => {
-          this.getAllProblemsFromASpecificContest();
-          (this as any).$Message.success('添加成功');
-        }).catch((err) => {
-          (this as any).$Message.error(err.data.message);
-        });
-      } else {
+    if (this.judgeType === 'DELAY') {
+      api.setProblemScore({
+        id: contestId,
+        problemId: problemId,
+        score: this.score
+      }).then(() => {
         this.getAllProblemsFromASpecificContest();
         (this as any).$Message.success('添加成功');
-      }
-    }).catch((err: any) => {
-      (this as any).$Message.error(err.data.message);
-    });
+      }).catch((err) => {
+        (this as any).$Message.error(err.data.message);
+      });
+    } else {
+      api.setProblemsToContest({
+        id: contestId,
+        problemId: [problemId]
+      }).then((res: any) => {
+        this.getAllProblemsFromASpecificContest();
+        (this as any).$Message.success('添加成功');
+      }).catch((err: any) => {
+        (this as any).$Message.error(err.data.message);
+      });
+    }
   }
 
   getTagId() {

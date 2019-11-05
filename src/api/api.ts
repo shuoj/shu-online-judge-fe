@@ -94,7 +94,7 @@ export default {
   getAllProblemsFromASpecificContest: (data: { id: string }) => axios.get(`/api/v1/contests/${data.id}/problems`),
   setProblemsToContest: (data: { id: string, problemId: Array<string> }) => axios.post(`/api/v1/contests/${data.id}/problems`, data.problemId),
   setProblemScore: (data: { id: string, problemId: string, score: number }) => axios.post(`/api/v1/contests/${data.id}/problems/add?problemId=${data.problemId}&&score=${data.score}`),
-  getProblemsIdByTitle: (data: { title: string }) => axios.get('/api/v1/problems', { params: data }),
+  getProblemsIdByTitle: (data: { idx: string }) => axios.get('/api/v1/problems', { params: data }),
   getRanking: (data: { id: string }) => axios.get(`/api/v1/contests/${data.id}/ranking`, { params: data }),
   addGroupsToContest: (data: { id: string, groupId: number[] }) => axios.post(`/api/v1/contests/${data.id}/groups`, data.groupId),
   getAllUserFromContest: (data: { id: string }) => axios.get(`/api/v1/contests/${data.id}/users`),
