@@ -3,7 +3,7 @@
     <Col span="18" offset="3">
       <div class="container">
         <h2>代码分享自题目：
-          <RouterLink :to=" '/share/' + $route.params.id">{{ title }} </RouterLink>
+          <RouterLink :to=" '/problems/' + commit.problemId">{{ title }} </RouterLink>
         </h2>
         <div v-highlightjs="sourceCode">
           <pre>
@@ -27,6 +27,7 @@ import api from '../api/api';
 
 @Component
 export default class Share extends Vue {
+  commit: any = {};
   sourceCode: string = '';
   title: string = '';
   errMsg: any = {};
@@ -34,6 +35,7 @@ export default class Share extends Vue {
   mounted() {
     const params = this.$route.params;
     api.getCommit({ id: params.id }).then((res: any) => {
+      this.commit = res.data;
       this.sourceCode = res.data.code.replace(/\\n/g, '\n');
       this.title = res.data.problemTitle;
       this.errMsg = JSON.parse(res.data.resultDetail);
