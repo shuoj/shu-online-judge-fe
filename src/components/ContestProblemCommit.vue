@@ -209,9 +209,13 @@
         (this as any).$Message.error('不在参赛列表内，正在尝试加入比赛');
         api.addUserToContest({
           id: params.contestId,
-          userId: this.$store.state.userInfo.userId,
+          userId: [this.$store.state.userInfo.id],
         }).then((res) => {
-          console.log(res.data)
+          api.getProblemsDetail({ id: params.problemId }).then((res: any) => {
+            this.problem = res.data;
+          }).catch((err) => {
+            (this as any).$Message.error('加入失败');
+          })
         })
       });
     }
