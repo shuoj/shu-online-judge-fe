@@ -38,7 +38,7 @@
         @on-ok="createUser"
         @on-cancel="newModal = false">
         <div style="display: flex;">
-          <div style="display: flex;height: 220px;padding-top:10px;width: 40px;flex-direction: column;justify-content: space-between">
+          <div style="display: flex;height: 220px;padding-top:10px;width: 60px;flex-direction: column;justify-content: space-between">
             <div>用户名</div>
             <div>密码</div>
             <div>邮箱</div>
@@ -135,7 +135,7 @@
         ...this.newUser,
         password: md5(this.newUser.password),
         authorities: [
-          { 'authority': this.role }
+          { 'name': this.role }
         ]
       }).then((res) => {
         (this as any).$Message.success('创建成功');
