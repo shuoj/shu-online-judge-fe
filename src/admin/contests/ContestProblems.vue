@@ -133,7 +133,7 @@
                   v-model="addTitle"
                   icon="ios-search"
                   placeholder="请输入题目"
-                  @on-search="getProblemsByTitle"
+                  @on-change="getProblemsByTitle"
                   @on-select="pushInto"
                   style="width: 100%;"
                   placement="bottom"
@@ -165,13 +165,16 @@
           <Col span="8">
             <p>题目</p>
           </Col>
-          <Col span="4">
+          <Col span="3">
             <p>上次使用时间</p>
           </Col>
           <Col span="4">
             <p>通过次数/提交总数</p>
           </Col>
-          <Col span="6" style="text-align: center">
+          <Col span="3" v-if="judgeType === 'DELAY'">
+            <p>分数</p>
+          </Col>
+          <Col span="4" style="text-align: center">
             <p>操作</p>
           </Col>
         </Row>
@@ -182,34 +185,80 @@
           <Col span="8">
             <a @click="toProblem(item.id)">{{ item.title }}</a>
           </Col>
-          <Col span="4">
-            <p>{{ item.lastUsedDate }}</p>
+          <Col span="3">
+            <p>{{ item.lastUsedDate || '未使用过' }}</p>
           </Col>
           <Col span="4">
-            <p>{{ item.rate }}</p>
+            <p>{{ Math.floor(item.acceptRate * 100) + '%(' +
+              String(item.acceptCount) +
+              ' / ' +
+              String(item.submitCount) +
+              ')' }}</p>
           </Col>
-          <Col span="6" style="text-align: center">
+          <Col span="3" v-if="judgeType === 'DELAY'">
+            <p>{{ item.score }}</p>
+          </Col>
+          <Col span="4" style="text-align: center">
             <Button
               type="text"
               style="color: #2d8cf0"
               @click="deleteProblem(item.id)"
             >删除</Button>
-            <Button
-              v-if="judgeType !== 'IMMEDIATELY'"
-              type="text"
-              style="color: #2d8cf0"
-              @click="scoreModal = true, setProblem = item"
-            >设置分数</Button>
           </Col>
         </Row>
       </Col>
       <Modal
-        v-model="scoreModal"
-        title="设置分数"
-        width="40%"
-        @on-ok="setScore"
-        @on-cancel="scoreModal = false">
-        <InputNumber :max="100" :min="10" v-model="score"></InputNumber>
+        v-model="detailModal"
+        :title="problemDetail.title"
+        width="70%"
+        @on-ok="setProblemsToContest"
+        @on-cancel="cancel">
+        <div class="wrapper">
+          <div class="problem-section">
+            <h3>描述</h3>
+            <p v-html="problemDetail.description"></p>
+          </div>
+          <div class="problem-section">
+            <h3>输入</h3>
+            <p v-html="problemDetail.inputDesc"></p>
+          </div>
+          <div class="problem-section">
+            <h3>输出</h3>
+            <p v-html="problemDetail.outputDesc"></p>
+          </div>
+          <div class="problem-section">
+            <h3>难度</h3>
+            <p v-html="problemDetail.difficulty"></p>
+          </div>
+          <div class="problem-section">
+            <h3>详细数据</h3>
+            <p>{{ Math.floor(problemDetail.acceptRate * 100) + '%(' +
+              String(problemDetail.acceptCount) +
+              ' / ' +
+              String(problemDetail.submitCount) +
+              ')' }}</p>
+          </div>
+          <div class="problem-section" style="clear: both">
+            <h3>标签</h3>
+            <p>
+              <Tag type="dot" v-for="(tag, index) in problemDetail.tagList" :key="index" v-if="problemDetail.tagList.length > 0" color="success">{{tag.name}}</Tag>
+              <span v-else>无</span>
+            </p>
+          </div>
+          <div class="problem-section" style="clear: both">
+            <h3>样例</h3>
+            <div style="padding-bottom: 10px;" type="dot" v-for="(item, index) in problemDetail.sample" :key="index" v-if="problemDetail.sample.length > 0">
+              <div>Input :  {{item.input}}</div>
+              <div>Output : {{item.input}}</div>
+            </div>
+            <span v-else>无</span>
+          </div>
+          <div class="problem-section" style="clear: both">
+            <h3>设置分数</h3>
+            <InputNumber :max="100" :min="10" :step="10" v-model="score"></InputNumber>
+          </div>
+        </div>
+
       </Modal>
     </Row>
   </div>
@@ -223,7 +272,7 @@ import Loading from '../../components/Loading.vue';
   components: { Loading }
 })
 export default class Admin extends Vue {
-  scoreModal: boolean = false;
+  detailModal: boolean = false;
   setProblem: any = {};
   alphabet: any = [
     'A',
@@ -270,6 +319,21 @@ export default class Admin extends Vue {
   pending: boolean = true;
   score: number = 10;
   judgeType: string = '';
+  problemDetail: any = {
+    id: '',
+    title: '',
+    description: '',
+    inputDesc: '',
+    outputDesc: '',
+    difficulty: '',
+    acceptRate: '',
+    acceptCount: '',
+    submitCount: '',
+    tagList: [],
+    sample: {},
+    sampleIO: ''
+  };
+
 
   getJudgeType() {
     const params = this.$route.params;
@@ -279,19 +343,12 @@ export default class Admin extends Vue {
     })[0].judgeType;
   }
 
-  setScore() {
+  getJudgeType() {
     const params = this.$route.params;
     const id: string = params.id;
-    api.setProblemScore({
-      id: id,
-      score: this.score,
-      problemId: this.setProblem.id
-    }).then((res) => {
-      console.log(res);
-      (this as any).$Message.success('设置成功');
-    }).catch((err) => {
-      (this as any).$Message.error(err.data.message);
-    });
+    this.judgeType = this.$store.state.contestList.filter((item: any) => {
+      return item.id === id;
+    })[0].judgeType;
   }
 
   getAllProblemsFromASpecificContest() {
@@ -302,21 +359,7 @@ export default class Admin extends Vue {
     api
       .getAllProblemsFromASpecificContest({ id })
       .then((res: any) => {
-        res.data.forEach(function(item: any) {
-          that.problems.push({
-            id: item.id,
-            title: item.title,
-            create: item.lastUsedDate,
-            lastUsedDate: item.lastUsedDate,
-            rate:
-              Math.floor(item.acceptRate * 100) +
-              '%(' +
-              String(item.acceptCount) +
-              ' / ' +
-              String(item.submitCount) +
-              ')'
-          });
-        });
+        this.problems = res.data;
       })
       .catch((err: any) => {
         console.log(err);
@@ -341,8 +384,9 @@ export default class Admin extends Vue {
   }
 
   cancel () {
-    (this as any).$Message.info('取消');
+    this.detailModal = false;
   }
+
   recommend() {
     this.pending = true;
     api.getRecommend({
@@ -376,39 +420,57 @@ export default class Admin extends Vue {
 
   getProblemsByTitle() {
     if (this.addTitle !== '') {
-      api
-        .getProblemsIdByTitle({
-          title: this.addTitle
-        })
-        .then((res: any) => {
-          this.searchData = res.data.list;
-        })
-        .catch((err: any) => {
-          console.log(err);
-        });
+      api.getProblemsIdByTitle({
+        title: this.addTitle
+      }).then((res: any) => {
+        this.searchData = res.data.list;
+      }).catch((err: any) => {
+        console.log(err);
+      });
     }
   }
 
   pushInto(id: any) {
-    this.addTitle = '';
-    if (id) {
-      const params = this.$route.params;
-      const contestId: any = params.id;
-      api
-        .setProblemsToContest({
-          id: contestId,
-          problemId: [id]
-        })
-        .then((res: any) => {
-          this.addTitle = '';
-          (this as any).$Message.success('添加成功');
-          this.getAllProblemsFromASpecificContest();
-        })
-        .catch((err: any) => {
-          console.log(err);
-          (this as any).$Message.error('添加失败');
-        });
+    const problem = this.searchData.filter((item: any) => item.id === id)[0];
+    this.problemDetail = { ...problem };
+    if (this.problemDetail.hasOwnProperty('sampleIO')) {
+      this.problemDetail.sample = JSON.parse(problem.sampleIO);
+    } else {
+      this.problemDetail.sample = [];
     }
+    console.log(this.problemDetail)
+    this.detailModal = true;
+  }
+
+  setProblemsToContest() {
+    this.addTitle = '';
+    const params = this.$route.params;
+    const contestId: any = params.id;
+    let problemId = this.problemDetail.id;
+    console.log(1212, this.problemDetail)
+    api.setProblemsToContest({
+      id: contestId,
+      problemId: [problemId]
+    }).then((res: any) => {
+      console.log(11, res)
+      if (this.judgeType === 'DELAY') {
+        api.setProblemScore({
+          id: contestId,
+          problemId: problemId,
+          score: this.score
+        }).then(() => {
+          this.getAllProblemsFromASpecificContest();
+          (this as any).$Message.success('添加成功');
+        }).catch((err) => {
+          (this as any).$Message.error(err.data.message);
+        });
+      } else {
+        this.getAllProblemsFromASpecificContest();
+        (this as any).$Message.success('添加成功');
+      }
+    }).catch((err: any) => {
+      (this as any).$Message.error(err.data.message);
+    });
   }
 
   getTagId() {
@@ -436,8 +498,7 @@ export default class Admin extends Vue {
         this.getAllProblemsFromASpecificContest();
       })
       .catch((err: any) => {
-        (this as any).$Message.success('删除失败');
-        console.log(err);
+        (this as any).$Message.error(err.data.message);
       });
   }
 
@@ -510,5 +571,31 @@ export default class Admin extends Vue {
 
 .last-row {
   margin-top: 24px;
+}
+.problem-section {
+  padding: 5px 0;
+  width: 50%;
+  p {
+    text-align: left;
+    font-size: 15px;
+    color: rgb(51, 51, 51);
+    margin-bottom: 10px;
+  }
+  pre {
+    background-color: white;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    padding: 9px;
+    margin: 2px 0 9px;
+    font-size: 12px;
+    line-height: 1.4;
+    border-radius: 0;
+    border: 1px solid #ccc;
+    text-align: left;
+  }
+}
+.wrapper {
+  display: flex;
+  flex-flow: wrap;
 }
 </style>
