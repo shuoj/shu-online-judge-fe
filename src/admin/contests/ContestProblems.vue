@@ -334,7 +334,6 @@ export default class Admin extends Vue {
     sampleIO: ''
   };
 
-
   getJudgeType() {
     const params = this.$route.params;
     const id: string = params.id;
@@ -437,7 +436,7 @@ export default class Admin extends Vue {
     this.addTitle = '';
     const params = this.$route.params;
     const contestId: any = params.id;
-    let problemId = this.problemDetail.id;
+    const problemId = this.problemDetail.id;
     if (this.judgeType === 'DELAY') {
       api.setProblemScore({
         id: contestId,

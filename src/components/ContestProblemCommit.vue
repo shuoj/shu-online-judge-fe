@@ -208,22 +208,8 @@
         pid: params.problemId
       }).then((res: any) => {
         this.problem = res.data;
-      }).catch((err: any) => {
-        (this as any).$Message.error('不在参赛列表内，正在尝试加入比赛');
-        api.addUserToContest({
-          id: params.contestId,
-          userId: [this.$store.state.userInfo.id],
-        }).then((res) => {
-          console.log('加入成功', res);
-          api.getContestProblemsDetail({
-            cid: params.contestId,
-            pid: params.problemId
-          }).then((res: any) => {
-            this.problem = res.data;
-          }).catch((err) => {
-            (this as any).$Message.error('拿题目失败');
-          })
-        })
+      }).catch(() => {
+        (this as any).$Message.error('获取题目失败');
       });
     }
 
