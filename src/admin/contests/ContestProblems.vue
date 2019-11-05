@@ -125,7 +125,7 @@
           <TabPane label="手动组卷" name="hand">
             <Row style="text-align: left;padding-top: 40px">
               <Col span="24">
-                <h2>用题目标题添加：</h2>
+                <h2>用题号添加：</h2>
               </Col>
               <Col span="14">
                 <AutoComplete
