@@ -101,6 +101,7 @@ export default {
   setVisibleContest: (data: { id: string, visible: boolean }) => axios.patch(`/api/v1/contests/${data.id}?visible=${data.visible}`),
   setStatusContest: (data: { id: string, option: any }) => axios.patch(`/api/v1/contests/${data.id}/status?option=${data.option}`),
   sendPassword: (data: { id: string, password: any }) => axios.post(`/api/v1/contests/${data.id}/join?password=${data.password}`),
+  setProblemScore: (data: { id: string, problemId: string, score: number }) => axios.post(`/api/v1/contests/${data.id}/problems/add?problemId=${data.problemId}&&score=${data.score}`),
   contestCommit: (data: { contestId: string, problemId: string, code: string, language: string }) => axios.post(`/api/v1/contests/${data.contestId}/problems/${data.problemId}/submissions`, {
     code: data.code,
     language: data.language

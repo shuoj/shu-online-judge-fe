@@ -162,16 +162,16 @@
           <Col span="2">
             <p>题号</p>
           </Col>
-          <Col span="10">
+          <Col span="8">
             <p>题目</p>
           </Col>
-          <Col span="6">
-            <p>最后更新</p>
+          <Col span="4">
+            <p>上次使用时间</p>
           </Col>
           <Col span="4">
             <p>通过次数/提交总数</p>
           </Col>
-          <Col span="2" style="text-align: center">
+          <Col span="6" style="text-align: center">
             <p>操作</p>
           </Col>
         </Row>
@@ -179,25 +179,38 @@
           <Col span="2">
             <p>{{ alphabet[index] }}</p>
           </Col>
-          <Col span="10">
+          <Col span="8">
             <a @click="toProblem(item.id)">{{ item.title }}</a>
           </Col>
-          <Col span="6">
-            <p>{{ item.create }}</p>
+          <Col span="4">
+            <p>{{ item.lastUsedDate }}</p>
           </Col>
           <Col span="4">
             <p>{{ item.rate }}</p>
           </Col>
-          <Col span="2" style="text-align: center">
+          <Col span="6" style="text-align: center">
             <Button
               type="text"
               style="color: #2d8cf0"
               @click="deleteProblem(item.id)"
-            >删除</Button
-            >
+            >删除</Button>
+            <Button
+              v-if="judgeType !== 'IMMEDIATELY'"
+              type="text"
+              style="color: #2d8cf0"
+              @click="scoreModal = true, setProblem = item"
+            >设置分数</Button>
           </Col>
         </Row>
       </Col>
+      <Modal
+        v-model="scoreModal"
+        title="设置分数"
+        width="40%"
+        @on-ok="setScore"
+        @on-cancel="scoreModal = false">
+        <InputNumber :max="100" :min="10" v-model="score"></InputNumber>
+      </Modal>
     </Row>
   </div>
 </template>
@@ -210,6 +223,8 @@ import Loading from '../../components/Loading.vue';
   components: { Loading }
 })
 export default class Admin extends Vue {
+  scoreModal: boolean = false;
+  setProblem: any = {};
   alphabet: any = [
     'A',
     'B',
@@ -253,6 +268,31 @@ export default class Admin extends Vue {
   recommendList: Array<string> = [];
   modal: boolean = false;
   pending: boolean = true;
+  score: number = 10;
+  judgeType: string = '';
+
+  getJudgeType() {
+    const params = this.$route.params;
+    const id: string = params.id;
+    this.judgeType = this.$store.state.contestList.filter((item: any) => {
+      return item.id === id;
+    })[0].judgeType;
+  }
+
+  setScore() {
+    const params = this.$route.params;
+    const id: string = params.id;
+    api.setProblemScore({
+      id: id,
+      score: this.score,
+      problemId: this.setProblem.id
+    }).then((res) => {
+      console.log(res);
+      (this as any).$Message.success('设置成功');
+    }).catch((err) => {
+      (this as any).$Message.error(err.data.message);
+    });
+  }
 
   getAllProblemsFromASpecificContest() {
     const params = this.$route.params;
@@ -267,6 +307,7 @@ export default class Admin extends Vue {
             id: item.id,
             title: item.title,
             create: item.lastUsedDate,
+            lastUsedDate: item.lastUsedDate,
             rate:
               Math.floor(item.acceptRate * 100) +
               '%(' +
@@ -359,6 +400,7 @@ export default class Admin extends Vue {
           problemId: [id]
         })
         .then((res: any) => {
+          this.addTitle = '';
           (this as any).$Message.success('添加成功');
           this.getAllProblemsFromASpecificContest();
         })
@@ -415,9 +457,16 @@ export default class Admin extends Vue {
   }
 
   mounted() {
-    this.getTagId();
-    this.getUser();
-    this.getAllProblemsFromASpecificContest();
+    if (this.$store.state.contestList.length === 0) {
+      this.$router.push({
+        path: `/admin/contests-list`
+      });
+    } else {
+      this.getTagId();
+      this.getUser();
+      this.getAllProblemsFromASpecificContest();
+      this.getJudgeType();
+    }
   }
 }
 </script>

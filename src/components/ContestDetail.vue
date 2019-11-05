@@ -35,30 +35,41 @@
                 <td style="width:30px;">#</td>
                 <td style="width:100px;">用户名</td>
                 <td style="width:100px;">AC/总提交</td>
-                <td style="width:100px;">用时 + 罚时</td>
+                <td style="width:100px;" v-if="contest.judgeType === 'IMMEDIATELY'">用时 + 罚时</td>
+                <td style="width:100px;" v-else>总分</td>
                 <td v-for="item in problemNumber" :key="item" style="width: 100px;">{{alphabet[item-1]}}</td>
               </tr>
               <tr class="second-title" v-for="(user, index) in ranking" :key="index">
                 <td>{{index+1}}</td>
                 <td>{{user.userName}}</td>
                 <td>{{user.acceptCount}}/{{user.submitCount}}</td>
-                <td>
+                <td v-if="contest.judgeType === 'IMMEDIATELY'">
                   <p v-html="timetrans(user.totalTime.totalTime)"></p>
                   <p v-if="user.totalTime.errorCount !== 0" >(-{{user.totalTime.errorCount}})</p>
                 </td>
+                <td v-else>
+                  <p>{{user.totalTime.score}}</p>
+                </td>
                 <template v-for="(problem, index) in user.timeList">
-                  <template v-if="problem.submitted === true">
-                    <td v-if="problem.passed === true" :class="choose(problem.firstPassed)">
-                      <div>{{timetrans(problem.totalTime)}}</div>
-                      <div v-if="problem.errorCount !== 0">(-{{problem.errorCount}})</div>
-                    </td>
-                    <td v-else class="red">
-                      <p v-html="timetrans(problem.totalTime)"></p>
-                      <p v-if="problem.errorCount !== 0">(-{{problem.errorCount}})</p>
+                  <template v-if="contest.judgeType === 'IMMEDIATELY'">
+                    <template v-if="problem.submitted === true">
+                      <td v-if="problem.passed === true" :class="choose(problem.firstPassed)">
+                        <div>{{timetrans(problem.totalTime)}}</div>
+                        <div v-if="problem.errorCount !== 0">(-{{problem.errorCount}})</div>
+                      </td>
+                      <td v-else class="red">
+                        <p v-html="timetrans(problem.totalTime)"></p>
+                        <p v-if="problem.errorCount !== 0">(-{{problem.errorCount}})</p>
+                      </td>
+                    </template>
+                    <td v-else class="not-submitted">
                     </td>
                   </template>
-                  <td v-else class="not-submitted">
-                  </td>
+                  <template v-else>
+                    <td :class="problem.submitted ? 'green' : 'red'">
+                      <p>{{problem.score}}</p>
+                    </td>
+                  </template>
                 </template>
               </tr>
             </tbody>

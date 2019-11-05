@@ -233,6 +233,7 @@
         page: page,
         size: pageSize
       }).then((res: any) => {
+        this.$store.state.contestList = res.data.list;
         const that = this;
         that.total = res.data.total;
         let visibility = '';
