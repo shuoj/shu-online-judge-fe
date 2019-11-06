@@ -13,11 +13,11 @@
       <div class="form-horizontal">
         <FormItem style="width: 40%">
           <h2>时间限制(ms, 范围1-10000ms)</h2>
-          <Input v-model="problemData.timeLimit" type="number"/>
+          <InputNumber v-model="timeLimit"/>
         </FormItem>
         <FormItem style="width: 40%; margin-left: 48px">
           <h2>内存限制(MB, 最低16M, Java不能低于32M)</h2>
-          <Input v-model="problemData.ramLimit" type="number"/>
+          <InputNumber v-model="ramLimit"/>
         </FormItem>
       </div>
       <div class="form-horizontal">
@@ -170,6 +170,8 @@ export default class Problemform extends Vue {
     source: '',
     specialJudged: false
   };
+  timeLimit: number = 0;
+  ramLimit: number = 0;
   baseURL: any = VUE_APP_BASE_URL;
   sampleList: Array<object> = [];
   @Prop({}) dataProp: any;
@@ -195,6 +197,8 @@ export default class Problemform extends Vue {
       tagTemp.forEach((item: any) => {
         tags.push(item);
       });
+      this.timeLimit = Number(this.problemData.timeLimit);
+      this.ramLimit = Number(this.problemData.ramLimit);
       this.problemData = this.dataProp;
       if (this.dataProp.sampleIO) {
         this.sampleList = JSON.parse(this.dataProp.sampleIO);
@@ -290,6 +294,8 @@ export default class Problemform extends Vue {
       this.problemData.sampleIO = JSON.stringify(this.sampleList);
       this.problemData.sampleIOList = this.sampleList;
     }
+    this.problemData.timeLimit = this.timeLimit;
+    this.problemData.ramLimit = this.ramLimit;
     this.$emit('problem-data', this.problemData);
   }
 
