@@ -13,11 +13,11 @@
       <div class="form-horizontal">
         <FormItem style="width: 40%">
           <h2>时间限制(ms, 范围1-10000ms)</h2>
-          <Input v-model="problemData.timeLimit"/>
+          <Input v-model="problemData.timeLimit" type="number"/>
         </FormItem>
         <FormItem style="width: 40%; margin-left: 48px">
           <h2>内存限制(MB, 最低16M, Java不能低于32M)</h2>
-          <Input v-model="problemData.ramLimit"/>
+          <Input v-model="problemData.ramLimit" type="number"/>
         </FormItem>
       </div>
       <div class="form-horizontal">
@@ -158,8 +158,8 @@ export default class Problemform extends Vue {
     authorId: '',
     title: '',
     description: '',
-    timeLimit: '',
-    ramLimit: '',
+    timeLimit: 0,
+    ramLimit: 0,
     difficulty: '',
     tagList: [],
     inputDesc: '',

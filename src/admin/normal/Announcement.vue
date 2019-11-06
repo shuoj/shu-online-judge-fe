@@ -129,7 +129,7 @@
         (this as any).$Message.success('修改成功');
         this.getAllAnnouncements();
       }).catch((err: any) => {
-        (this as any).$Message.error(err.data.message);;
+        (this as any).$Message.error(err.data.message);
       });
     }
 
@@ -138,7 +138,7 @@
         (this as any).$Message.success('删除成功');
         this.getAllAnnouncements();
       }).catch((err: any) => {
-        (this as any).$Message.error(err.data.message);;
+        (this as any).$Message.error(err.data.message);
       });
     }
 
@@ -154,7 +154,7 @@
           (this as any).$Message.success('创建成功');
           this.getAllAnnouncements();
         }).catch((err: any) => {
-          (this as any).$Message.error(err.data.message);;
+          (this as any).$Message.error(err.data.message);
         });
       } else {
         (this as any).$Message.error('不能为空');

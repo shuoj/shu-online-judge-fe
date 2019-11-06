@@ -147,7 +147,7 @@ export default class ProblemDetail extends Vue {
         this.codeStatus = res.data.result;
         this.submissionId = res.data.id;
       }).catch((err: any) => {
-        (this as any).$Message.error(err.data.message);;
+        (this as any).$Message.error(err.data.message);
         this.codeLoading = false;
         // this.codeStatus = 'ACCEPTED';
       });
@@ -226,7 +226,7 @@ export default class ProblemDetail extends Vue {
     font-size: 30px;
     font-weight: 500;
     margin-top: 20px;
-    margin-bottom: 10px;;
+    margin-bottom: 10px;
   }
 
   h3 {

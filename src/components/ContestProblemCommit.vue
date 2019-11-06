@@ -239,7 +239,7 @@
     font-size: 30px;
     font-weight: 500;
     margin-top: 20px;
-    margin-bottom: 10px;;
+    margin-bottom: 10px;
   }
 
   h3 {

@@ -41,7 +41,7 @@
         api.getOwnQuestion({ username }).then((res: any) => {
           this.question = res.data;
         }).catch((err) => {
-          (this as any).$Message.error('获取失败');
+          (this as any).$Message.error(err.data.message);
         });
       } else {
         (this as any).$Message.warning('用户名不能为空');
@@ -58,7 +58,7 @@
         this.revise = true;
         window.localStorage.setItem('token', res.data.token);
       }).catch((err: any) => {
-        (this as any).$Message.error('出错');
+        (this as any).$Message.error(err.data.message);
       });
     }
 
@@ -70,7 +70,7 @@
           path: `/login`
         });
       }).catch((err: any) => {
-        (this as any).$Message.error(err.data.message);;
+        (this as any).$Message.error(err.data.message);
       });
     }
   }

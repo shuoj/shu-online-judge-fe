@@ -383,7 +383,7 @@
         (this as any).$Message.success('修改成功');
         this.getContests();
       }).catch((err: any) => {
-        (this as any).$Message.error(err.data.message);;
+        (this as any).$Message.error(err.data.message);
       });
     }
 

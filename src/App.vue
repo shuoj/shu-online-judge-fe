@@ -38,7 +38,7 @@ export default class App extends Vue {
         this.$store.commit('setUserInfo', res.data);
         this.$store.commit('setRole', role);
       }).catch((err: any) => {
-        (this as any).$Message.error(err.data.message);;
+        (this as any).$Message.error(err.data.message);
       });
       this.$store.commit('login', {
         token: window.localStorage.getItem('token'),

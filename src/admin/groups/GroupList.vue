@@ -254,7 +254,7 @@ export default class GroupList extends Vue {
         });
       }
     }).catch((err: any) => {
-      (this as any).$Message.error(err.data.message);;
+      (this as any).$Message.error(err.data.message);
     });
   }
 

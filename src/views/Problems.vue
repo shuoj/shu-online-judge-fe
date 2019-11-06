@@ -150,7 +150,7 @@ export default class Problems extends Vue {
       });
       that.problems = temp;
     }).catch((err: any) => {
-      (this as any).$Message.error(err.data.message);;
+      (this as any).$Message.error(err.data.message);
     });
   }
 

@@ -239,7 +239,7 @@ export default class ContestDetail extends Vue {
         'name': res.data.authorName
       });
     }).catch((err: any) => {
-      (this as any).$Message.error(err.data.message);;
+      (this as any).$Message.error(err.data.message);
       if (err.status === 400) {
         switch (err.data.code) {
           // 比赛未开始
@@ -335,7 +335,7 @@ export default class ContestDetail extends Vue {
       this.problemNumber = res.data.rankingUserList[0].timeList.length;
       that.ranking = res.data.rankingUserList;
     }).catch((err: any) => {
-      (this as any).$Message.error(err.data.message);;
+      (this as any).$Message.error(err.data.message);
     });
   }
 
@@ -355,7 +355,7 @@ export default class ContestDetail extends Vue {
   h1 {
     font-size: 30px;
     font-weight: 400;
-    margin-bottom: 20px;;
+    margin-bottom: 20px;
   }
 
   .description {
