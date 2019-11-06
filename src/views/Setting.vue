@@ -80,7 +80,7 @@
       api.getAllQuestions().then((res: any) => {
         this.questions = res.data;
       }).catch((err: any) => {
-        console.log(err);
+        (this as any).$Message.error(err.data.message);
       });
     }
 
@@ -109,8 +109,7 @@
           this.reset();
         }
       }).catch((err: any) => {
-        console.log(err);
-        (this as any).$Message.error('设置失败');
+        (this as any).$Message.error(err.data.message);
       });
     }
 
@@ -127,7 +126,7 @@
       api.deleteAnswers({}).then((res: any) => {
         (this as any).$Message.success('重置成功');
       }).catch((err: any) => {
-        console.log(err);
+        (this as any).$Message.error(err.data.message);
       });
     }
 

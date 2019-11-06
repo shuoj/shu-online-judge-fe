@@ -90,8 +90,7 @@ export default class About extends Vue {
             this.handleReset();
           })
           .catch((err: any) => {
-            console.log(err, 'err_register');
-            (this as any).$Message.error('服务器错误！');
+            (this as any).$Message.error(err.data.message);
           });
       }
     });

@@ -53,9 +53,8 @@ export default class Group extends Vue {
           index: index
         };
       });
-
-    }).catch((err: any) => {
-      console.log(err);
+    }).catch(() => {
+      (this as any).$Message.error('获取失败');
     });
   }
 

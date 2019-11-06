@@ -72,7 +72,7 @@ export default class Navbar extends Vue {
       api.getUserInfo().then((res: any) => {
         this.$store.commit('setUserInfo', res.data);
       }).catch((err: any) => {
-        console.log(err);
+        (this as any).$Message.error(err.data.message);;
       });
     }
   }

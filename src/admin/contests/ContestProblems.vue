@@ -353,7 +353,7 @@ export default class Admin extends Vue {
         this.problems = res.data;
       })
       .catch((err: any) => {
-        console.log(err);
+        (this as any).$Message.error(err.data.message);
       });
   }
 
@@ -369,8 +369,7 @@ export default class Admin extends Vue {
         this.getAllProblemsFromASpecificContest();
       })
       .catch((err: any) => {
-        console.log(err);
-        (this as any).$Message.error('添加失败');
+        (this as any).$Message.error(err.data.message);
       });
   }
 
@@ -416,7 +415,7 @@ export default class Admin extends Vue {
       }).then((res: any) => {
         this.searchData = res.data.list;
       }).catch((err: any) => {
-        console.log(err);
+        (this as any).$Message.error(err.data.message);
       });
     }
   }
@@ -468,7 +467,7 @@ export default class Admin extends Vue {
         this.tags = res.data;
       })
       .catch((err: any) => {
-        console.log(err);
+        (this as any).$Message.error(err.data.message);
       });
   }
   deleteProblem(itemId: any) {
@@ -501,7 +500,7 @@ export default class Admin extends Vue {
         });
       })
       .catch((err: any) => {
-        console.log(err);
+        (this as any).$Message.error(err.data.message);
       });
   }
 

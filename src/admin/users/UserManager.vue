@@ -207,7 +207,7 @@
         this.users = res.data.list;
         this.total = res.data.total;
       }).catch((err) => {
-        console.log(err);
+        (this as any).$Message.error(err.data.message);;
       });
     }
     mounted() {

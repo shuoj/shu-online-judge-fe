@@ -147,7 +147,7 @@ export default class ProblemDetail extends Vue {
         this.codeStatus = res.data.result;
         this.submissionId = res.data.id;
       }).catch((err: any) => {
-        console.log(err);
+        (this as any).$Message.error(err.data.message);;
         this.codeLoading = false;
         // this.codeStatus = 'ACCEPTED';
       });

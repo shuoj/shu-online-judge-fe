@@ -48,7 +48,7 @@ export default class UserManager extends Vue {
     api.getJudgeServer({}).then((res: any) => {
       this.status = res.data[0];
     }).catch((err) => {
-      console.log(err);
+      (this as any).$Message.error(err.data.message);
     });
   }
 

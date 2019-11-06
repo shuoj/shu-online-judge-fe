@@ -114,7 +114,7 @@
       api.getGroups().then((res: any) => {
         that.groups = res.data;
       }).catch((err: any) => {
-        console.log(err);
+        (this as any).$Message.error(err.data.message);;
       });
     }
 
@@ -124,7 +124,7 @@
       api.getAllUserFromContest({ id }).then((res: any) => {
         this.users = res.data;
       }).catch((err: any) => {
-        console.log(err);
+        (this as any).$Message.error(err.data.message);;
       });
     }
 
@@ -142,8 +142,7 @@
         (this as any).$Message.success('添加成功');
         this.getUser();
       }).catch((err: any) => {
-        (this as any).$Message.error('添加失败');
-        console.log(err);
+        (this as any).$Message.error(err.data.message);;
       });
     }
 
@@ -159,8 +158,7 @@
         this.getUser();
         (this as any).$Message.success('删除成功');
       }).catch((err: any) => {
-        (this as any).$Message.error('删除失败');
-        console.log(err);
+        (this as any).$Message.error(err.data.message);;
       });
     }
 

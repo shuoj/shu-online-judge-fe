@@ -246,8 +246,8 @@
           };
         });
         this.changeContest = this.contests.slice();
-      }).catch((err: any) => {
-        console.log(err, 'err');
+      }).catch(() => {
+        (this as any).$Message.error('获取失败');
       });
     }
 
@@ -264,8 +264,8 @@
         that.contestType = res.data.contestType;
         that.judgeType = (res.data.judgeType === 'IMMEDIATELY');
         that.visible = (res.data.visible === true);
-      }).catch((err: any) => {
-        console.log(err, 'err');
+      }).catch(() => {
+        (this as any).$Message.error('获取失败');
       });
       this.editorContest = !this.editorContest;
     }
@@ -349,9 +349,8 @@
         that.$router.push({
           path: `/admin/contests-list`
         });
-      }).catch((err: any) => {
+      }).catch(() => {
         (this as any).$Message.error('修改出错');
-        console.log(err);
       });
     }
 
@@ -360,8 +359,7 @@
         (this as any).$Message.success('删除成功');
         this.getContests();
       }).catch((err: any) => {
-        console.log(err);
-        (this as any).$Message.error('删除失败');
+        (this as any).$Message.error(err.data.message);
       });
     }
 
@@ -385,7 +383,7 @@
         (this as any).$Message.success('修改成功');
         this.getContests();
       }).catch((err: any) => {
-        console.log(err);
+        (this as any).$Message.error(err.data.message);;
       });
     }
 
@@ -405,7 +403,7 @@
         (this as any).$Message.success('修改成功');
         this.getContests();
       }).catch((err: any) => {
-        console.log(err);
+        (this as any).$Message.error(err.data.message);
       });
     }
 

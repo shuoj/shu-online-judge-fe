@@ -122,14 +122,14 @@
           this.user = res.data;
           this.reviseUser = JSON.parse(JSON.stringify(res.data));
         }).catch((err: any) => {
-          console.log(err);
+          (this as any).$Message.error(err.data.message);;
         });
       } else {
         api.getUserInfo().then((res: any) => {
           this.user = JSON.parse(JSON.stringify(res.data));
           this.reviseUser = JSON.parse(JSON.stringify(res.data));
         }).catch((err: any) => {
-          console.log(err);
+          (this as any).$Message.error(err.data.message);;
         });
       }
     }

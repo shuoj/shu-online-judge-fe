@@ -62,7 +62,7 @@ export default class UserManager extends Vue {
       this.total = res.data.total;
       this.logs = res.data.list;
     }).catch((err: any) => {
-      console.log(err);
+      (this as any).$Message.error(err.data.message);
     });
   }
 
@@ -93,7 +93,7 @@ export default class UserManager extends Vue {
       this.totalStudent = res.data.total;
       this.searchArray = res.data.list;
     }).catch((err: any) => {
-      console.log(err);
+      (this as any).$Message.error(err.data.message);
     });
   }
 

@@ -32,7 +32,7 @@
           'title': res.data.title
         });
       }).catch((err: any) => {
-        console.log(err, 'err');
+        (this as any).$Message.error(err.data.message);
       });
     }
 

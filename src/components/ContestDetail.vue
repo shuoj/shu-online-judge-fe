@@ -239,7 +239,7 @@ export default class ContestDetail extends Vue {
         'name': res.data.authorName
       });
     }).catch((err: any) => {
-      console.log(err);
+      (this as any).$Message.error(err.data.message);;
       if (err.status === 400) {
         switch (err.data.code) {
           // 比赛未开始
@@ -316,8 +316,7 @@ export default class ContestDetail extends Vue {
         this.getContestDetail();
       }
     }).catch((err: any) => {
-      console.log(err);
-      (this as any).$Message.error('加入失败');
+      (this as any).$Message.error(err.data.message);
       this.cancel();
     });
   }
@@ -336,7 +335,7 @@ export default class ContestDetail extends Vue {
       this.problemNumber = res.data.rankingUserList[0].timeList.length;
       that.ranking = res.data.rankingUserList;
     }).catch((err: any) => {
-      console.log(err);
+      (this as any).$Message.error(err.data.message);;
     });
   }
 

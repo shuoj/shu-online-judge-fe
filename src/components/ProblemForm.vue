@@ -296,8 +296,8 @@ export default class Problemform extends Vue {
   getTags() {
     api.getTags().then((res: any) => {
       this.allTags = res.data;
-    }).catch(() => {
-      console.log('err');
+    }).catch((err) => {
+      (this as any).$Message.error(err.data.message);
     });
   }
 

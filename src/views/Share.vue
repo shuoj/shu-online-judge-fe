@@ -40,7 +40,7 @@ export default class Share extends Vue {
       this.title = res.data.problemTitle;
       this.errMsg = JSON.parse(res.data.resultDetail);
     }).catch((err: any) => {
-      console.log(err);
+      (this as any).$Message.error(err.data.message);
     });
   }
 }

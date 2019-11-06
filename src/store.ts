@@ -24,7 +24,6 @@ export default new Vuex.Store({
       window.localStorage.setItem('username', payload.username);
     },
     logout(state) {
-      console.log('注销成功');
       state.username = '';
       state.token = '';
       window.localStorage.setItem('token', '');

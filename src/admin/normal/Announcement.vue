@@ -109,7 +109,7 @@
         this.content = res.data.content;
         this.id = res.data.id;
       }).catch((err: any) => {
-        console.log(err);
+        (this as any).$Message.error(err.data.message);
       });
     }
 
@@ -129,7 +129,7 @@
         (this as any).$Message.success('修改成功');
         this.getAllAnnouncements();
       }).catch((err: any) => {
-        console.log(err);
+        (this as any).$Message.error(err.data.message);;
       });
     }
 
@@ -138,8 +138,7 @@
         (this as any).$Message.success('删除成功');
         this.getAllAnnouncements();
       }).catch((err: any) => {
-        console.log(err);
-        (this as any).$Message.error('删除失败');
+        (this as any).$Message.error(err.data.message);;
       });
     }
 
@@ -155,8 +154,7 @@
           (this as any).$Message.success('创建成功');
           this.getAllAnnouncements();
         }).catch((err: any) => {
-          console.log(err);
-          (this as any).$Message.error('创建失败');
+          (this as any).$Message.error(err.data.message);;
         });
       } else {
         (this as any).$Message.error('不能为空');
