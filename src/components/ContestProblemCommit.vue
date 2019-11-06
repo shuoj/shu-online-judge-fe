@@ -145,9 +145,20 @@
           this.codeLoading = false;
           this.codeStatus = res.data.result;
         }).catch((err: any) => {
-          console.log(err);
+          if (err.data.code === -6) {
+            (this as any).$Message.info('不在参赛列表内，正在尝试加入比赛');
+            api.sendPassword({
+              id: params.contestId,
+              password: ''
+            }).then((res) => {
+              console.log(res.data, 'success');
+              (this as any).$Message.success('加入成功，请重新提交');
+            }).catch(() => {
+              (this as any).$Message.error('加入失败，请重新尝试');
+            });
+          }
+          (this as any).$Message.error(err.data.message);
           this.codeLoading = false;
-          // this.codeStatus = 'ACCEPTED';
         });
       } else {
         (this as any).$Message.error('代码不能为空');
