@@ -130,8 +130,11 @@
             </Col>
             <Col span="11">
               <div class="item-padding">
-                <h3>实时排名</h3>
-                <Checkbox v-model="judgeType">如果不勾选，排名会被缓存，不会更新，而且只显示自己的提交。用于 acm 封榜。rank页面url后面增加?force_real_time_rank=true可以在管理员身份下查看最新排名。</Checkbox>
+                <h3>比赛类型</h3>
+                <RadioGroup v-model="judgeType">
+                  <Radio label="IMMEDIATELY">ICPC</Radio>
+                  <Radio label="DELAY">OI</Radio>
+                </RadioGroup>
               </div>
             </Col>
             <Col span="11" offset="2">
@@ -337,7 +340,7 @@
           name: that.name,
           description: that.description,
           contestType: that.contestType,
-          judgeType: (that.judgeType === true) ? 'IMMEDIATELY' : 'DELAY',
+          judgeType: that.judgeType,
           enable: that.enable,
           visible: that.visible,
           startDate: start,
