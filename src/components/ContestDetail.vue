@@ -44,11 +44,11 @@
                 <td>{{user.userName}}</td>
                 <td>{{user.acceptCount}}/{{user.submitCount}}</td>
                 <td v-if="contest.judgeType === 'IMMEDIATELY'">
-                  <p v-html="timetrans(user.totalTime.totalTime)"></p>
-                  <p v-if="user.totalTime.errorCount !== 0" >(-{{user.totalTime.errorCount}})</p>
+                  <p v-html="timetrans(user.time)"></p>
+                  <p v-if="user.errorCount !== 0" >(-{{user.errorCount}})</p>
                 </td>
                 <td v-else>
-                  <p>{{user.totalTime.score}}</p>
+                  <p>{{user.score}}</p>
                 </td>
                 <template v-for="(problem, index) in user.timeList">
                   <template v-if="contest.judgeType === 'IMMEDIATELY'">
@@ -225,7 +225,6 @@ export default class ContestDetail extends Vue {
     const id: any = params.id;
     const that = this;
     api.getContestDetail({ id }).then((res: any) => {
-      console.log(res.data);
       this.$store.state.currentContest = res.data;
       that.contest = res.data;
       const status = this.findStatus(res.data.status);
