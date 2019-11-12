@@ -150,7 +150,7 @@
         ...this.reviseUser,
         password: md5(this.reviseUser.password),
         authorities: [
-          { 'authority': this.role }
+          { 'name': this.role }
         ]
       };
       console.log(user);
