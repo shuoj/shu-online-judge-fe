@@ -11,7 +11,7 @@
         @on-ok="setVisible"
         @on-cancel="cancel">
         <p v-if="modalVisible === true">确定要修改为不可见吗？</p>
-        <p v-else="modalVisible === false">确定要修改为可见吗？</p>
+        <p v-else >确定要修改为可见吗？</p>
       </Modal>
       <Modal
         v-model="modal2"
