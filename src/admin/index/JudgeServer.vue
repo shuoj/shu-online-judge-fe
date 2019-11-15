@@ -10,24 +10,28 @@
         <div class="content">
           <Row>
             <Col span="8">
-              <p>行为: </p>
-              <p>CPU: </p>
-              <p>CPU核数: </p>
-              <p>host:  </p>
-              <p>内存:  </p>
-              <p>判题机version: </p>
-              <p>任务数： </p>
-              <p>服务器地址： </p>
+              <p>行为:</p>
+              <p>CPU:</p>
+              <p>CPU核数:</p>
+              <p>host:</p>
+              <p>内存:</p>
+              <p>判题机version:</p>
+              <p>任务数：</p>
+              <p>服务器地址：</p>
             </Col>
             <Col span="16">
-              <p>{{status.action}}</p>
-              <p>{{status.cpu}}</p>
-              <p>{{status.cpu_core}}</p>
-              <p>{{status.hostname}}</p>
-              <p>{{status.memory}}</p>
-              <p>{{status.judger_version}}</p>
-              <p>{{status.running_task_number ? status.running_task_number : 0}}</p>
-              <p>{{status.service_url}}</p>
+              <p>{{ status.action }}</p>
+              <p>{{ status.cpu }}</p>
+              <p>{{ status.cpu_core }}</p>
+              <p>{{ status.hostname }}</p>
+              <p>{{ status.memory }}</p>
+              <p>{{ status.judger_version }}</p>
+              <p>
+                {{
+                  status.running_task_number ? status.running_task_number : 0
+                }}
+              </p>
+              <p>{{ status.service_url }}</p>
             </Col>
           </Row>
         </div>
@@ -37,23 +41,25 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
-import api from '@/api/api';
+import { Component, Vue } from 'vue-property-decorator'
+import api from '@/api/api'
 
 @Component
 export default class UserManager extends Vue {
-
-  status: any = {};
-  getJudgeServer () {
-    api.getJudgeServer({}).then((res: any) => {
-      this.status = res.data[0];
-    }).catch((err) => {
-      (this as any).$Message.error(err.data.message);
-    });
+  status: any = {}
+  getJudgeServer() {
+    api
+      .getJudgeServer({})
+      .then((res: any) => {
+        this.status = res.data[0]
+      })
+      .catch(err => {
+        ;(this as any).$Message.error(err.data.message)
+      })
   }
 
   mounted() {
-    this.getJudgeServer();
+    this.getJudgeServer()
   }
 }
 </script>

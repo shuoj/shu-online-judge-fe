@@ -2,7 +2,7 @@ module.exports = {
   devServer: {
     proxy: {
       '/api': {
-        target: 'http://10.0.3.31:54689',
+        target: 'http://localhost:8081',
         changeOrigin: true
       }
     }
@@ -17,12 +17,11 @@ module.exports = {
       const CompressionWebpackPlugin = require('compression-webpack-plugin');
       config.plugins.push(new CompressionWebpackPlugin());
     } else if (process.env.NODE_ENV === 'analyzer') {
-      const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+      const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+        .BundleAnalyzerPlugin;
       config.plugins.push(new BundleAnalyzerPlugin());
     }
   },
   // 链式操作(高级),允许我们更细粒度的控制其内部配置
-  chainWebpack: config => {
-  
-  }
+  chainWebpack: config => {}
 };

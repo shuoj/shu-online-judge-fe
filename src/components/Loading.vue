@@ -1,17 +1,17 @@
 <template>
   <div>
-    <img src="../assets/loading.gif">
+    <img src="../assets/loading.gif" />
   </div>
 </template>
 <script>
 export default {
-  name: 'Loading'
-};
+  name: 'Loading',
+}
 </script>
 <style>
-  img {
-    width: 100px;
-    height: 100px;
-    display: block;
-  }
+img {
+  width: 100px;
+  height: 100px;
+  display: block;
+}
 </style>

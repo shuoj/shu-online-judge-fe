@@ -10,14 +10,10 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class Admin extends Vue {
-
-}
+export default class Admin extends Vue {}
 </script>
 
-<style lang="less" scoped>
-
-</style>
+<style lang="less" scoped></style>

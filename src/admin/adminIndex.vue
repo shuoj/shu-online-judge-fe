@@ -2,7 +2,11 @@
   <div>
     <Row>
       <Col span="4" style="overflow-y: scroll;height:100vh;">
-        <Menu theme="light"  active-name="$route.path" style="width:auto;padding-left: 20px;height:100vh;">
+        <Menu
+          theme="light"
+          active-name="$route.path"
+          style="width:auto;padding-left: 20px;height:100vh;"
+        >
           <RouterLink to="/">
             <div class="icon-title" style="color: #515a6e">SHU OJ</div>
           </RouterLink>
@@ -15,8 +19,11 @@
             </MenuItem>
           </MenuGroup>
           <MenuGroup title="通用" align="left">
-            <MenuItem name="/admin/admin-announcement" to="/admin/admin-announcement">
-              <Icon type="ios-paper"/>公告管理
+            <MenuItem
+              name="/admin/admin-announcement"
+              to="/admin/admin-announcement"
+            >
+              <Icon type="ios-paper" />公告管理
             </MenuItem>
           </MenuGroup>
           <MenuGroup title="题目" align="left">
@@ -55,26 +62,22 @@
       </Col>
     </Row>
   </div>
-
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator';
+import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class Admin extends Vue {
-
-}
+export default class Admin extends Vue {}
 </script>
 
 <style lang="less" scoped>
-  @import '../style/base';
+@import '../style/base';
 
-  .icon-title {
-    font-size: 24px;
-    font-weight: 500;
-    margin-bottom: 12px;
-    padding-top: 18px;
-  }
-
+.icon-title {
+  font-size: 24px;
+  font-weight: 500;
+  margin-bottom: 12px;
+  padding-top: 18px;
+}
 </style>

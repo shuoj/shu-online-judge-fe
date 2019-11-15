@@ -17,12 +17,18 @@
         </Submenu>
       </div>
       <div class="nav-right">
-        <Dropdown @on-click="handleMenu" v-if="loginStatus" style="cursor: pointer">
-          {{Username}}
+        <Dropdown
+          @on-click="handleMenu"
+          v-if="loginStatus"
+          style="cursor: pointer"
+        >
+          {{ Username }}
           <Icon type="ios-arrow-down"></Icon>
           <DropdownMenu slot="list">
             <DropdownItem name="admin" v-if="isAdmin">后台管理</DropdownItem>
-            <DropdownItem divided v-if="isAdmin" name="personal">我的主页</DropdownItem>
+            <DropdownItem divided v-if="isAdmin" name="personal"
+              >我的主页</DropdownItem
+            >
             <DropdownItem v-else name="personal">我的主页</DropdownItem>
             <DropdownItem name="submission">我的提交</DropdownItem>
             <DropdownItem name="setting">设置</DropdownItem>
@@ -30,118 +36,125 @@
           </DropdownMenu>
         </Dropdown>
         <span v-else>
-                <MenuItem name="login" to="/login">登录</MenuItem>
-                <MenuItem name="register" to="/register">注册</MenuItem>
-         </span>
+          <MenuItem name="login" to="/login">登录</MenuItem>
+          <MenuItem name="register" to="/register">注册</MenuItem>
+        </span>
       </div>
     </div>
   </Menu>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator';
-import api from '../api/api';
+import { Component, Vue, Watch } from 'vue-property-decorator'
+import api from '../api/api'
 
 @Component
 export default class Navbar extends Vue {
-  activeName: string = 'home';
+  activeName: string = 'home'
 
   get loginStatus() {
-    return this.Username;
+    return this.Username
   }
 
   get isAdmin() {
     if (this.$store.state.userInfo) {
-      return this.$store.state.userInfo.authorities[0].authority.indexOf('USER') === -1;
+      return (
+        this.$store.state.userInfo.authorities[0].authority.indexOf('USER') ===
+        -1
+      )
     }
-    return false;
+    return false
   }
 
   get Username() {
-    return this.$store.state.username || window.localStorage.getItem('username');
+    return this.$store.state.username || window.localStorage.getItem('username')
   }
 
   @Watch('$route')
   handleRoute(to: any, from: any) {
-    this.activeName = to.name;
+    this.activeName = to.name
   }
 
   @Watch('loginStatus')
   handleInfo(status: boolean) {
     if (status) {
-      api.getUserInfo().then((res: any) => {
-        this.$store.commit('setUserInfo', res.data);
-      }).catch((err: any) => {
-        (this as any).$Message.error(err.data.message);
-      });
+      api
+        .getUserInfo()
+        .then((res: any) => {
+          this.$store.commit('setUserInfo', res.data)
+        })
+        .catch((err: any) => {
+          ;(this as any).$Message.error(err.data.message)
+        })
     }
   }
 
   handleMenu(name: string) {
     if (name === 'logout') {
-      this.logout();
+      this.logout()
     }
     if (name === 'admin') {
-      this.$router.push('/admin');
+      this.$router.push('/admin')
     }
     if (name === 'personal') {
-      const id = this.$store.state.userInfo.id;
+      const id = this.$store.state.userInfo.id
       this.$router.push({
-        path: `/personal/${id}`
-      });
+        path: `/personal/${id}`,
+      })
     }
     if (name === 'submission') {
-      const id = this.$store.state.userInfo.id;
+      const id = this.$store.state.userInfo.id
       this.$router.push({
-        path: `/submission/${id}`
-      });
+        path: `/submission/${id}`,
+      })
     }
     if (name === 'setting') {
-      const id = this.$store.state.userInfo.id;
+      const id = this.$store.state.userInfo.id
       this.$router.push({
-        path: `/setting/${id}`
-      });
+        path: `/setting/${id}`,
+      })
     }
   }
 
   logout() {
-    this.$store.dispatch('logout')
+    this.$store
+      .dispatch('logout')
       .then(() => {
-        this.$router.replace('/');
+        this.$router.replace('/')
       })
-      .catch((err: any) => console.log('logout' + err));
+      .catch((err: any) => console.log('logout' + err))
   }
 }
 </script>
 
 <style lang="less" scoped>
-  @import '../style/base';
+@import '../style/base';
 
-  .ivu-layout {
-    background-color: @background-base !important;
-  }
+.ivu-layout {
+  background-color: @background-base !important;
+}
 
-  .content-background {
-    background-color: @background-base !important;
-  }
+.content-background {
+  background-color: @background-base !important;
+}
 
-  .oj-logo {
-    text-align: center;
-    width: 260px;
-    height: 60px;
-    font-size: 20px;
-    font-weight: normal;
-    /*font-family: code-font;*/
-    color: #515a6e !important;
-    border-bottom: 0.5px solid transparent !important;
-  }
+.oj-logo {
+  text-align: center;
+  width: 260px;
+  height: 60px;
+  font-size: 20px;
+  font-weight: normal;
+  /*font-family: code-font;*/
+  color: #515a6e !important;
+  border-bottom: 0.5px solid transparent !important;
+}
 
-  .layout-nav {
-    display: flex;
-    justify-content: space-between;
-  }
+.layout-nav {
+  display: flex;
+  justify-content: space-between;
+}
 
-  .nav-right {
-    margin-right: 32px;
-  }
+.nav-right {
+  margin-right: 32px;
+}
 </style>
