@@ -168,7 +168,7 @@ export default class UserManager extends Vue {
         ;(this as any).$Message.success('创建成功')
         this.newUser = {}
       })
-      .catch(err => {
+      .catch((err: any) => {
         ;(this as any).$Message.error(err.data.message)
       })
   }
@@ -222,7 +222,7 @@ export default class UserManager extends Vue {
         console.log(res)
         ;(this as any).$Message.success('修改成功')
       })
-      .catch(err => {
+      .catch((err: any) => {
         ;(this as any).$Message.error(err.data.message)
       })
   }
@@ -237,7 +237,7 @@ export default class UserManager extends Vue {
         this.users = res.data.list
         this.total = res.data.total
       })
-      .catch(err => {
+      .catch((err: any) => {
         ;(this as any).$Message.error(err.data.message)
       })
   }

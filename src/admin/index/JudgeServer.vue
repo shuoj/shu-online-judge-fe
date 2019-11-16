@@ -53,7 +53,7 @@ export default class UserManager extends Vue {
       .then((res: any) => {
         this.status = res.data[0]
       })
-      .catch(err => {
+      .catch((err: any) => {
         ;(this as any).$Message.error(err.data.message)
       })
   }

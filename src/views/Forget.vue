@@ -54,7 +54,7 @@ export default class Forget extends Vue {
         .then((res: any) => {
           this.question = res.data
         })
-        .catch(err => {
+        .catch((err: any) => {
           ;(this as any).$Message.error(err.data.message)
         })
     } else {

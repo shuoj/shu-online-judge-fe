@@ -502,7 +502,7 @@ export default class Admin extends Vue {
           this.getAllProblemsFromASpecificContest()
           ;(this as any).$Message.success('添加成功')
         })
-        .catch(err => {
+        .catch((err: any) => {
           ;(this as any).$Message.error(err.data.message)
         })
     } else {

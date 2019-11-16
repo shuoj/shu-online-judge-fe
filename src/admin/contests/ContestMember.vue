@@ -61,7 +61,7 @@
             <p>用户名</p>
           </Col>
           <Col span="8">
-            <p>真实姓名</p>
+            <p>状态</p>
           </Col>
           <Col span="4">
             <p>操作</p>
@@ -72,10 +72,10 @@
             <p>{{ index + 1 }}</p>
           </Col>
           <Col span="8" offset="2">
-            <p>{{ item.username }}</p>
+            <p><span v-if="!item.userName">未知</span>{{ item.userName }}</p>
           </Col>
           <Col span="8">
-            <p><span v-if="!item.name">未知</span>{{ item.name }}</p>
+            <p>{{ item.acceptCount }} / {{ item.submitCount }}</p>
           </Col>
           <Col span="4">
             <a style="color: #2d8cf0" @click="deleteMember(item.id)">删除</a>

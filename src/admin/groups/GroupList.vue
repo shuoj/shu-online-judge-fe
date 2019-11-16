@@ -251,7 +251,7 @@ export default class GroupList extends Vue {
         .then(res => {
           this.users = res.data.list
         })
-        .catch(err => {
+        .catch((err: any) => {
           ;(this as any).$Message.error(err || '出错啦')
         })
     } else {
@@ -285,7 +285,7 @@ export default class GroupList extends Vue {
       .then(() => {
         this.groupDetail(this.thisGroup)
       })
-      .catch(err => {
+      .catch((err: any) => {
         ;(this as any).$Message.error(err || '出错啦')
       })
   }

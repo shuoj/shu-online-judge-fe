@@ -1,9 +1,19 @@
 <template>
-  <Row>
-    <Col span="20" offset="2" style="padding-top: 60px;">
-      <Table :columns="title" :data="groups"></Table>
-    </Col>
-  </Row>
+  <div>
+    <Row justify="center" class="contain-padding">
+      <Col span="20" offset="2">
+        <Table :columns="title" :data="status"></Table>
+      </Col>
+    </Row>
+    <Row style="margin-top: 36px">
+      <Page
+      :total="total"
+      show-sizer
+      @on-change="pageChange"
+      @on-page-size-change="pageSizeChange"
+      />
+    </Row>
+  </div>
 </template>
 
 <script lang="ts">
@@ -12,6 +22,7 @@ import api from '@/api/api.ts'
 
 @Component
 export default class Group extends Vue {
+  total: number = 10
   groups: any = []
   title: any = [
     {
@@ -45,23 +56,40 @@ export default class Group extends Vue {
       key: 'createDate',
     },
   ]
-  getGroups() {
-    api
-      .getGroups()
-      .then((res: any) => {
-        let index = 0
-        this.groups = res.data.map((item: any) => {
-          index = index + 1
-          item.index = index
-          return {
-            ...item,
-            index: index,
-          }
-        })
-      })
-      .catch(() => {
-        ;(this as any).$Message.error('获取失败')
-      })
+  page: number = 0
+  pageSize: number = 10
+
+  pageChange(pages: number) {
+    this.page = pages - 1
+    this.getGroups(pages - 1, this.pageSize)
+  }
+
+  pageSizeChange(size: number) {
+    this.getGroups(this.page, size)
+    this.pageSize = size
+  }
+
+  getGroups(page: number = 0, pageSize: number = 10) {
+    // api
+    //   .getGroups({
+    //     page: page,
+    //     size: pageSize,
+    //   })
+    //   .then((res: any) => {
+    //     console.log(res)
+    //     let index = 0
+    //     this.groups = res.data.map((item: any) => {
+    //       index = index + 1
+    //       item.index = index
+    //       return {
+    //         ...item,
+    //         index: index,
+    //       }
+    //     })
+    //   })
+    //   .catch(() => {
+    //     (this as any).$Message.error('获取失败')
+    //   })
   }
 
   mounted() {

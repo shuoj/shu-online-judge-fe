@@ -376,7 +376,7 @@ export default class Problemform extends Vue {
       .then((res: any) => {
         this.allTags = res.data
       })
-      .catch(err => {
+      .catch((err: any) => {
         ;(this as any).$Message.error(err.data.message)
       })
   }

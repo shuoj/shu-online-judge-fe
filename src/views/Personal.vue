@@ -122,7 +122,7 @@ export default class Personal extends Vue {
         this.reviseUser = JSON.parse(JSON.stringify(res.data))
         ;(this as any).$Message.success('修改成功')
       })
-      .catch(err => {
+      .catch((err: any) => {
         ;(this as any).$Message.error(err.data.message)
       })
   }

@@ -301,7 +301,7 @@ export default class ContestDetail extends Vue {
       .then(res => {
         this.authorList = res.data.list
       })
-      .catch(err => {
+      .catch((err: any) => {
         ;(this as any).$Message.error(err.data.message)
       })
   }
@@ -321,7 +321,7 @@ export default class ContestDetail extends Vue {
         this.groupList = res.data.list
         this.groupSelectLoading = false
       })
-      .catch(err => {
+      .catch((err: any) => {
         ;(this as any).$Message.error(err.data.message)
         this.groupSelectLoading = false
       })
