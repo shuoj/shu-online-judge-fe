@@ -148,7 +148,7 @@ export default class Index extends Vue {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="stylus" scoped>
 @import '../style/base';
 
 .my-info {

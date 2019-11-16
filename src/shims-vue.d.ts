@@ -4,9 +4,9 @@ declare module '*.vue' {
   export default Vue
 }
 
-declare module 'iview' {
-  const Iview: any
-  export default Iview
+declare module 'view-design' {
+  const ViewDesign: any
+  export default ViewDesign
 }
 
 declare module 'vue-wangeditor-simple' {

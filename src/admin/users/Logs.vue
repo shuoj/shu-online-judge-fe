@@ -125,7 +125,7 @@ export default class UserManager extends Vue {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="stylus" scoped>
 .logs {
   text-align: left;
 }

@@ -190,7 +190,7 @@ export default class CodeMirror extends Vue {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="less">
+<style scoped lang="stylus">
 @import '~codemirror/lib/codemirror.css';
 
 .box-option {

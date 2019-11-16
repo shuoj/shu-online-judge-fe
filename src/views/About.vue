@@ -52,7 +52,7 @@ import { Component, Vue } from 'vue-property-decorator'
 export default class About extends Vue {}
 </script>
 
-<style lang="less" scoped>
+<style lang="stylus" scoped>
 @import '../style/base';
 
 .wrapper-content {

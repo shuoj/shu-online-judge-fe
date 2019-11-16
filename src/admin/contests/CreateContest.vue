@@ -43,12 +43,11 @@
           </Col>
           <Col span="11">
             <div class="item-padding">
-              <h3>实时排名</h3>
-              <Checkbox v-model="judge"
-                >如果不勾选，排名会被缓存，不会更新，而且只显示自己的提交。用于
-                acm
-                封榜。rank页面url后面增加?force_real_time_rank=true可以在管理员身份下查看最新排名。</Checkbox
-              >
+              <h3>比赛类型</h3>
+              <RadioGroup v-model="judgeType">
+                <Radio label="IMMEDIATELY">ICPC</Radio>
+                <Radio label="DELAY">OI</Radio>
+              </RadioGroup>
             </div>
           </Col>
           <Col span="11" offset="2">
@@ -120,6 +119,7 @@ export default class Admin extends Vue {
   name: any = ''
   description: any = ''
   contestType: any = 'PUBLIC'
+  judgeType: boolean = true
   judge: boolean = true
   enable: any = false
   visual: any = 'true'
@@ -184,7 +184,6 @@ export default class Admin extends Vue {
   createContest() {
     const userInfo = this.$store.state.userInfo
     const that = this
-    const judgeType = that.judge ? 'IMMEDIATELY' : 'DELAY'
     const visible = that.visual === 'true'
     const start = this.computeDate(that.startDate)
     const end = this.computeDate(that.endDate)
@@ -196,7 +195,7 @@ export default class Admin extends Vue {
         name: this.name,
         description: this.description,
         contestType: this.contestType,
-        judgeType: judgeType,
+        judgeType: this.judgeType,
         enable: this.enable,
         visible: visible,
         startDate: start,

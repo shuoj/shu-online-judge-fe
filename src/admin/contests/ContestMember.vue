@@ -218,7 +218,6 @@ export default class Index extends Vue {
   margin-top: 40px;
   text-align: left;
   color: #17233d;
-  font-size: 14px;
   font-weight: 600;
   border-bottom: 1px solid #e8eaec;
   padding-bottom: 10px;

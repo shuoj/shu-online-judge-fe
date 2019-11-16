@@ -240,7 +240,7 @@ export default class Problems extends Vue {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="stylus" scoped>
 @import '../style/base';
 .LOW {
   background-color: #74b567;

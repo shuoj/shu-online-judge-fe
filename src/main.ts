@@ -2,13 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import iView from 'iview'
-import 'iview/dist/styles/iview.css'
+import ViewUI from 'view-design'
+import 'view-design/dist/styles/iview.css'
 import VueWangeditor from 'vue-wangeditor-simple'
 import VueHighlightJS from 'vue-highlightjs'
 
 Vue.config.productionTip = false
-Vue.use(iView)
+Vue.use(ViewUI)
 Vue.use(VueWangeditor)
 Vue.use(VueHighlightJS)
 

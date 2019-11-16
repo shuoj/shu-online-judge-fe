@@ -127,15 +127,15 @@ export default class Navbar extends Vue {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="stylus" scoped>
 @import '../style/base';
 
 .ivu-layout {
-  background-color: @background-base !important;
+  background-color: @white !important;
 }
 
 .content-background {
-  background-color: @background-base !important;
+  background-color: @white !important;
 }
 
 .oj-logo {

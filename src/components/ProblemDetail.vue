@@ -261,7 +261,7 @@ export default class ProblemDetail extends Vue {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="stylus" scoped>
 @import '../style/base';
 
 .pro-status {

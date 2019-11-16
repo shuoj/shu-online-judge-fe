@@ -54,7 +54,7 @@ export default class App extends Vue {
 }
 </script>
 
-<style lang="less">
+<style lang="stylus">
 @import './style/base';
 
 * {
@@ -90,7 +90,6 @@ body {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
-  font-size: 14px;
   line-height: 1.4;
   overflow-x: hidden;
   display: flex;
@@ -125,7 +124,7 @@ body {
 .oj-footer {
   font-family: code-font;
   text-align: center;
-  background-color: @background-base !important;
+  background-color: @white !important;
   padding: 0 50px 10px 50px;
 }
 

@@ -32,11 +32,11 @@
           <Col span="1">
             <p>ID</p>
           </Col>
-          <Col span="6">
+          <Col span="5">
             <p>标题</p>
           </Col>
-          <Col span="1">
-            <p>排名</p>
+          <Col span="2">
+            <p>比赛形式</p>
           </Col>
           <Col span="4" align="center">
             <p>开始时间</p>
@@ -58,11 +58,11 @@
           <Col span="1">
             <p>{{ index + 1 }}</p>
           </Col>
-          <Col span="6">
+          <Col span="5">
             <p>{{ item.name }}</p>
           </Col>
-          <Col span="1">
-            <p>{{ item.rank }}</p>
+          <Col span="2">
+            <p>{{ item.judgeType === 'IMMEDIATELY' ? 'ICPC' : 'IO' }}</p>
           </Col>
           <Col span="4" align="center">
             <p>{{ item.startDate }}</p>
@@ -71,7 +71,7 @@
             <a
               style="color: #2d8cf0"
               @click="makeVisible(item.id, item.visible)"
-              >{{ item.visible }}</a
+              >{{ item.visible ? '可见' : '不可见' }}</a
             >
           </Col>
           <Col span="3" align="center">
@@ -263,7 +263,6 @@ export default class Index extends Vue {
   pageSize: number = 20
   page: number = 0
   contests: any = []
-  changeContest: any = []
   rank: any = ''
 
   // 文本编辑器配置
@@ -306,18 +305,8 @@ export default class Index extends Vue {
       })
       .then((res: any) => {
         this.$store.state.contestList = res.data.list
-        const that = this
-        that.total = res.data.total
-        let visibility = ''
-        that.contests = res.data.list.map((item: any) => {
-          item.rank = item.judgeType === 'IMMEDIATELY' ? '实时' : '不实时'
-          visibility = item.visible === true ? '可见' : '不可见'
-          return {
-            ...item,
-            visibility: visibility,
-          }
-        })
-        this.changeContest = this.contests.slice()
+        this.total = res.data.total
+        this.contests = res.data.list
       })
       .catch(() => {
         ;(this as any).$Message.error('获取失败')
@@ -337,8 +326,8 @@ export default class Index extends Vue {
         that.startDate = res.data.startDate
         that.endDate = res.data.endDate
         that.contestType = res.data.contestType
-        that.judgeType = res.data.judgeType === 'IMMEDIATELY'
-        that.visible = res.data.visible === true
+        that.judgeType = res.data.judgeType
+        that.visible = res.data.visible
       })
       .catch(() => {
         ;(this as any).$Message.error('获取失败')
@@ -521,7 +510,7 @@ export default class Index extends Vue {
 }
 </script>
 
-<style scoped lang="less">
+<style scoped lang="stylus">
 .list {
   border-bottom: 1px solid #ddd;
   font-weight: 400;

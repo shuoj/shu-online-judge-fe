@@ -236,7 +236,6 @@ export default class Admin extends Vue {
   user-select: none;
   padding: 6px 15px;
   line-height: 1.5;
-  font-size: 14px;
   border-radius: 4px;
   transition: color 0.2s linear, background-color 0.2s linear,
     border 0.2s linear, box-shadow 0.2s linear;
@@ -248,7 +247,6 @@ export default class Admin extends Vue {
   color: #fff;
   background-color: #2d8cf0;
   padding: 6px 15px;
-  font-size: 14px;
   border-radius: 4px;
   vertical-align: middle;
   line-height: 1.5;

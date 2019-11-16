@@ -210,7 +210,7 @@ export default class Status extends Vue {
 }
 </script>
 
-<style lang="less">
+<style lang="stylus">
 @import '../style/base';
 
 .contain-padding {

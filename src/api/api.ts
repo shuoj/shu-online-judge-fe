@@ -183,12 +183,7 @@ export default {
   forgetPassword: (data: { password: string }) =>
     axios.post(`/api/v1/forgotPassword?password=${data.password}`),
   // Group
-  getGroups: (params?: {
-    name?: string
-    idx?: number
-    currentUser?: boolean
-    authorId?: string
-  }) => axios.get('/api/v1/groups', { params }),
+  getGroups: (params: {}) => axios.get('/api/v1/groups', { params }),
   deleteMember: (data: { id: string; memberId: string }) =>
     axios.delete(`/api/v1/groups/${data.id}/members`, {
       data: [data.memberId],

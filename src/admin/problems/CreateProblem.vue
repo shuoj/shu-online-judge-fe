@@ -42,4 +42,4 @@ export default class Createproblem extends Vue {
 }
 </script>
 
-<style lang="less" scoped></style>
+<style lang="stylus" scoped></style>

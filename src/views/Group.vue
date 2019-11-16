@@ -70,26 +70,26 @@ export default class Group extends Vue {
   }
 
   getGroups(page: number = 0, pageSize: number = 10) {
-    // api
-    //   .getGroups({
-    //     page: page,
-    //     size: pageSize,
-    //   })
-    //   .then((res: any) => {
-    //     console.log(res)
-    //     let index = 0
-    //     this.groups = res.data.map((item: any) => {
-    //       index = index + 1
-    //       item.index = index
-    //       return {
-    //         ...item,
-    //         index: index,
-    //       }
-    //     })
-    //   })
-    //   .catch(() => {
-    //     (this as any).$Message.error('获取失败')
-    //   })
+    api
+      .getGroups({
+        page: page,
+        size: pageSize,
+      })
+      .then((res: any) => {
+        console.log(res)
+        let index = 0
+        this.groups = res.data.map((item: any) => {
+          index = index + 1
+          item.index = index
+          return {
+            ...item,
+            index: index,
+          }
+        })
+      })
+      .catch(() => {
+        ;(this as any).$Message.error('获取失败')
+      })
   }
 
   mounted() {
@@ -98,7 +98,7 @@ export default class Group extends Vue {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="stylus" scoped>
 .index {
   width: 1140px;
   margin: 0 auto;

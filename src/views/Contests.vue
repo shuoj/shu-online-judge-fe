@@ -303,7 +303,7 @@ export default class About extends Vue {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="stylus" scoped>
 @import '../style/base';
 .card-margin {
   margin-top: 40px;
@@ -334,7 +334,6 @@ export default class About extends Vue {
   }
   .list-subtitle {
     text-align: left;
-    font-size: 14px;
     color: rgba(0, 0, 0, 0.5);
   }
 }
@@ -348,7 +347,6 @@ export default class About extends Vue {
     vertical-align: middle;
     text-align: center;
     color: rgba(0, 0, 0, 0.7);
-    font-size: 14px;
     height: 50px;
     line-height: 54px;
     overflow: hidden;
@@ -363,6 +361,5 @@ export default class About extends Vue {
   line-height: 54px;
   vertical-align: middle;
   text-align: left;
-  font-size: 14px;
 }
 </style>
