@@ -29,10 +29,7 @@ Vue.use(Router)
 const routerPush = Router.prototype.push
 Router.prototype.push = function push(location: any): Promise<any> {
   // @ts-ignore
-  return routerPush
-    .call(this, location)
-    .then(() => {})
-    .catch((error: any) => error)
+  return routerPush.call(this, location).catch((error: any) => error)
 }
 // @ts-ignore
 const router = new Router({
