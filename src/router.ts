@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-// TS 默认只识别.vue文件，不识别.vue文件
 import problems from '@/views/Problems.vue'
 import status from '@/views/Status.vue'
 import contests from '@/views/Contests.vue'
@@ -16,13 +15,11 @@ import submission from '@/views/Submission.vue'
 import share from '@/views/Share.vue'
 import setting from '@/views/Setting.vue'
 
-// component
 import problemDetail from '@/components/ProblemDetail.vue'
 import contestDetail from '@/components/ContestDetail.vue'
 import announcement from '@/components/Announcement.vue'
 import contestProblemCommit from '@/components/ContestProblemCommit.vue'
 
-// admin
 import adminIndex from '@/admin/adminIndex.vue'
 
 Vue.use(Router)

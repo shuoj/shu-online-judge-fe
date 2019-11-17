@@ -2,7 +2,7 @@
   <div>
     <Row justify="center" class="contain-padding">
       <Col span="20" offset="2">
-        <Table :columns="title" :data="status"></Table>
+        <Table :columns="title" :data="groups"></Table>
       </Col>
     </Row>
     <Row style="margin-top: 36px">
@@ -27,7 +27,7 @@ export default class Group extends Vue {
   title: any = [
     {
       title: '#',
-      key: 'index',
+      key: 'idx',
       width: 80,
     },
     {
@@ -76,16 +76,8 @@ export default class Group extends Vue {
         size: pageSize,
       })
       .then((res: any) => {
-        console.log(res)
-        let index = 0
-        this.groups = res.data.map((item: any) => {
-          index = index + 1
-          item.index = index
-          return {
-            ...item,
-            index: index,
-          }
-        })
+        this.total = res.data.total
+        this.groups = res.data.list
       })
       .catch(() => {
         ;(this as any).$Message.error('获取失败')

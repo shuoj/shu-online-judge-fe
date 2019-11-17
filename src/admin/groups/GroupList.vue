@@ -52,6 +52,14 @@
               >
             </li>
           </ul>
+          <div style="padding-top: 30px; text-align: center">
+            <Page
+              :total="total"
+              show-sizer
+              @on-change="pageChange"
+              @on-page-size-change="pageSizeChange"
+            />
+          </div>
         </div>
         <Modal v-model="deleteModal" @on-ok="confirmDelete">
           确认删除这个群组吗?
@@ -170,6 +178,10 @@ import { VUE_APP_BASE_URL } from '@/api/constant'
   },
 })
 export default class GroupList extends Vue {
+  total: number = 10
+  page: number = 0
+  pageSize: number = 10
+
   groups: Array<any> = []
   users: Array<any> = []
   groupShow: boolean = true
@@ -185,6 +197,16 @@ export default class GroupList extends Vue {
   baseURL: any = VUE_APP_BASE_URL
   createModal: boolean = false
   groupName: string = ''
+
+  pageChange(pages: number) {
+    this.page = pages - 1
+    this.getGroups(pages - 1, this.pageSize)
+  }
+
+  pageSizeChange(size: number) {
+    this.getGroups(this.page, size)
+    this.pageSize = size
+  }
 
   get memberShow() {
     if (this.users) {
@@ -293,24 +315,15 @@ export default class GroupList extends Vue {
   uploadErr(response: any, file: any, fileList: any) {
     ;(this as any).$Message.error('上传失败')
   }
-  getGroups() {
-    this.groups.splice(0, this.groups.length)
+  getGroups(page: number = 0, pageSize: number = 10) {
     api
-      .getGroups()
+      .getGroups({
+        page: page,
+        size: pageSize,
+      })
       .then((res: any) => {
-        if (res.data.code === -1) {
-          this.noGroup = true
-        } else {
-          res.data.list.forEach((item: any) => {
-            this.groups.push({
-              id: item.id,
-              name: item.name,
-              createDate: item.createDate,
-              number: 0,
-              userList: item.jwtUserList,
-            })
-          })
-        }
+        this.total = res.data.total
+        this.groups = res.data.list
       })
       .catch((err: any) => {
         ;(this as any).$Message.error(err.data.message)

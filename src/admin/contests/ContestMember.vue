@@ -27,6 +27,14 @@
         </CheckboxGroup>
       </Col>
     </Row>
+    <Row style="padding-top: 30px; text-align: center">
+      <Page
+        :total="total"
+        show-sizer
+        @on-change="pageChange"
+        @on-page-size-change="pageSizeChange"
+      />
+    </Row>
     <Row style="text-align: left">
       <Col span="22" offset="1">
         <h2>添加成员</h2>
@@ -92,6 +100,9 @@ import api from '../../api/api'
 
 @Component
 export default class Index extends Vue {
+  total: number = 0
+  page: number = 0
+  pageSize: number = 10
   groups: any = ''
   groupAdd: any = []
   users: any = []
@@ -126,27 +137,14 @@ export default class Index extends Vue {
       const userId: Array<number> = [id]
       api
         .addUserToContest({ id: contestId, userId: userId })
-        .then((res: any) => {
-          this.users = res.data
+        .then(() => {
+          this.getUser()
           ;(this as any).$Message.success('添加成功')
         })
         .catch(() => {
           ;(this as any).$Message.error('添加失败')
         })
     }
-  }
-
-  getAllGroup() {
-    this.groupAdd = []
-    const that = this
-    api
-      .getGroups()
-      .then((res: any) => {
-        that.groups = res.data.list
-      })
-      .catch((err: any) => {
-        ;(this as any).$Message.error(err.data.message)
-      })
   }
 
   getUser() {
@@ -174,7 +172,7 @@ export default class Index extends Vue {
         id: id,
         groupId: groupArray,
       })
-      .then((res: any) => {
+      .then(() => {
         ;(this as any).$Message.success('添加成功')
         this.getUser()
       })
@@ -193,7 +191,7 @@ export default class Index extends Vue {
         id: id,
         userId: groupArray,
       })
-      .then((res: any) => {
+      .then(() => {
         this.getUser()
         ;(this as any).$Message.success('删除成功')
       })
@@ -202,8 +200,33 @@ export default class Index extends Vue {
       })
   }
 
+  pageChange(pages: number) {
+    this.page = pages - 1
+    this.getGroups(pages - 1, this.pageSize)
+  }
+
+  pageSizeChange(size: number) {
+    this.getGroups(this.page, size)
+    this.pageSize = size
+  }
+
+  getGroups(page: number = 0, pageSize: number = 10) {
+    api
+      .getGroups({
+        page: page,
+        size: pageSize,
+      })
+      .then((res: any) => {
+        this.total = res.data.total
+        this.groups = res.data.list
+      })
+      .catch((err: any) => {
+        ;(this as any).$Message.error(err.data.message)
+      })
+  }
+
   mounted() {
-    this.getAllGroup()
+    this.getGroups()
     this.getUser()
   }
 }
