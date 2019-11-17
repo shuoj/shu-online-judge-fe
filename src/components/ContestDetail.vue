@@ -19,52 +19,59 @@
           <Table :columns="title" :data="problems"></Table>
         </TabPane>
         <TabPane label="排名" name="rank" style="text-align: left" class="pane-padding">
-          <div></div>
           <Row>
             <Col span="8">
               <span style="font-weight: 500;margin: 0 10px 0 10px;">自动刷新：</span>
               <i-switch v-model="autoRefresh" @on-change="refreshAuto" />
             </Col>
-            <Col span="8">
-              <Select
-                clearable
-                @on-clear="handleGroupSelectClear"
-                @on-change="handleGroupSelectChange"
-                v-model="groupSelect"
-                filterable
-                :placeholder="groupSelectPlaceholder"
-                :loading="groupSelectLoading"
-                remote
-                :remote-method="getGroupList"
-              >
+            <Col span="6">
+              <AutoComplete
+                v-model="author"
+                :data="authorSearch"
+                placeholder="搜索某老师创建群组的成员成绩"
+                search
+                icon="ios-search"
+                @on-change="getAuthorByName"
+                @on-select="selectedAuthor"
+                placement="bottom"
+                style="width:280px">
                 <Option
-                  v-for="group in groupList"
-                  :value="group.id"
-                  :key="group.id"
-                >{{ group.name }}</Option>
-              </Select>
+                  v-for="(item, index) in authorSearch"
+                  :value="item.id"
+                  :key="index"
+                >
+                  <div class="option-two">
+                    <span>{{ item.name }}</span>
+                  </div>
+                </Option>
+              </AutoComplete>
             </Col>
-            <Col span="8">
-              <Select
-                clearable
-                :label="authorSelectLabel"
-                :disabled="authorSelectDisable"
-                v-model="authorSelect"
-                filterable
-                :placeholder="authorSelectPlaceholder"
-                :loading="authorSelectLoading"
-                remote
-                :remote-method="getAuthorList"
-              >
+            <Col span="6">
+              <AutoComplete
+                v-model="name"
+                :data="groupSearch"
+                placeholder="以小组筛选显示排名"
+                search
+                icon="ios-search"
+                @on-change="getGroupsByName"
+                @on-select="selectedGroup"
+                placement="bottom"
+                style="width:200px">
                 <Option
-                  v-for="author in authorList"
-                  :value="author.id"
-                  :key="author.id"
-                >{{ author.name }}</Option>
-              </Select>
+                  v-for="(item, index) in groupSearch"
+                  :value="item.id"
+                  :key="item.name"
+                >
+                  <div class="option-two">
+                    <span>{{ item.name }}</span>
+                  </div>
+                </Option>
+              </AutoComplete>
+            </Col>
+            <Col span="4">
+              <Button type="primary" @click="exportRank">导出</Button>
             </Col>
           </Row>
-
           <table style="margin-top: 20px;">
             <tbody>
               <tr class="first-title">
@@ -208,16 +215,57 @@ export default class ContestDetail extends Vue {
   autoRefresh: any = false
   ranking: any = []
   problemNumber: any = ''
-  authorSelectDisable = false
-  authorSelect = this.$store.state.userInfo.id
-  authorSelectLabel = this.$store.state.userInfo.name
-  authorSelectLoading = false
-  authorSelectPlaceholder = '以教师筛选显示'
-  authorList = []
-  groupSelect = ''
-  groupSelectLoading = false
-  groupSelectPlaceholder = '以小组筛选显示'
-  groupList = []
+
+  name: string = ''
+  author: string = ''
+  groupSearch: Array<any> = []
+  authorSearch: Array<any> = []
+  groupSelect: string = ''
+  authorSelect: string = ''
+
+  getGroupsByName(name: string) {
+    this.authorSelect = ''
+    this.author = ''
+    api
+      .getGroups({ name })
+      .then(res => {
+        this.groupSearch = res.data.list
+      })
+      .catch((err: any) => {
+        ;(this as any).$Message.error(err.data.message)
+      })
+  }
+
+  selectedGroup(id: any) {
+    this.groupSelect = id
+    this.getContestRanking({
+      groupId: this.groupSelect,
+      // teacherId: this.authorSelect,
+    })
+  }
+
+  getAuthorByName() {
+    this.groupSelect = ''
+    this.name = ''
+    api
+      .getUser({
+        role: UserRole.STUFF,
+      })
+      .then(res => {
+        this.authorSearch = res.data.list
+      })
+      .catch((err: any) => {
+        ;(this as any).$Message.error(err.data.message)
+      })
+  }
+
+  selectedAuthor(id: any) {
+    this.authorSelect = id
+    this.getContestRanking({
+      // groupId: this.groupSelect,
+      teacherId: this.authorSelect,
+    })
+  }
 
   timetrans(time: string) {
     const date = new Date(time)
@@ -280,51 +328,6 @@ export default class ContestDetail extends Vue {
       type = '私密赛(不可加入)'
     }
     return type
-  }
-
-  handleGroupSelectClear() {
-    this.authorSelectDisable = false
-    this.getContestRanking()
-  }
-
-  handleGroupSelectChange() {
-    this.authorSelectDisable = true
-    const groupId = this.groupSelect
-    const teacherId = this.authorSelect
-    this.getContestRanking({ groupId, teacherId })
-  }
-
-  getAuthorList(username: string) {
-    this.authorSelectLoading = true
-    api
-      .getUser({ query: { username }, page: 0, size: 10 })
-      .then(res => {
-        this.authorList = res.data.list
-      })
-      .catch((err: any) => {
-        ;(this as any).$Message.error(err.data.message)
-      })
-  }
-
-  getGroupList(name: string) {
-    this.groupSelectLoading = true
-    let currentUser, authorId
-    if (this.$store.state.role === 'ROLE_TEACHER') {
-      currentUser = true
-      this.authorSelectDisable = true
-    } else {
-      authorId = this.authorSelect
-    }
-    api
-      .getGroups({ name, currentUser, authorId })
-      .then(res => {
-        this.groupList = res.data.list
-        this.groupSelectLoading = false
-      })
-      .catch((err: any) => {
-        ;(this as any).$Message.error(err.data.message)
-        this.groupSelectLoading = false
-      })
   }
 
   getContestDetail() {
@@ -443,33 +446,59 @@ export default class ContestDetail extends Vue {
     })
   }
 
+  download(data){
+    if (!data) {
+      return
+    }
+    let url = window.URL.createObjectURL(new Blob([data]))
+    let link = document.createElement('a')
+    link.style.display = 'none'
+    link.href = url
+    link.setAttribute('download', 'ranking.xlsx')
+    document.body.appendChild(link)
+    link.click()
+  }
+
+  exportRank() {
+    const params = this.$route.params
+    const id: string = params.id
+    api.exportRanking(id, {
+      groupId: this.groupSelect,
+      teacherId: this.authorSelect,
+    }).then((res: any) => {
+      this.download(res.data)
+    })
+  }
+
   getContestRanking(query?: RankingQuery) {
     const params = this.$route.params
     const id: string = params.id
-    const that = this
     api
       .getRanking(id, query)
       .then((res: any) => {
-        this.problemNumber = res.data.rankingUserList[0].timeList.length
-        that.ranking = res.data.rankingUserList
+        if (res.data.rankingUserList.length > 0) {
+          this.problemNumber = res.data.rankingUserList[0].timeList.length
+          this.ranking = res.data.rankingUserList
+        } else {
+          this.problemNumber = 0
+          this.ranking = []
+        }
+        this.author = ''
+        this.name = ''
       })
       .catch((err: any) => {
+        console.log(err)
         ;(this as any).$Message.error(err.data.message)
       })
   }
 
   mounted() {
     this.getContestDetail()
-    if (this.$store.state.role === UserRole.STUFF) {
-      this.authorSelectDisable = true
-    }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-@import '../style/base';
-
 .pane-padding {
   padding-top: 30px;
 }

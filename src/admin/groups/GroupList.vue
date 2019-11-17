@@ -19,7 +19,7 @@
             <li class="id">ID</li>
             <li class="title">名称</li>
             <li class="time">创建时间</li>
-            <li class="id">人数</li>
+            <li class="way">创建者</li>
             <li class="time">操作</li>
           </ul>
           <div class="no-member" v-if="noGroup">
@@ -35,7 +35,7 @@
             <li class="id">{{ index + 1 }}</li>
             <li class="title">{{ group.name }}</li>
             <li class="time">{{ group.createDate }}</li>
-            <li class="id">{{ group.number || 0 }}</li>
+            <li class="way">{{ group.authorName }}</li>
             <li class="time">
               <Button @click="groupDetail(group)">详情</Button>
               <Button
@@ -109,7 +109,6 @@
             <li class="title">{{ user.name }}</li>
             <li class="time">{{ user.username }}</li>
             <li class="time">
-              <!--<Button style="margin-right: 8px">设为管理员</Button>-->
               <Button type="error" @click="deleteUser(user)"> 移除</Button>
             </li>
           </ul>
@@ -245,19 +244,12 @@ export default class GroupList extends Vue {
     if (id) {
       api
         .addUserToGroup({ id: this.thisGroup.id, userId: id })
-        .then(() => {
+        .then((res) => {
           ;(this as any).$Message.success('添加成功')
-          api
-            .getSpecificGroup({ id: this.thisGroup.id })
-            .then((res: any) => {
-              this.groupDetail(res.data)
-            })
-            .catch(() => {
-              console.log('error')
-            })
+          this.users = res.data
         })
-        .catch(() => {
-          ;(this as any).$Message.error('添加失败')
+        .catch((err) => {
+          ;(this as any).$Message.error(err.data.message)
         })
     }
   }
@@ -315,6 +307,7 @@ export default class GroupList extends Vue {
   uploadErr(response: any, file: any, fileList: any) {
     ;(this as any).$Message.error('上传失败')
   }
+
   getGroups(page: number = 0, pageSize: number = 10) {
     api
       .getGroups({
@@ -331,13 +324,16 @@ export default class GroupList extends Vue {
   }
 
   groupDetail(group: any) {
-    this.thisGroup = {
-      id: group.id,
-      name: group.name,
-    }
-    this.users.splice(0, this.users.length)
-    this.users = group.userList || group.jwtUserList
-    this.groupShow = false
+    api.getGroup({
+      id: group.id
+    }).then((res: any) => {
+      this.thisGroup = {
+        id: res.data.id,
+        name: res.data.name,
+      }
+      this.users = res.data.jwtUserList
+      this.groupShow = false
+    })
   }
 
   modify(group: any) {
@@ -366,15 +362,14 @@ export default class GroupList extends Vue {
   }
 
   deleteUser(user: any) {
-    const that = this
     api
-      .deleteMember({ id: user.groupId, memberId: user.id })
+      .deleteMember({ id: this.thisGroup.id, memberId: user.id })
       .then((res: any) => {
         this.users = res.data
-        ;(that as any).$Message.success('删除成功')
+        ;(this as any).$Message.success('删除成功')
       })
       .catch((err: any) => {
-        ;(that as any).$Message.error(err.data.message)
+        ;(this as any).$Message.error(err.data.message)
       })
   }
 

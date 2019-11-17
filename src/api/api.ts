@@ -114,6 +114,8 @@ export default {
     axios.get('/api/v1/problems', { params: data }),
   getRanking: (id: string, params?: RankingQuery) =>
     axios.get(`/api/v1/contests/${id}/ranking`, { params }),
+  exportRanking: (id: string, params?: RankingQuery) =>
+    axios.get(`/api/v1/contests/${id}/ranking/export`, { params }),
   addGroupsToContest: (data: { id: string; groupId: number[] }) =>
     axios.post(`/api/v1/contests/${data.id}/groups`, data.groupId),
   getAllUserFromContest: (data: { id: string }) =>
@@ -184,6 +186,8 @@ export default {
     axios.post(`/api/v1/forgotPassword?password=${data.password}`),
   // Group
   getGroups: (params: {}) => axios.get('/api/v1/groups', { params }),
+  getGroup: (params: { id: string }) =>
+    axios.get(`/api/v1/groups/${params.id}`),
   deleteMember: (data: { id: string; memberId: string }) =>
     axios.delete(`/api/v1/groups/${data.id}/members`, {
       data: [data.memberId],
@@ -196,13 +200,10 @@ export default {
   createMembers: (data: {}) => axios.post('/api/v1/users/generate', data),
   deleteGroup: (data: { id: string }) =>
     axios.delete(`/api/v1/groups/${data.id}`),
-  getUser: (params: { query?: UserQuery; page?: number; size?: number }) =>
-    axios.get('/api/v1/users', { params }),
+  getUser: (params: {}) => axios.get('/api/v1/users', { params }),
   deleteUser: (data: {}) => axios.delete('/api/v1/users', data),
   addUserToGroup: (data: { id: string; userId: string }) =>
     axios.post(`/api/v1/groups/${data.id}/members`, [data.userId]),
-  getSpecificGroup: (data: { id: string }) =>
-    axios.get(`/api/v1/groups/${data.id}`),
   createCommit: (data: { id: string; code: string; language: string }) =>
     axios.post(`/api/v1/problems/${data.id}/submissions`, {
       code: data.code,

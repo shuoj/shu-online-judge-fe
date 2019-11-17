@@ -17,7 +17,7 @@
             <li></li>
             <li class="id">#</li>
             <li class="title">题目</li>
-            <li class="diff">难度</li>
+            <li class="diff" style="color: #2c3e50">难度</li>
             <li>通过率</li>
           </ul>
           <ul
