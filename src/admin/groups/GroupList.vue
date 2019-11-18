@@ -244,11 +244,11 @@ export default class GroupList extends Vue {
     if (id) {
       api
         .addUserToGroup({ id: this.thisGroup.id, userId: id })
-        .then((res) => {
+        .then(res => {
           ;(this as any).$Message.success('添加成功')
           this.users = res.data
         })
-        .catch((err) => {
+        .catch(err => {
           ;(this as any).$Message.error(err.data.message)
         })
     }
@@ -324,16 +324,18 @@ export default class GroupList extends Vue {
   }
 
   groupDetail(group: any) {
-    api.getGroup({
-      id: group.id
-    }).then((res: any) => {
-      this.thisGroup = {
-        id: res.data.id,
-        name: res.data.name,
-      }
-      this.users = res.data.jwtUserList
-      this.groupShow = false
-    })
+    api
+      .getGroup({
+        id: group.id,
+      })
+      .then((res: any) => {
+        this.thisGroup = {
+          id: res.data.id,
+          name: res.data.name,
+        }
+        this.users = res.data.jwtUserList
+        this.groupShow = false
+      })
   }
 
   modify(group: any) {

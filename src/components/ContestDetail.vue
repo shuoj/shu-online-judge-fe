@@ -1,14 +1,33 @@
 <template>
   <Row>
     <Col span="22" offset="1">
-      <Modal v-model="modalPassword" title="密码验证" @on-ok="sendPassword" @on-cancel="cancel">
+      <Modal
+        v-model="modalPassword"
+        title="密码验证"
+        @on-ok="sendPassword"
+        @on-cancel="cancel"
+      >
         <h2>如要加入，请输入密码</h2>
-        <Input v-model="password" type="password" placeholder="输入比赛加入密码：" style="width: 200px" />
+        <Input
+          v-model="password"
+          type="password"
+          placeholder="输入比赛加入密码："
+          style="width: 200px"
+        />
       </Modal>
-      <Modal v-model="modal" :title="modalTitle" @on-ok="cancel" @on-cancel="cancel">
+      <Modal
+        v-model="modal"
+        :title="modalTitle"
+        @on-ok="cancel"
+        @on-cancel="cancel"
+      >
         <p>{{ modalContent }}</p>
       </Modal>
-      <Tabs value="detail" style="padding-top: 40px;" v-on:on-click="onTabChange">
+      <Tabs
+        value="detail"
+        style="padding-top: 40px;"
+        v-on:on-click="onTabChange"
+      >
         <TabPane label="比赛详情" name="detail" class="pane-padding">
           <h1>{{ contest.name }}</h1>
           <h3 style="text-align: left;font-weight: 600;">描述:</h3>
@@ -18,10 +37,17 @@
         <TabPane label="题目列表" name="problem" class="pane-padding">
           <Table :columns="title" :data="problems"></Table>
         </TabPane>
-        <TabPane label="排名" name="rank" style="text-align: left" class="pane-padding">
+        <TabPane
+          label="排名"
+          name="rank"
+          style="text-align: left"
+          class="pane-padding"
+        >
           <Row>
             <Col span="8">
-              <span style="font-weight: 500;margin: 0 10px 0 10px;">自动刷新：</span>
+              <span style="font-weight: 500;margin: 0 10px 0 10px;"
+                >自动刷新：</span
+              >
               <i-switch v-model="autoRefresh" @on-change="refreshAuto" />
             </Col>
             <Col span="6">
@@ -34,7 +60,8 @@
                 @on-change="getAuthorByName"
                 @on-select="selectedAuthor"
                 placement="bottom"
-                style="width:280px">
+                style="width:280px"
+              >
                 <Option
                   v-for="(item, index) in authorSearch"
                   :value="item.id"
@@ -56,7 +83,8 @@
                 @on-change="getGroupsByName"
                 @on-select="selectedGroup"
                 placement="bottom"
-                style="width:200px">
+                style="width:200px"
+              >
                 <Option
                   v-for="(item, index) in groupSearch"
                   :value="item.id"
@@ -78,15 +106,26 @@
                 <td style="width:30px;">#</td>
                 <td style="width:100px;">用户名</td>
                 <td style="width:100px;">AC/总提交</td>
-                <td style="width:100px;" v-if="contest.judgeType === 'IMMEDIATELY'">用时 + 罚时</td>
+                <td
+                  style="width:100px;"
+                  v-if="contest.judgeType === 'IMMEDIATELY'"
+                >
+                  用时 + 罚时
+                </td>
                 <td style="width:100px;" v-else>总分</td>
                 <td
                   v-for="item in problemNumber"
                   :key="item"
                   style="width: 100px;"
-                >{{ alphabet[item - 1] }}</td>
+                >
+                  {{ alphabet[item - 1] }}
+                </td>
               </tr>
-              <tr class="second-title" v-for="(user, index) in ranking" :key="index">
+              <tr
+                class="second-title"
+                v-for="(user, index) in ranking"
+                :key="index"
+              >
                 <td>{{ index + 1 }}</td>
                 <td>{{ user.userName }}</td>
                 <td>{{ user.acceptCount }}/{{ user.submitCount }}</td>
@@ -100,13 +139,20 @@
                 <template v-for="problem in user.timeList">
                   <template v-if="contest.judgeType === 'IMMEDIATELY'">
                     <template v-if="problem.submitted === true">
-                      <td v-if="problem.passed === true" :class="choose(problem.firstPassed)">
+                      <td
+                        v-if="problem.passed === true"
+                        :class="choose(problem.firstPassed)"
+                      >
                         <div>{{ timetrans(problem.totalTime) }}</div>
-                        <div v-if="problem.errorCount !== 0">(-{{ problem.errorCount }})</div>
+                        <div v-if="problem.errorCount !== 0">
+                          (-{{ problem.errorCount }})
+                        </div>
                       </td>
                       <td v-else class="red">
                         <p v-html="timetrans(problem.totalTime)"></p>
-                        <p v-if="problem.errorCount !== 0">(-{{ problem.errorCount }})</p>
+                        <p v-if="problem.errorCount !== 0">
+                          (-{{ problem.errorCount }})
+                        </p>
                       </td>
                     </template>
                     <td v-else class="not-submitted"></td>
@@ -446,7 +492,7 @@ export default class ContestDetail extends Vue {
     })
   }
 
-  download(data){
+  download(data: any) {
     if (!data) {
       return
     }
@@ -462,12 +508,14 @@ export default class ContestDetail extends Vue {
   exportRank() {
     const params = this.$route.params
     const id: string = params.id
-    api.exportRanking(id, {
-      groupId: this.groupSelect,
-      teacherId: this.authorSelect,
-    }).then((res: any) => {
-      this.download(res.data)
-    })
+    api
+      .exportRanking(id, {
+        groupId: this.groupSelect,
+        teacherId: this.authorSelect,
+      })
+      .then((res: any) => {
+        this.download(res.data)
+      })
   }
 
   getContestRanking(query?: RankingQuery) {
