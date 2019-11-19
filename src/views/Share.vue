@@ -15,9 +15,21 @@
         </div>
         <h2>状态：{{ errMsg.result }}</h2>
         <div v-if="errMsg.result !== 'ACCEPTED'">
-          <h2>错误信息</h2>
-          <h4>信息：{{ errMsg.message }}</h4>
-          <h4>错误：{{ errMsg.error }}</h4>
+          <div v-if="errMsg.result === 'COMPILE_ERROR'">
+            <h4>运行：</h4>
+            <div class="error">{{ errMsg.message }}</div>
+          </div>
+          <div v-if="errMsg.result === 'WRONG_ANSWER'">
+            <h4>cpu时间：{{ errMsg.cpuTime }}</h4>
+            <h4>超出CPU限制数目：{{ errMsg.cpuTimeLimitExceededCount }}</h4>
+            <h4>内存: {{ errMsg.memory }}</h4>
+            <h4>超出内存限制数目: {{ errMsg.memoryLimitExceededCount }}</h4>
+            <h4>通过数目: {{ errMsg.passedCount }}</h4>
+            <h4>真实时间: {{ errMsg.realTime }}</h4>
+            <h4>超出时间限制数目: {{ errMsg.timeLimitExceededCount }}</h4>
+            <h4>总样例数目: {{ errMsg.totalCount }}</h4>
+            <h4>样例出错数目: {{ errMsg.wrongAnswerCount }}</h4>
+          </div>
         </div>
       </div>
     </Col>
@@ -65,5 +77,12 @@ h4 {
 .container {
   padding-top: 24px;
   text-align: left;
+}
+.error {
+  white-space: pre-line;
+  padding: 20px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 6px;
+  background-color: rgba(0, 0, 0, 0.05);
 }
 </style>
