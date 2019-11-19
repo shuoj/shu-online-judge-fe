@@ -26,40 +26,37 @@
         >
           <table>
             <tr>
-              <td>cpuTime</td>
-              <td>{{ errMsg.cpuTime }}</td>
+              <th>Debug 信息:</th>
             </tr>
             <tr>
-              <td>cpuTimeLimitExceededCount</td>
-              <td>{{ errMsg.cpuTimeLimitExceededCount }}</td>
-            </tr>
-            <tr>
-              <td>memory</td>
+              <td>内存:</td>
               <td>{{ errMsg.memory }}</td>
             </tr>
             <tr>
-              <td>memoryLimitExceededCount</td>
-              <td>{{ errMsg.memoryLimitExceededCount }}</td>
-            </tr>
-            <tr>
-              <td>passedCount</td>
-              <td>{{ errMsg.passedCount }}</td>
-            </tr>
-            <tr>
-              <td>realTime</td>
+              <td>实际时间:</td>
               <td>{{ errMsg.realTime }}</td>
             </tr>
             <tr>
-              <td>timeLimitExceededCount</td>
+              <td>CPU Time Limit Exceeded:</td>
+              <td>{{ errMsg.cpuTimeLimitExceededCount }}</td>
+            </tr>
+
+            <tr>
+              <td>Memory Limit Exceeded:</td>
+              <td>{{ errMsg.memoryLimitExceededCount }}</td>
+            </tr>
+
+            <tr>
+              <td>Time Limit Exceeded:</td>
               <td>{{ errMsg.timeLimitExceededCount }}</td>
             </tr>
             <tr>
-              <td>totalCount</td>
-              <td>{{ errMsg.totalCount }}</td>
+              <td>Wrong Answer:</td>
+              <td>{{ errMsg.wrongAnswerCount }}</td>
             </tr>
             <tr>
-              <td>WRONG_ANSWER 的个数</td>
-              <td>{{ errMsg.wrongAnswerCount }}</td>
+              <td>样例通过/总数</td>
+              <td>{{ errMsg.passedCount }} / {{ errMsg.totalCount }}</td>
             </tr>
           </table>
         </div>
