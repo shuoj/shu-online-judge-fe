@@ -67,7 +67,8 @@
           <Card v-if="codeStatus" class="pro-status">
             Run Code Status:
             <span :style="{ color: codeColor }">{{ codeStatus }}</span
-            >&nbsp;&nbsp;<a target="_blank">查看详情</a>
+            >&nbsp;&nbsp;
+            <router-link :to="shareRoute" target="_blank">查看详情</router-link>
           </Card>
         </TabPane>
         <TabPane label="我的提交" name="submission">
@@ -142,6 +143,7 @@ export default class ContestProblemDetail extends Vue {
       key: 'result',
     },
   ]
+  submissionId: string = ''
 
   get logined() {
     return window.localStorage.getItem('token')
@@ -153,6 +155,10 @@ export default class ContestProblemDetail extends Vue {
     } else {
       return 'red'
     }
+  }
+
+  get shareRoute() {
+    return '/share/' + this.submissionId
   }
 
   @Watch('$route')
@@ -180,6 +186,7 @@ export default class ContestProblemDetail extends Vue {
         .then((res: any) => {
           this.codeLoading = false
           this.codeStatus = res.data.result
+          this.submissionId = res.data.id
         })
         .catch((err: any) => {
           if (err.data.code === -6) {
