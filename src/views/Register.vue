@@ -27,7 +27,13 @@
               type="password"
               v-model="register.password"
               placeholder="请输入密码"
-              @on-enter="handleSubmit('registerForm')"
+            ></Input>
+          </FormItem>
+          <FormItem label="重复密码" prop="passwdCheck">
+            <Input
+              type="password"
+              v-model="register.passwdCheck"
+              placeholder="请再次输入密码"
             ></Input>
           </FormItem>
           <FormItem label="姓" prop="lastname">
@@ -67,10 +73,22 @@ export default class About extends Vue {
     username: '',
     mail: '',
     password: '',
+    passwdCheck: '',
     firstname: '',
     lastname: '',
     school: '',
   }
+
+  validatePassCheck = (rule: any, value: string, callback: any) => {
+    if (value === '') {
+      callback(new Error('请输入密码2次'))
+    } else if (value !== this.register.password) {
+      callback(new Error('两次密码不相符'))
+    } else {
+      callback()
+    }
+  }
+
   registerRule: any = {
     username: [
       { required: true, message: '用户名不能为空', trigger: 'blur' },
@@ -88,6 +106,7 @@ export default class About extends Vue {
       { required: true, message: '邮箱不能为空', trigger: 'blur' },
       { type: 'email', message: '格式不正确', trigger: 'blur' },
     ],
+    passwdCheck: [{ validator: this.validatePassCheck, trigger: 'blur' }],
     password: [
       { required: true, message: '密码不能为空', trigger: 'blur' },
       {
@@ -124,12 +143,15 @@ export default class About extends Vue {
   }
 
   handleReset() {
-    this.register.username = ''
-    this.register.mail = ''
-    this.register.password = ''
-    this.register.firstname = ''
-    this.register.lastname = ''
-    this.register.school = ''
+    this.register = {
+      username: '',
+      mail: '',
+      password: '',
+      passwdCheck: '',
+      firstname: '',
+      lastname: '',
+      school: '',
+    }
   }
 }
 </script>
