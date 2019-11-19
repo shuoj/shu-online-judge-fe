@@ -103,7 +103,6 @@ export default class ContestProblemDetail extends Vue {
   hide: boolean = false
   codeLoading: boolean = false
   codeStatus: string = ''
-  index = 1
   title: any = [
     {
       title: '#',
@@ -114,18 +113,7 @@ export default class ContestProblemDetail extends Vue {
       title: '提交时间',
       key: 'createDate',
       render: (h: any, obj: any) => {
-        return h(
-          'a',
-          {
-            on: {
-              click: () => {
-                console.log(obj.row)
-                this.toShare(obj.row.id)
-              },
-            },
-          },
-          obj.row.createDate
-        )
+        return h(obj.row.createDate)
       },
     },
     {
@@ -156,10 +144,6 @@ export default class ContestProblemDetail extends Vue {
     } else {
       return 'red'
     }
-  }
-
-  get shareRoute() {
-    return '/share/' + this.submissionId
   }
 
   @Watch('$route')
@@ -214,7 +198,6 @@ export default class ContestProblemDetail extends Vue {
 
   getSubmission(name: string) {
     if (name === 'submission') {
-      this.index = 1
       const params = this.$route.params
       api
         .getContestSubmission({

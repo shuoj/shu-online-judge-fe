@@ -127,6 +127,19 @@ export default class Status extends Vue {
       key: 'result',
       width: 350,
       align: 'center',
+      render: (h: any, obj: any) => {
+        return h(
+          'span',
+          {
+            on: {
+              click: () => {
+                this.toShare(obj.row.shareId)
+              },
+            },
+          },
+          obj.row.result
+        )
+      },
       filters: [
         {
           label: 'Accepted',
