@@ -107,7 +107,7 @@ export default class ContestProblemDetail extends Vue {
   title: any = [
     {
       title: '#',
-      key: 'id',
+      key: 'index',
       width: 80,
     },
     {
@@ -115,15 +115,16 @@ export default class ContestProblemDetail extends Vue {
       key: 'createDate',
       render: (h: any, obj: any) => {
         return h(
-          'span',
+          'a',
           {
             on: {
               click: () => {
+                console.log(obj.row)
                 this.toShare(obj.row.id)
               },
             },
           },
-          obj.row.id
+          obj.row.createDate
         )
       },
     },
@@ -221,10 +222,10 @@ export default class ContestProblemDetail extends Vue {
           problemId: params.problemId,
         })
         .then((res: any) => {
-          let id = 0
+          let index = 0
           this.submission = res.data.map((item: any) => {
-            id = id + 1
-            item.id = id
+            index = index + 1
+            item.index = index
             if (item.result === 'ACCEPTED') {
               return {
                 ...item,
