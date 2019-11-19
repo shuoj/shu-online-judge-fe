@@ -178,7 +178,7 @@ import api from '@/api/api'
 import md5 from 'js-md5'
 import { UserRole } from '../types/user'
 import { RankingQuery } from '../types/ranking'
-
+import axios from 'axios'
 @Component
 export default class ContestDetail extends Vue {
   modalPassword: boolean = false
@@ -496,26 +496,35 @@ export default class ContestDetail extends Vue {
     if (!data) {
       return
     }
-    let url = window.URL.createObjectURL(new Blob([data]))
+    let url = window.URL.createObjectURL(
+      new Blob([data], {
+        type: 'application/octet-stream',
+      })
+    )
     let link = document.createElement('a')
     link.style.display = 'none'
     link.href = url
     link.setAttribute('download', 'ranking.xlsx')
     document.body.appendChild(link)
     link.click()
+    document.body.removeChild(link)
   }
 
   exportRank() {
     const params = this.$route.params
     const id: string = params.id
-    api
-      .exportRanking(id, {
-        groupId: this.groupSelect,
-        teacherId: this.authorSelect,
-      })
-      .then((res: any) => {
-        this.download(res.data)
-      })
+    const rankParams = {
+      groupId: this.groupSelect,
+      teacherId: this.authorSelect,
+    }
+    axios({
+      url: `/api/v1/contests/${id}/ranking/export`,
+      method: 'get',
+      responseType: 'arraybuffer',
+      params: rankParams,
+    }).then(res => {
+      this.download(res.data)
+    })
   }
 
   getContestRanking(query?: RankingQuery) {
