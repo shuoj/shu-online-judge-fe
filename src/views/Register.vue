@@ -29,7 +29,7 @@
               placeholder="请输入密码"
             ></Input>
           </FormItem>
-          <FormItem label="重复密码" prop="passwdCheck">
+          <FormItem label="再次输入密码" prop="passwdCheck">
             <Input
               type="password"
               v-model="register.passwdCheck"
@@ -81,7 +81,7 @@ export default class About extends Vue {
 
   validatePassCheck = (rule: any, value: string, callback: any) => {
     if (value === '') {
-      callback(new Error('请输入密码2次'))
+      callback(new Error('请再次输入密码'))
     } else if (value !== this.register.password) {
       callback(new Error('两次密码不相符'))
     } else {
