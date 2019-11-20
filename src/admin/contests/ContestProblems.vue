@@ -195,7 +195,7 @@
         </Row>
         <Row v-for="(item, index) in problems" class="item" :key="item.id">
           <Col span="2">
-            <p>{{ alphabet[index] }}</p>
+            <p>{{ item.label }}</p>
           </Col>
           <Col span="8">
             <a @click="toProblem(item.id)">{{ item.title }}</a>

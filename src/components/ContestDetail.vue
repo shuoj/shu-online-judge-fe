@@ -78,7 +78,7 @@
                 v-if="show"
                 v-model="author"
                 :data="authorSearch"
-                clearable="true"
+                clearable
                 placeholder="搜索某老师创建群组的成员成绩"
                 search
                 icon="ios-search"
@@ -129,7 +129,7 @@
                 :data="groupSearch"
                 placeholder="以小组筛选显示排名"
                 search
-                clearable="true"
+                clearable
                 icon="ios-search"
                 @on-change="getGroupsByName"
                 @on-select="selectedGroup"
@@ -137,9 +137,9 @@
                 style="width:200px;opacity: 0;position: absolute"
               >
                 <Option
-                  v-for="(item, index) in groupSearch"
+                  v-for="item in groupSearch"
                   :value="item.id"
-                  :key="item.name"
+                  :key="item.id"
                 >
                   <div class="option-two">
                     <span>{{ item.name }}</span>
@@ -269,7 +269,7 @@ export default class ContestDetail extends Vue {
       title: 'ID',
       key: 'id',
       render: (h: any, obj: any) => {
-        return h('span', this.alphabet[obj.row.index])
+        return h('span', obj.row.label)
       },
       width: 80,
     },
