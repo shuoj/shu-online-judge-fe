@@ -165,11 +165,11 @@
                 </td>
                 <td style="width:100px;" v-else>总分</td>
                 <td
-                  v-for="item in problemNumber"
+                  v-for="item in problemKey"
                   :key="item"
                   style="width: 100px;"
                 >
-                  {{ alphabet[item - 1] }}
+                  {{ item }}
                 </td>
               </tr>
               <tr
@@ -187,7 +187,8 @@
                 <td v-else>
                   <p>{{ user.score }}</p>
                 </td>
-                <template v-for="problem in user.timeList">
+                <!--<template v-for="key in problemKey">-->
+                <template v-for="(problem, key) in user.timeList">
                   <template v-if="contest.judgeType === 'IMMEDIATELY'">
                     <template v-if="problem.submitted === true">
                       <td
@@ -235,10 +236,10 @@ export default class ContestDetail extends Vue {
   show: boolean = false
   modalPassword: boolean = false
   modal: boolean = false
-  modalTitle: any = ''
-  modalContent: any = ''
-  password: any = ''
-  alphabet: any = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L']
+  modalTitle: string = ''
+  modalContent: string = ''
+  password: string = ''
+  problemKey: Array<String> = []
   index = 0
   contest: any = {}
   columns: any = [
@@ -309,10 +310,9 @@ export default class ContestDetail extends Vue {
     },
   ]
   problems: any = []
-  problemDetail: any = []
+  problemDetail: Array<any> = []
   autoRefresh: any = false
-  ranking: any = []
-  problemNumber: any = ''
+  ranking: Array<any> = []
 
   name: string = ''
   author: string = ''
@@ -597,10 +597,10 @@ export default class ContestDetail extends Vue {
       .getRanking(id, query)
       .then((res: any) => {
         if (res.data.rankingUserList.length > 0) {
-          this.problemNumber = res.data.rankingUserList[0].timeList.length
+          this.problemKey = Object.keys(res.data.rankingUserList[0].timeList)
           this.ranking = res.data.rankingUserList
         } else {
-          this.problemNumber = 0
+          this.problemKey = []
           this.ranking = []
         }
       })
