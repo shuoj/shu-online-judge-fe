@@ -165,7 +165,7 @@ export default class UserManager extends Vue {
         password: md5(this.newUser.password),
         authorities: [{ name: this.role }],
       })
-      .then(res => {
+      .then(() => {
         ;(this as any).$Message.success('创建成功')
         this.newUser = {}
       })

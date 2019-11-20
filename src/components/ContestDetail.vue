@@ -54,6 +54,7 @@
               <AutoComplete
                 v-model="author"
                 :data="authorSearch"
+                clearable="true"
                 placeholder="搜索某老师创建群组的成员成绩"
                 search
                 icon="ios-search"
@@ -79,6 +80,7 @@
                 :data="groupSearch"
                 placeholder="以小组筛选显示排名"
                 search
+                clearable="true"
                 icon="ios-search"
                 @on-change="getGroupsByName"
                 @on-select="selectedGroup"
@@ -173,7 +175,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import api from '@/api/api'
 import md5 from 'js-md5'
 import { UserRole } from '../types/user'
@@ -269,6 +271,19 @@ export default class ContestDetail extends Vue {
   groupSelect: string = ''
   authorSelect: string = ''
 
+  @Watch('name')
+  handleName(name: string) {
+    if (name === '' && this.author === '') {
+      this.getContestRanking()
+    }
+  }
+  @Watch('author')
+  handleAuthor(name: string) {
+    if (name === '' && this.name === '') {
+      this.getContestRanking()
+    }
+  }
+
   getGroupsByName(name: string) {
     this.authorSelect = ''
     this.author = ''
@@ -291,8 +306,6 @@ export default class ContestDetail extends Vue {
   }
 
   getAuthorByName() {
-    this.groupSelect = ''
-    this.name = ''
     api
       .getUser({
         role: UserRole.STUFF,
@@ -540,11 +553,8 @@ export default class ContestDetail extends Vue {
           this.problemNumber = 0
           this.ranking = []
         }
-        this.author = ''
-        this.name = ''
       })
       .catch((err: any) => {
-        console.log(err)
         ;(this as any).$Message.error(err.data.message)
       })
   }
