@@ -52,6 +52,7 @@
             </Col>
             <Col span="6">
               <AutoComplete
+                v-if="show"
                 v-model="author"
                 :data="authorSearch"
                 clearable
@@ -73,9 +74,33 @@
                   </div>
                 </Option>
               </AutoComplete>
+              <AutoComplete
+                v-if="show"
+                v-model="author"
+                :data="authorSearch"
+                clearable="true"
+                placeholder="搜索某老师创建群组的成员成绩"
+                search
+                icon="ios-search"
+                @on-change="getAuthorByName"
+                @on-select="selectedAuthor"
+                placement="bottom"
+                style="width:280px;opacity: 0;position: absolute"
+              >
+                <Option
+                  v-for="(item, index) in authorSearch"
+                  :value="item.id"
+                  :key="index"
+                >
+                  <div class="option-two">
+                    <span>{{ item.name }}</span>
+                  </div>
+                </Option>
+              </AutoComplete>
             </Col>
             <Col span="6">
               <AutoComplete
+                v-if="show"
                 v-model="name"
                 :data="groupSearch"
                 placeholder="以小组筛选显示排名"
@@ -87,6 +112,29 @@
                 @on-select="selectedGroup"
                 placement="bottom"
                 style="width:200px"
+              >
+                <Option
+                  v-for="(item, index) in groupSearch"
+                  :value="item.id"
+                  :key="item.name"
+                >
+                  <div class="option-two">
+                    <span>{{ item.name }}</span>
+                  </div>
+                </Option>
+              </AutoComplete>
+              <AutoComplete
+                v-if="show"
+                v-model="name"
+                :data="groupSearch"
+                placeholder="以小组筛选显示排名"
+                search
+                clearable="true"
+                icon="ios-search"
+                @on-change="getGroupsByName"
+                @on-select="selectedGroup"
+                placement="bottom"
+                style="width:200px;opacity: 0;position: absolute"
               >
                 <Option
                   v-for="(item, index) in groupSearch"
@@ -184,6 +232,7 @@ import { RankingQuery } from '../types/ranking'
 import axios from 'axios'
 @Component
 export default class ContestDetail extends Vue {
+  show: boolean = false
   modalPassword: boolean = false
   modal: boolean = false
   modalTitle: any = ''
@@ -562,6 +611,9 @@ export default class ContestDetail extends Vue {
 
   mounted() {
     this.getContestDetail()
+    setTimeout(() => {
+      this.show = true
+    }, 1)
   }
 }
 </script>
