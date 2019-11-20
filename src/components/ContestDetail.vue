@@ -54,7 +54,7 @@
               <AutoComplete
                 v-model="author"
                 :data="authorSearch"
-                clearable="true"
+                clearable
                 placeholder="搜索某老师创建群组的成员成绩"
                 search
                 icon="ios-search"
@@ -80,7 +80,8 @@
                 :data="groupSearch"
                 placeholder="以小组筛选显示排名"
                 search
-                clearable="true"
+                clearable
+                autocomplete="off"
                 icon="ios-search"
                 @on-change="getGroupsByName"
                 @on-select="selectedGroup"
