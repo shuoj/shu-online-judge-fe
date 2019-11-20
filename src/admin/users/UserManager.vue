@@ -125,6 +125,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import api from '@/api/api'
 import md5 from 'js-md5'
+import { sign } from 'crypto'
 
 @Component
 export default class UserManager extends Vue {
@@ -176,13 +177,11 @@ export default class UserManager extends Vue {
   reviseUserInfo() {
     const user: any = {
       ...this.reviseUser,
-      password: md5(this.reviseUser.password),
       authorities: [{ name: this.role }],
     }
-    console.log(user)
     api.updateUserInfo(user).then(res => {
-      console.log(res)
       this.reviseUser = {}
+      this.getUsers(this.page, this.pageSize)
     })
   }
 
@@ -193,7 +192,7 @@ export default class UserManager extends Vue {
         case 'ROLE_ADMIN':
           return '管理员'
         case 'ROLE_USER':
-          return '普通用户'
+          return '学生'
         case 'ROLE_STUFF':
           return '教师'
         default:
