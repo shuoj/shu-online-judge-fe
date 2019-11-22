@@ -7,10 +7,10 @@
     </Row>
     <Row style="margin-top: 36px">
       <Page
-      :total="total"
-      show-sizer
-      @on-change="pageChange"
-      @on-page-size-change="pageSizeChange"
+        :total="total"
+        show-sizer
+        @on-change="pageChange"
+        @on-page-size-change="pageSizeChange"
       />
     </Row>
   </div>

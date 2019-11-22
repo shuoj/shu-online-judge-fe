@@ -11,7 +11,11 @@
           <Row v-if="loading">
             <Col span="24">
               <Spin fix>
-                <Icon type="ios-loading" size=32 class="demo-spin-icon-load"></Icon>
+                <Icon
+                  type="ios-loading"
+                  size="32"
+                  class="demo-spin-icon-load"
+                ></Icon>
                 <div>Loading</div>
               </Spin>
             </Col>
@@ -92,6 +96,4 @@ export default class UserManager extends Vue {
   font-size 16px
   p
     padding: 4px 0px
-
-
 </style>
