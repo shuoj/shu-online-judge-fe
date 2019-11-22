@@ -141,9 +141,9 @@
               <Col span="14">
                 <AutoComplete
                   search
-                  v-model="addTitle"
+                  v-model="addById"
                   icon="ios-search"
-                  placeholder="请输入题目"
+                  placeholder="请输入题号"
                   @on-change="getProblemsByTitle"
                   @on-select="pushInto"
                   style="width: 100%;"
@@ -352,7 +352,7 @@ export default class Admin extends Vue {
   ]
   searchData: any = []
   problems: any = []
-  addTitle: any = ''
+  addById: string = ''
   tags: any = []
   include: Array<string> = []
   exclude: Array<string> = []
@@ -461,10 +461,10 @@ export default class Admin extends Vue {
   }
 
   getProblemsByTitle() {
-    if (this.addTitle !== '') {
+    if (this.addById !== '') {
       api
         .getProblemsIdByTitle({
-          idx: this.addTitle,
+          idx: this.addById,
         })
         .then((res: any) => {
           this.searchData = res.data.list
@@ -487,7 +487,7 @@ export default class Admin extends Vue {
   }
 
   setProblemsToContest() {
-    this.addTitle = ''
+    this.addById = ''
     const params = this.$route.params
     const contestId: any = params.id
     const problemId = this.problemDetail.id
