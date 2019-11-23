@@ -148,9 +148,7 @@ export default class Index extends Vue {
 }
 </script>
 
-<style lang="stylus" scoped>
-@import '../style/base';
-
+<style lang="less" scoped>
 .my-info {
   text-align: left;
   color: #808695;

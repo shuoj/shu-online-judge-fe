@@ -160,6 +160,4 @@ export default class Personal extends Vue {
 }
 </script>
 
-<style lang="stylus" scoped>
-@import '../style/base';
-</style>
+<style lang="less" scoped></style>

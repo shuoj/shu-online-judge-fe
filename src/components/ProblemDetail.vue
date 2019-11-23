@@ -261,9 +261,7 @@ export default class ProblemDetail extends Vue {
 }
 </script>
 
-<style lang="stylus" scoped>
-@import '../style/base';
-
+<style lang="less" scoped>
 .pro-status {
   text-align: left;
   margin-top: 32px;

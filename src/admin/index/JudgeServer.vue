@@ -78,22 +78,34 @@ export default class UserManager extends Vue {
 }
 </script>
 
-<style lang="stylus" scoped>
-.card
-  width 80%
-  margin-top 40px
+<style lang="less" scoped>
+.card {
+  width: 80%;
+  margin-top: 40px;
+}
 
-.demo-spin-icon-load
-  animation ani-demo-spin 1s linear infinite
+.demo-spin-icon-load {
+  animation: ani-demo-spin 1s linear infinite;
+}
 
-@keyframes ani-demo-spin
-  from  transform rotate(0deg)
-  50%   transform rotate(180deg)
-  to    transform rotate(360deg)
+@keyframes ani-demo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(180deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
 
-.content
-  padding 20px 40px
-  font-size 16px
-  p
-    padding: 4px 0px
+.content {
+  padding: 20px 40px;
+  font-size: 16px;
+}
+
+p {
+  padding: 4px 0;
+}
 </style>

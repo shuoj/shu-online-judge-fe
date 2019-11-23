@@ -269,7 +269,7 @@ export default class ContestProblemDetail extends Vue {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="less" scoped>
 .pro-status {
   text-align: left;
   margin-top: 32px;

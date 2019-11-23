@@ -303,8 +303,7 @@ export default class About extends Vue {
 }
 </script>
 
-<style lang="stylus" scoped>
-@import '../style/base';
+<style lang="less" scoped>
 .card-margin {
   margin-top: 40px;
   margin-bottom: 40px;

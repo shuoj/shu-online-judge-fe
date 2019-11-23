@@ -90,7 +90,7 @@ export default class Group extends Vue {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="less" scoped>
 .index {
   width: 1140px;
   margin: 0 auto;

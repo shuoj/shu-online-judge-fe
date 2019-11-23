@@ -392,7 +392,7 @@ export default class GroupList extends Vue {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="less" scoped>
 .create-btn {
   margin-top: 20px;
   height: 40px;

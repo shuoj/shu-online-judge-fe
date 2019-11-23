@@ -71,9 +71,7 @@ import { Component, Vue } from 'vue-property-decorator'
 export default class Admin extends Vue {}
 </script>
 
-<style lang="stylus" scoped>
-@import '../style/base';
-
+<style lang="less" scoped>
 .icon-title {
   font-size: 24px;
   font-weight: 500;

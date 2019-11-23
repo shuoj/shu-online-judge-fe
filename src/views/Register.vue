@@ -156,9 +156,7 @@ export default class About extends Vue {
 }
 </script>
 
-<style lang="stylus" scoped>
-@import '../style/base';
-
+<style lang="less" scoped>
 .register {
   margin-top: 50px;
   margin-bottom: 100px;

@@ -618,7 +618,7 @@ export default class ContestDetail extends Vue {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="less" scoped>
 .pane-padding {
   padding-top: 30px;
 }

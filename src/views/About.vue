@@ -52,9 +52,7 @@ import { Component, Vue } from 'vue-property-decorator'
 export default class About extends Vue {}
 </script>
 
-<style lang="stylus" scoped>
-@import '../style/base';
-
+<style lang="less" scoped>
 .wrapper-content {
   padding: 20px 25px;
   position: relative;

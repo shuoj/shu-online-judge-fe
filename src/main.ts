@@ -3,7 +3,7 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import ViewUI from 'view-design'
-import 'view-design/dist/styles/iview.css'
+import '../src/style/base.less'
 import VueWangeditor from 'vue-wangeditor-simple'
 import VueHighlightJS from 'vue-highlightjs'
 

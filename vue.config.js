@@ -24,4 +24,11 @@ module.exports = {
   },
   // 链式操作(高级),允许我们更细粒度的控制其内部配置
   chainWebpack: config => {},
+  css: {
+    loaderOptions: {
+      less: {
+        javascriptEnabled: true,
+      },
+    },
+  },
 }

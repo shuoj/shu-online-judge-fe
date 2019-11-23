@@ -93,7 +93,7 @@ export default class Share extends Vue {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="less" scoped>
 h2 {
   font-weight: 500;
   font-size: 36px;

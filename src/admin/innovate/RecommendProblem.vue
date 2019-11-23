@@ -70,4 +70,4 @@ import { Component, Vue } from 'vue-property-decorator'
 export default class App extends Vue {}
 </script>
 
-<style lang="stylus" scoped></style>
+<style lang="less" scoped></style>

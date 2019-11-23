@@ -510,7 +510,7 @@ export default class Index extends Vue {
 }
 </script>
 
-<style scoped lang="stylus">
+<style scoped lang="less">
 .list {
   border-bottom: 1px solid #ddd;
   font-weight: 400;

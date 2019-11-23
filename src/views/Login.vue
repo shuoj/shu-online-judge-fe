@@ -100,9 +100,7 @@ export default class Login extends Vue {
 }
 </script>
 
-<style lang="stylus" scoped>
-@import '../style/base';
-
+<style lang="less" scoped>
 .login-form {
   margin-top: 150px;
   margin-bottom: 200px;

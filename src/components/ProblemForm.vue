@@ -387,7 +387,7 @@ export default class Problemform extends Vue {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="less" scoped>
 .problem-form {
   text-align: left !important;
 }

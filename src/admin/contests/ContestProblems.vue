@@ -580,7 +580,7 @@ export default class Admin extends Vue {
 }
 </script>
 
-<style lang="stylus" scoped>
+<style lang="less" scoped>
 .item-padding {
   padding: 30px 0 0 0;
 }
