@@ -1,5 +1,20 @@
 <template>
   <Row>
+    <Col span="10" offset="3">
+      <div v-if="$store.state.role !== 'ROLE_USER'" class="top">
+        <Button type="primary" @click="rejudge">重判</Button>
+      </div>
+    </Col>
+    <Col span="8">
+      <div class="top">
+        <Select v-model="select" style="width:200px">
+          <Option v-for="item in submitList" :value="item" :key="item">{{
+            item
+          }}</Option>
+        </Select>
+        <Button type="primary" @click="rejudge(select)">改判</Button>
+      </div>
+    </Col>
     <Col span="18" offset="3">
       <div class="container">
         <h2>
@@ -75,8 +90,34 @@ export default class Share extends Vue {
   sourceCode: string = ''
   title: string = ''
   errMsg: any = {}
+  select: string = 'ACCEPTED'
+  submitList: Array<string> = [
+    'ACCEPTED',
+    'RUNTIME_ERROR',
+    'CPU_TIME_LIMIT_EXCEEDED',
+    'TIME_LIMIT_EXCEEDED',
+    'MEMORY_LIMIT_EXCEEDED',
+    'COMPILE_ERROR',
+    'WRONG_ANSWER',
+  ]
 
-  mounted() {
+  rejudge(result?: string) {
+    const params = this.$route.params
+    api
+      .rejudge({
+        id: params.id,
+        result: result,
+      })
+      .then(res => {
+        console.log(res.data)
+        this.getCommit()
+      })
+      .catch((err: any) => {
+        ;(this as any).$Message.error(err.data.message)
+      })
+  }
+
+  getCommit() {
     const params = this.$route.params
     api
       .getCommit({ id: params.id })
@@ -90,10 +131,18 @@ export default class Share extends Vue {
         ;(this as any).$Message.error(err.data.message)
       })
   }
+
+  mounted() {
+    this.getCommit()
+  }
 }
 </script>
 
 <style lang="less" scoped>
+.top {
+  text-align: left;
+  padding-top: 20px;
+}
 h2 {
   font-weight: 500;
   font-size: 36px;

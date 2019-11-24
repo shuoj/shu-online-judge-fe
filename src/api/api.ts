@@ -230,4 +230,8 @@ export default {
     }),
   getJudgeServer: (data: {}) => axios.get('/api/v1/judge-server/status'),
   getRecommend: (data: {}) => axios.post('/api/v1/problems/recommend', data),
+  rejudge: (data: { id: string; result?: string }) =>
+    axios.post(`/api/v1/submissions/${data.id}`, {
+      result: data.result,
+    }),
 }
