@@ -12,7 +12,7 @@
             item
           }}</Option>
         </Select>
-        <Button type="primary" @click="rejudge(select)">改判</Button>
+        <Button type="primary" @click="judge(select)">改判</Button>
       </div>
     </Col>
     <Col span="18" offset="3">
@@ -101,15 +101,28 @@ export default class Share extends Vue {
     'WRONG_ANSWER',
   ]
 
-  rejudge(result?: string) {
+  rejudge() {
     const params = this.$route.params
     api
       .rejudge({
         id: params.id,
-        result: result,
       })
       .then(res => {
         console.log(res.data)
+        this.getCommit()
+      })
+      .catch((err: any) => {
+        ;(this as any).$Message.error(err.data.message)
+      })
+  }
+
+  judge(result: string) {
+    api
+      .resetJudge({
+        id: params.id,
+        result: result,
+      })
+      .then(res => {
         this.getCommit()
       })
       .catch((err: any) => {
