@@ -117,6 +117,7 @@ export default class Share extends Vue {
   }
 
   judge(result: string) {
+    const params = this.$route.params
     api
       .resetJudge({
         id: params.id,
