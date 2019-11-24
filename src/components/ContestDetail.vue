@@ -567,7 +567,7 @@ export default class ContestDetail extends Vue {
 
   toContestProblemSubmission(id: string) {
     this.$router.push({
-      path: `/submission/${id}`,
+      path: `/share/${id}`,
     })
   }
 
