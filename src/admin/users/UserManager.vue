@@ -218,7 +218,6 @@ export default class UserManager extends Vue {
         list: [id],
       })
       .then(res => {
-        console.log(res)
         ;(this as any).$Message.success('修改成功')
       })
       .catch((err: any) => {

@@ -244,7 +244,6 @@ export default class GroupList extends Vue {
   }
 
   resetPassword(group: any) {
-    console.log(group)
     axios({
       url: `/api/v1/groups/${group.id}/members/resetPassword`,
       method: 'post',
