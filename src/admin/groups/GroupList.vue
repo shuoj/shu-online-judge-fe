@@ -1,6 +1,6 @@
 <template>
   <Row>
-    <Col span="20" offset="2">
+    <Col span="22" offset="1">
       <div class="index">
         <div v-if="groupShow && modifyShow">
           <div style="display: flex">
@@ -20,7 +20,7 @@
             <li class="title">名称</li>
             <li class="time">创建时间</li>
             <li class="way">创建者</li>
-            <li class="time">操作</li>
+            <li class="do">操作</li>
           </ul>
           <div class="no-member" v-if="noGroup">
             没有群组
@@ -36,13 +36,19 @@
             <li class="title">{{ group.name }}</li>
             <li class="time">{{ group.createDate }}</li>
             <li class="way">{{ group.authorName }}</li>
-            <li class="time">
+            <li class="do">
               <Button @click="groupDetail(group)">详情</Button>
               <Button
                 @click="modify(group)"
                 type="info"
                 style="margin-left: 8px"
                 >修改群组</Button
+              >
+              <Button
+                @click="resetPassword(group)"
+                type="info"
+                style="margin-left: 8px"
+                >重置组员密码</Button
               >
               <Button
                 @click="deleteGroup(group)"
@@ -170,6 +176,7 @@ import api from '@/api/api.ts'
 import GroupForm from '@/components/CreateGroup.vue'
 import { debounce } from '@/util/util.ts'
 import { VUE_APP_BASE_URL } from '@/api/constant'
+import axios from 'axios'
 
 @Component({
   components: {
@@ -217,6 +224,36 @@ export default class GroupList extends Vue {
       Authorization: 'Bearer ' + window.localStorage.getItem('token'),
     }
   }
+
+  download(data: any) {
+    if (!data) {
+      return
+    }
+    let url = window.URL.createObjectURL(
+      new Blob([data], {
+        type: 'application/octet-stream',
+      })
+    )
+    let link = document.createElement('a')
+    link.style.display = 'none'
+    link.href = url
+    link.setAttribute('download', 'reset.xlsx')
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
+  resetPassword(group: any) {
+    console.log(group)
+    axios({
+      url: `/api/v1/groups/${group.id}/members/resetPassword`,
+      method: 'post',
+      responseType: 'arraybuffer',
+    }).then(res => {
+      this.download(res.data)
+    })
+  }
+
   getMemberId() {
     if (this.member) {
       api
@@ -445,6 +482,9 @@ h2 {
   }
   .time {
     width: 300px;
+  }
+  .do {
+    width: 500px;
   }
 }
 
