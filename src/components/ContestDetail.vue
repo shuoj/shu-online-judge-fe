@@ -359,7 +359,17 @@ export default class ContestDetail extends Vue {
       key: 'problemTitle',
       className: 'pointer-class',
       render: (h: any, obj: any) => {
-        return h('span', obj.row.problemTitle)
+        return h(
+          'span',
+          {
+            on: {
+              click: () => {
+                this.toContestProblemSubmission(obj.row.id)
+              },
+            },
+          },
+          obj.row.problemTitle
+        )
       },
     },
     {
@@ -553,6 +563,12 @@ export default class ContestDetail extends Vue {
   pageSizeChange(size: number) {
     this.getAllSubmissionOfContest(this.page, size)
     this.pageSize = size
+  }
+
+  toContestProblemSubmission(id: string) {
+    this.$router.push({
+      path: `/submission/${id}`,
+    })
   }
 
   getAllSubmissionOfContest(page: number = 0, pageSize: number = 10) {
