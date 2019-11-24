@@ -219,6 +219,24 @@
             </tbody>
           </table>
         </TabPane>
+        <TabPane
+          label="提交"
+          name="submit"
+          v-if="role !== 'ROLE_USER'"
+          style="text-align: left"
+          class="pane-padding"
+        >
+          <Row> </Row>
+          <Table :columns="titleSubmission" :data="status"></Table>
+          <div style="text-align: center">
+            <Page
+              :total="total"
+              show-sizer
+              @on-change="pageChange"
+              @on-page-size-change="pageSizeChange"
+            />
+          </div>
+        </TabPane>
       </Tabs>
     </Col>
   </Row>
@@ -321,6 +339,125 @@ export default class ContestDetail extends Vue {
   groupSelect: string = ''
   authorSelect: string = ''
 
+  page: number = 0
+  pageSize: number = 0
+  total: number = 0
+
+  titleSubmission: any = [
+    {
+      title: '#',
+      type: 'index',
+      width: 78,
+    },
+    {
+      title: '用户',
+      key: 'authorName',
+      className: 'pointer-class',
+    },
+    {
+      title: '题目名称',
+      key: 'problemTitle',
+      className: 'pointer-class',
+      render: (h: any, obj: any) => {
+        return h('span', obj.row.problemTitle)
+      },
+    },
+    {
+      title: '提交时间',
+      key: 'createDate',
+    },
+    {
+      title: '语言',
+      key: 'language',
+      filters: [
+        {
+          label: 'C',
+          value: 1,
+        },
+        {
+          label: 'CPP',
+          value: 2,
+        },
+        {
+          label: 'JAVA',
+          value: 3,
+        },
+      ],
+      filterMultiple: false,
+      filterMethod(value: any, row: any) {
+        if (value === 1) {
+          return row.language === 'C'
+        } else if (value === 2) {
+          return row.language === 'CPP'
+        } else if (value === 3) {
+          return row.language === 'JAVA'
+        }
+      },
+    },
+    {
+      title: '运行时间',
+      key: 'duration',
+      render: (h: any, obj: any) => {
+        return h('span', (obj.row.duration || 0) + ' ms')
+      },
+    },
+    {
+      title: '结果',
+      key: 'result',
+      width: 350,
+      align: 'center',
+      filters: [
+        {
+          label: 'Accepted',
+          value: 1,
+        },
+        {
+          label: 'Wrong Answer',
+          value: 2,
+        },
+        {
+          label: 'Runtime Error',
+          value: 3,
+        },
+        {
+          label: 'Time Limit Exceeded',
+          value: 4,
+        },
+        {
+          label: 'Memory Limit Exceeded',
+          value: 5,
+        },
+        {
+          label: 'Compile Error',
+          value: 6,
+        },
+        {
+          label: 'Format Error',
+          value: 7,
+        },
+      ],
+      filterMultiple: false,
+      filterMethod(value: any, row: any) {
+        if (value === 1) {
+          return row.result === 'Accepted'
+        } else if (value === 2) {
+          return row.result === 'Wrong Answer'
+        } else if (value === 3) {
+          return row.result === 'Runtime Error'
+        } else if (value === 4) {
+          return row.result === 'Time Limit Exceeded'
+        } else if (value === 5) {
+          return row.result === 'Memory Limit Exceeded'
+        } else if (value === 6) {
+          return row.result === 'Compile Error'
+        } else if (value === 7) {
+          return row.result === 'Format Error'
+        }
+      },
+    },
+  ]
+  status: any = []
+
   @Watch('name')
   handleName(name: string) {
     if (name === '' && this.author === '') {
@@ -332,6 +469,10 @@ export default class ContestDetail extends Vue {
     if (name === '' && this.name === '') {
       this.getContestRanking()
     }
+  }
+
+  get role() {
+    return this.$store.state.userInfo.authorities[0].authority
   }
 
   getGroupsByName(name: string) {
@@ -396,7 +537,37 @@ export default class ContestDetail extends Vue {
         break
       case 'problem':
         this.getContestProblems()
+        break
+      case 'submit':
+        this.getAllSubmissionOfContest()
+      default:
+        break
     }
+  }
+
+  pageChange(pages: number) {
+    this.page = pages - 1
+    this.getAllSubmissionOfContest(pages - 1, this.pageSize)
+  }
+
+  pageSizeChange(size: number) {
+    this.getAllSubmissionOfContest(this.page, size)
+    this.pageSize = size
+  }
+
+  getAllSubmissionOfContest(page: number = 0, pageSize: number = 10) {
+    const params = this.$route.params
+    const id: string = params.id
+    api
+      .getAllSubmissionOfContest({
+        contestId: id,
+        page: page,
+        size: pageSize,
+      })
+      .then(res => {
+        this.total = res.data.total
+        this.status = res.data.list
+      })
   }
 
   choose(status: boolean) {

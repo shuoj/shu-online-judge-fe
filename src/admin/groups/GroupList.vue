@@ -182,7 +182,7 @@ export default class GroupList extends Vue {
   pageSize: number = 10
 
   groups: Array<any> = []
-  users: Array<any> = []
+  users: any = []
   groupShow: boolean = true
   noGroup: boolean = false
   modifyShow: boolean = true

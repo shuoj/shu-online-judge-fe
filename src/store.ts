@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   // 全局变量
   state: {
-    userInfo: '',
+    userInfo: undefined,
     token: '',
     username: '',
     loginStatus: '',

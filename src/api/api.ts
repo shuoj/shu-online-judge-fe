@@ -147,6 +147,14 @@ export default {
     axios.get(
       `/api/v1/contests/${data.contestId}/problems/${data.problemId}/submissions`
     ),
+  getAllSubmissionOfContest: (data: {
+    contestId: string
+    page: number
+    size: number
+  }) =>
+    axios.get(`/api/v1/contests/${data.contestId}/submissions`, {
+      params: { page: data.page, size: data.size },
+    }),
   // 公告
   getAllAnnouncements: (data: {}) =>
     axios.get('/api/v1/announcements', { params: data }),
