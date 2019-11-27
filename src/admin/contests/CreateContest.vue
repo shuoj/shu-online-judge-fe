@@ -44,9 +44,9 @@
           <Col span="11">
             <div class="item-padding">
               <h3>比赛类型</h3>
-              <RadioGroup v-model="judgeType">
-                <Radio label="IMMEDIATELY">ICPC</Radio>
-                <Radio label="DELAY">OI</Radio>
+              <RadioGroup v-model="contestType">
+                <Radio label="ICPC">ICPC</Radio>
+                <Radio label="IO">OI</Radio>
               </RadioGroup>
             </div>
           </Col>
@@ -54,9 +54,24 @@
             <div class="item-padding">
               <h3>是否可见</h3>
               <RadioGroup v-model="visual">
-                <Radio label="true">可见</Radio>
-                <Radio label="false">不可见</Radio>
+                <Radio label="visible">可见</Radio>
+                <Radio label="invisible">不可见</Radio>
               </RadioGroup>
+            </div>
+          </Col>
+          <Col span="11">
+            <div class="item-padding">
+              <h3>是否允许分享</h3>
+              <RadioGroup v-model="sharable">
+                <Radio label="allow">允许</Radio>
+                <Radio label="deny">不允许</Radio>
+              </RadioGroup>
+            </div>
+          </Col>
+          <Col span="11" offset="2">
+            <div class="item-padding">
+              <h3>延迟封榜(单位：小时)</h3>
+              <InputNumber :max="100" :min="1" v-model="delay"></InputNumber>
             </div>
           </Col>
         </Row>
@@ -66,7 +81,7 @@
           <Col span="11" style="height:100px">
             <div class="item-padding">
               <h3>比赛类型</h3>
-              <RadioGroup v-model="contestType">
+              <RadioGroup v-model="openType">
                 <Radio label="PUBLIC">公开赛</Radio>
                 <Radio label="SECRET_WITH_PASSWORD">私密赛（可加入）</Radio>
                 <Radio label="SECRET_WITHOUT_PASSWORD"
@@ -75,11 +90,7 @@
               </RadioGroup>
             </div>
           </Col>
-          <Col
-            v-if="contestType === 'SECRET_WITH_PASSWORD'"
-            span="11"
-            offset="2"
-          >
+          <Col v-if="openType === 'SECRET_WITH_PASSWORD'" span="11" offset="2">
             <div class="item-padding">
               <h3>邀请密码</h3>
               <Input
@@ -118,11 +129,12 @@ export default class Admin extends Vue {
   // contest参数
   name: any = ''
   description: any = ''
-  contestType: any = 'PUBLIC'
-  judgeType: boolean = true
-  judge: boolean = true
+  openType: string = 'PUBLIC'
+  contestType: string = 'ICPC'
+  sharable: string = 'allow'
   enable: any = false
-  visual: any = 'true'
+  visual: string = 'visible'
+  delay: number = 0
   startDate: any = ''
   endDate: any = ''
   password: any = ''
@@ -183,34 +195,30 @@ export default class Admin extends Vue {
 
   createContest() {
     const userInfo = this.$store.state.userInfo
-    const that = this
-    const visible = that.visual === 'true'
-    const start = this.computeDate(that.startDate)
-    const end = this.computeDate(that.endDate)
+    const start = this.computeDate(this.startDate)
+    const end = this.computeDate(this.endDate)
     const pwd =
-      this.contestType === 'SECRET_WITH_PASSWORD' ? md5(this.password) : ''
+      this.openType === 'SECRET_WITH_PASSWORD' ? md5(this.password) : ''
     api
       .createContest({
-        authorId: userInfo.id,
-        name: this.name,
-        description: this.description,
         contestType: this.contestType,
-        judgeType: this.judgeType,
-        enable: this.enable,
-        visible: visible,
+        description: this.description,
         startDate: start,
         endDate: end,
+        frozenOffset: this.delay * 3600000,
+        name: this.name,
+        openType: this.openType,
         password: pwd,
+        sharable: this.sharable === 'allow',
+        visible: this.visual === 'visible',
       })
       .then((res: any) => {
         ;(this as any).$Message.success('创建成功')
         this.name = ''
         this.initContent = ''
         this.description = ''
-        this.contestType = 'PUBLIC'
-        this.judge = true
-        this.enable = false
-        this.visual = 'true'
+        this.openType = 'PUBLIC'
+        this.visual = 'visible'
         this.startDate = ''
         this.endDate = ''
         this.password = ''

@@ -70,16 +70,16 @@ export default {
   getContestDetail: (data: { id: string }) =>
     axios.get(`/api/v1/contests/${data.id}`),
   createContest: (data: {
-    authorId: any
-    name: any
-    description: any
-    contestType: any
-    judgeType: any
-    enable: any
-    visible: any
+    contestType: string
+    description: string
     startDate: any
     endDate: any
-    password: any
+    frozenOffset: number
+    name: string
+    openType: string
+    password: string
+    sharable: boolean
+    visible: boolean
   }) => axios.post('/api/v1/contests', data),
   updateContest: (data: {
     contestId: any
