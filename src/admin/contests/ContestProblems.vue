@@ -12,7 +12,7 @@
         class="item-padding"
         style="margin-bottom: 40px"
       >
-        <Tabs value="name1">
+        <Tabs>
           <TabPane label="自动组卷" name="auto" style="padding: 0 20px">
             <Row>
               <Col span="24" style="text-align: left;">
@@ -462,16 +462,24 @@ export default class Admin extends Vue {
 
   getProblemsByTitle() {
     if (this.addById !== '') {
-      api
-        .getProblemsIdByTitle({
-          idx: this.addById,
-        })
-        .then((res: any) => {
-          this.searchData = res.data.list
-        })
-        .catch((err: any) => {
-          ;(this as any).$Message.error(err.data.message)
-        })
+      if (parseInt(this.addById) > 0) {
+        api
+          .getProblemsIdByTitle({
+            idx: this.addById,
+          })
+          .then((res: any) => {
+            if (res.data.list.length > 0) {
+              this.searchData = res.data.list
+            } else {
+              ;(this as any).$Message.info('没有搜索到相关题目')
+            }
+          })
+          .catch((err: any) => {
+            ;(this as any).$Message.error(err.data.message)
+          })
+      } else {
+        ;(this as any).$Message.warning('请输入题号哦')
+      }
     }
   }
 
