@@ -23,6 +23,9 @@
       >
         <p>{{ modalContent }}</p>
       </Modal>
+      <div class="timeInterval" v-if="contestStatus === '正在进行'">
+        还剩{{ interval }}比赛结束
+      </div>
       <Tabs
         value="detail"
         style="padding-top: 40px;"
@@ -228,7 +231,7 @@
         >
           <Row> </Row>
           <Table :columns="titleSubmission" :data="status"></Table>
-          <div style="text-align: center">
+          <div style="text-align: center;padding-top: 30px;">
             <Page
               :total="total"
               show-sizer
@@ -249,6 +252,7 @@ import md5 from 'js-md5'
 import { UserRole } from '../types/user'
 import { RankingQuery } from '../types/ranking'
 import axios from 'axios'
+import { countInterval } from '@/util/util'
 @Component
 export default class ContestDetail extends Vue {
   show: boolean = false
@@ -282,6 +286,7 @@ export default class ContestDetail extends Vue {
       key: 'name',
     },
   ]
+  contestStatus: string = '未进行'
   data: any = []
   title: any = [
     {
@@ -342,6 +347,8 @@ export default class ContestDetail extends Vue {
   page: number = 0
   pageSize: number = 0
   total: number = 0
+  endDate: number = 0
+  interval: string = ''
 
   titleSubmission: any = [
     {
@@ -629,22 +636,27 @@ export default class ContestDetail extends Vue {
   getContestDetail() {
     const params = this.$route.params
     const id: any = params.id
-    const that = this
     api
       .getContestDetail({ id })
       .then((res: any) => {
         this.$store.state.currentContest = res.data
-        that.contest = res.data
-        const status = this.findStatus(res.data.status)
-        const t = res.data.contestType
+        this.contest = res.data
+        this.contestStatus = this.findStatus(res.data.status)
+        const t = res.data.openType
         const type = this.findType(t)
-        that.data.push({
+        this.endDate = res.data.endDate
+        this.data.push({
           start: res.data.startDate,
           end: res.data.endDate,
-          status: status,
+          status: this.contestStatus,
           type: type,
           name: res.data.authorName,
         })
+        const ed = new Date(Date.parse(res.data.endDate.replace(/-/g, '/')))
+        setInterval(() => {
+          const now = new Date()
+          this.interval = countInterval(now, ed)
+        }, 1000)
       })
       .catch((err: any) => {
         ;(this as any).$Message.error(err.data.message)
@@ -891,5 +903,10 @@ tr {
     vertical-align: middle;
     border: 1px solid #e8eaec;
   }
+}
+
+.timeInterval {
+  padding-top: 30px;
+  font-size: 16px;
 }
 </style>
