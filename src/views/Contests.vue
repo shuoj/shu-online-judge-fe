@@ -7,7 +7,7 @@
             <h1>所有比赛</h1>
           </Col>
           <Col span="5" class="card-margin tag-padding">
-            <span style="color:#2d8cf0;padding: 4px 8px 0 0;">比赛类型</span>
+            <span class="selection">比赛类型</span>
             <Select
               v-model="type"
               size="small"
@@ -23,7 +23,7 @@
             </Select>
           </Col>
           <Col span="4" class="card-margin tag-padding">
-            <span style="color:#2d8cf0;padding: 4px 8px 0 0;">状态</span>
+            <span class="selection">状态</span>
             <Select
               v-model="status"
               size="small"
@@ -304,6 +304,7 @@ export default class About extends Vue {
 </script>
 
 <style lang="less" scoped>
+@import '../style/index.less';
 .card-margin {
   margin-top: 40px;
   margin-bottom: 40px;
@@ -360,5 +361,9 @@ export default class About extends Vue {
   line-height: 54px;
   vertical-align: middle;
   text-align: left;
+}
+.selection {
+  color: @primary-color;
+  padding: 4px 8px 0 0;
 }
 </style>
