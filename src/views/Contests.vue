@@ -75,12 +75,12 @@
               </div>
               <div class="list-subtitle">
                 <p style="width:200px;float: left">
-                  <Icon type="ios-calendar-outline" color="#2db7f5" />{{
+                  <Icon type="ios-calendar-outline" color="#6961c4" />{{
                     item.startDate
                   }}
                 </p>
                 <p style="float: left;">
-                  <Icon type="ios-clock-outline" color="#2db7f5" />{{
+                  <Icon type="ios-clock-outline" color="#6961c4" />{{
                     item.interval
                   }}
                 </p>
@@ -108,7 +108,7 @@
             <Col span="4" offset="3">
               <div class="status">
                 <span v-if="item.status === 'PROCESSING'" class="text"
-                  ><Icon type="ios-cafe" color="#2db7f5" />正在进行</span
+                  ><Icon type="ios-cafe" color="#6961c4" />正在进行</span
                 >
                 <span v-else-if="item.status === 'ENDED'" class="text"
                   ><Icon

@@ -68,12 +68,11 @@
       </Card>
       <Card dis-hover align="left" style="margin-top: 20px">
         <p slot="title">分类</p>
-        <Button shape="circle" size="small" @click="getProblems()">
+        <Button shape="circle" @click="getProblems()">
           全部的
         </Button>
         <Button
           shape="circle"
-          size="small"
           v-for="(tag, index) in tags"
           :key="index"
           @click="addTag(tag.id)"
@@ -241,6 +240,7 @@ export default class Problems extends Vue {
 </script>
 
 <style lang="less" scoped>
+@import '../style/index.less';
 .LOW {
   background-color: #74b567;
   padding: 6px 10px;
@@ -269,7 +269,7 @@ export default class Problems extends Vue {
 
 .colored {
   border-radius: 50px;
-  background-color: #2db7f5;
+  background-color: @primary-color;
   color: white;
   padding: 4px 8px 4px 8px;
 }
