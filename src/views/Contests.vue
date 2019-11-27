@@ -139,6 +139,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import api from '../api/api'
+import { countInterval } from '@/util/util'
 
 @Component
 export default class About extends Vue {
@@ -212,20 +213,6 @@ export default class About extends Vue {
     this.getContests(this.page, this.pageSize, status, this.type, this.keyword)
   }
 
-  countInterval(sd: any, ed: any) {
-    const interval: any = (ed - sd) / 1000
-    let continued = ''
-    if (interval > 3600) {
-      continued = interval / 3600 + '小时'
-      if (0 !== interval % 60) {
-        continued += (interval % 60) + '分'
-      }
-    } else if (interval > 60 && interval < 3600) {
-      continued = interval / 60 + '分'
-    }
-    return continued
-  }
-
   getContests(
     page: number = 0,
     pageSize: number = 10,
@@ -250,7 +237,7 @@ export default class About extends Vue {
           const sd = new Date(Date.parse(item.startDate.replace(/-/g, '/')))
           const ed = new Date(Date.parse(item.endDate.replace(/-/g, '/')))
           const rest = new Date()
-          const interval = that.countInterval(sd, ed)
+          const interval = countInterval(sd, ed)
           that.contests.push({
             authorId: item.authorId,
             authorName: item.authorName,
