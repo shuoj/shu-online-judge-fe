@@ -15,6 +15,12 @@
         <Tabs>
           <TabPane label="自动组卷" name="auto" style="padding: 0 20px">
             <Row>
+              <Col span="12">
+                <div id="positive"></div>
+              </Col>
+              <Col span="12">
+                <div id="negative"></div>
+              </Col>
               <Col span="24" style="text-align: left;">
                 <div class="part">
                   <h2>需要的知识点:</h2>
@@ -316,6 +322,8 @@
 import { Component, Vue } from 'vue-property-decorator'
 import api from '../../api/api'
 import Loading from '../../components/Loading.vue'
+import echarts from 'echarts'
+
 @Component({
   components: { Loading },
 })
@@ -381,6 +389,138 @@ export default class Admin extends Vue {
     sample: {},
     sampleIO: '',
   }
+  positiveDataAxis = ['二分查找', '排序', '链表', '树', '双指针']
+  positiveData = [244, 189, 122, 53, 20]
+  negativeDataAxis = ['贪心算法', '极小极大化', '几何', '递归', '回溯算法']
+  negativeData = [-10, -10, -38, -89, -184]
+  negativeDataShadow = [5, 5, 5, 5, 5]
+  negativeOption = {
+    title: {
+      text: '题目类别掌握度评分Bottom5',
+    },
+    xAxis: {
+      data: this.negativeDataAxis,
+      axisLabel: {
+        inside: false,
+        textStyle: {
+          color: 'black',
+        },
+      },
+      axisTick: {
+        show: false,
+      },
+      axisLine: {
+        show: false,
+      },
+      z: 10,
+    },
+    yAxis: {
+      axisLine: {
+        show: false,
+      },
+      axisTick: {
+        show: false,
+      },
+      axisLabel: {
+        textStyle: {
+          color: '#999',
+        },
+      },
+    },
+    dataZoom: [
+      {
+        type: 'inside',
+      },
+    ],
+    series: [
+      {
+        type: 'bar',
+        itemStyle: {
+          normal: { color: 'rgba(0,0,0,0)' },
+        },
+        barGap: '-100%',
+        barCategoryGap: '40%',
+        data: this.negativeDataShadow,
+        animation: false,
+      },
+      {
+        type: 'bar',
+        itemStyle: {
+          normal: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: '#a39aaf' },
+              { offset: 0.5, color: '#5e556a' },
+              { offset: 1, color: '#463f4e' },
+            ]),
+          },
+        },
+        data: this.negativeData,
+      },
+    ],
+  }
+  positiveOption = {
+    title: {
+      text: '题目类别掌握度评分Top5',
+    },
+    xAxis: {
+      data: this.positiveDataAxis,
+      axisLabel: {
+        inside: false,
+        textStyle: {
+          color: 'black',
+        },
+      },
+      axisTick: {
+        show: false,
+      },
+      axisLine: {
+        show: false,
+      },
+      z: 10,
+    },
+    yAxis: {
+      axisLine: {
+        show: false,
+      },
+      axisTick: {
+        show: false,
+      },
+      axisLabel: {
+        textStyle: {
+          color: '#999',
+        },
+      },
+    },
+    dataZoom: [
+      {
+        type: 'inside',
+      },
+    ],
+    series: [
+      {
+        type: 'bar',
+        itemStyle: {
+          normal: { color: 'rgba(0,0,0,0)' },
+        },
+        barGap: '-100%',
+        barCategoryGap: '40%',
+        animation: false,
+      },
+      {
+        type: 'bar',
+        itemStyle: {
+          normal: {
+            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
+              { offset: 0, color: '#a39aaf' },
+              { offset: 0.5, color: '#5e556a' },
+              { offset: 1, color: '#463f4e' },
+            ]),
+          },
+        },
+        data: this.positiveData,
+      },
+    ],
+  }
 
   getJudgeType() {
     const params = this.$route.params
@@ -429,23 +569,36 @@ export default class Admin extends Vue {
   recommend() {
     this.pending = true
     api
-      .getRecommend({
-        difficultDegree: this.difficulty,
-        count: this.problemNum,
-        duration: this.duration || 0,
-        interval: this.interval,
-        tagIdsInclude: this.include,
-        tagIdsExclude: this.exclude,
-        userIdList: this.userList,
+      .getProblems({
+        page: 0,
+        size: 10,
+        visible: true,
       })
       .then((res: any) => {
         this.pending = false
-        this.recommendList = res.data
+        this.recommendList = res.data.list
       })
       .catch((err: any) => {
-        ;(this as any).$Message.error(err.data.message)
+        console.log(err)
       })
     this.modal = true
+    // api
+    //   .getRecommend({
+    //     difficultDegree: this.difficulty,
+    //     count: this.problemNum,
+    //     duration: this.duration || 0,
+    //     interval: this.interval,
+    //     tagIdsInclude: this.include,
+    //     tagIdsExclude: this.exclude,
+    //     userIdList: this.userList,
+    //   })
+    //   .then((res: any) => {
+    //     this.pending = false
+    //     this.recommendList = res.data
+    //   })
+    //   .catch((err: any) => {
+    //     ;(this as any).$Message.error(err.data.message)
+    //   })
   }
 
   backToContest() {
@@ -574,6 +727,10 @@ export default class Admin extends Vue {
   }
 
   mounted() {
+    const positive = echarts.init(document.getElementById('positive'))
+    positive.setOption(this.positiveOption)
+    const negative = echarts.init(document.getElementById('negative'))
+    negative.setOption(this.negativeOption)
     if (this.$store.state.contestList.length === 0) {
       this.$router.push({
         path: `/admin/contests-list`,
@@ -610,6 +767,7 @@ export default class Admin extends Vue {
 
 .part {
   padding-top: 30px;
+  padding-bottom: 30px;
 }
 
 .title {
@@ -652,5 +810,13 @@ export default class Admin extends Vue {
 .wrapper {
   display: flex;
   flex-flow: wrap;
+}
+#positive {
+  width: 100%;
+  height: 400px;
+}
+#negative {
+  width: 100%;
+  height: 400px;
 }
 </style>

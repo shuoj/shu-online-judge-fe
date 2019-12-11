@@ -19,5 +19,10 @@ declare module 'js-md5' {
   export default jsMd5
 }
 
+declare module 'echarts' {
+  const echarts: any
+  export default echarts
+}
+
 declare module 'vue-codemirror'
 declare module 'vue-highlightjs'
