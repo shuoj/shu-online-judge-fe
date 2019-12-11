@@ -389,135 +389,80 @@ export default class Admin extends Vue {
     sample: {},
     sampleIO: '',
   }
-  positiveDataAxis = ['二分查找', '排序', '链表', '树', '双指针']
-  positiveData = [244, 189, 122, 53, 20]
-  negativeDataAxis = ['贪心算法', '极小极大化', '几何', '递归', '回溯算法']
-  negativeData = [-10, -10, -38, -89, -184]
-  negativeDataShadow = [5, 5, 5, 5, 5]
   negativeOption = {
     title: {
-      text: '题目类别掌握度评分Bottom5',
+      text: '题目类别综合掌握度Bottom5',
     },
-    xAxis: {
-      data: this.negativeDataAxis,
-      axisLabel: {
-        inside: false,
-        textStyle: {
-          color: 'black',
-        },
-      },
-      axisTick: {
-        show: false,
-      },
-      axisLine: {
-        show: false,
-      },
-      z: 10,
+    dataset: {
+      source: [
+        ['score', '分数', '考点'],
+        [-20, -20, '拓扑排序'],
+        [-63, -63, '树状数组'],
+        [-125, -125, '回溯算法'],
+        [-188, -188, '几何'],
+        [-320, -320, '贪心算法'],
+      ],
     },
-    yAxis: {
-      axisLine: {
-        show: false,
-      },
-      axisTick: {
-        show: false,
-      },
-      axisLabel: {
-        textStyle: {
-          color: '#999',
-        },
+    grid: { containLabel: true },
+    xAxis: { name: 'amount' },
+    yAxis: { type: 'category' },
+    visualMap: {
+      orient: 'horizontal',
+      left: 'center',
+      min: -40,
+      max: 0,
+      text: ['掌握度高', '掌握度低'],
+      dimension: 0,
+      inRange: {
+        color: ['#a39aaf', '#463f4e'],
       },
     },
-    dataZoom: [
-      {
-        type: 'inside',
-      },
-    ],
     series: [
       {
         type: 'bar',
-        itemStyle: {
-          normal: { color: 'rgba(0,0,0,0)' },
+        encode: {
+          x: 'amount',
+          y: '考点',
         },
-        barGap: '-100%',
-        barCategoryGap: '40%',
-        data: this.negativeDataShadow,
-        animation: false,
-      },
-      {
-        type: 'bar',
-        itemStyle: {
-          normal: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: '#a39aaf' },
-              { offset: 0.5, color: '#5e556a' },
-              { offset: 1, color: '#463f4e' },
-            ]),
-          },
-        },
-        data: this.negativeData,
       },
     ],
   }
+
   positiveOption = {
     title: {
-      text: '题目类别掌握度评分Top5',
+      text: '题目类别综合掌握度Top5',
     },
-    xAxis: {
-      data: this.positiveDataAxis,
-      axisLabel: {
-        inside: false,
-        textStyle: {
-          color: 'black',
-        },
-      },
-      axisTick: {
-        show: false,
-      },
-      axisLine: {
-        show: false,
-      },
-      z: 10,
+    dataset: {
+      source: [
+        ['score', '分数', '考点'],
+        [24, 24, '树'],
+        [62, 62, '二分查找'],
+        [125, 125, '双指针'],
+        [186, 186, '排序'],
+        [328, 328, '链表'],
+      ],
     },
-    yAxis: {
-      axisLine: {
-        show: false,
-      },
-      axisTick: {
-        show: false,
-      },
-      axisLabel: {
-        textStyle: {
-          color: '#999',
-        },
+    grid: { containLabel: true },
+    xAxis: { name: '分数' },
+    yAxis: { type: 'category' },
+    visualMap: {
+      orient: 'horizontal',
+      left: 'center',
+      dimension: 0,
+      min: 0,
+      max: 40,
+      text: ['掌握度高', '掌握度低'],
+      inRange: {
+        color: ['#a39aaf', '#463f4e'],
       },
     },
-    dataZoom: [
-      {
-        type: 'inside',
-      },
-    ],
     series: [
       {
         type: 'bar',
-        itemStyle: {
-          normal: { color: 'rgba(0,0,0,0)' },
+        encode: {
+          x: '分数',
+          y: '考点',
         },
-        barGap: '-100%',
-        barCategoryGap: '40%',
-        animation: false,
-      },
-      {
-        type: 'bar',
-        itemStyle: {
-          normal: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: '#a39aaf' },
-              { offset: 0.5, color: '#5e556a' },
-              { offset: 1, color: '#463f4e' },
-            ]),
-          },
-        },
-        data: this.positiveData,
       },
     ],
   }
@@ -575,8 +520,10 @@ export default class Admin extends Vue {
         visible: true,
       })
       .then((res: any) => {
-        this.pending = false
-        this.recommendList = res.data.list
+        setTimeout(() => {
+          this.pending = false
+          this.recommendList = res.data.list
+        }, 4000)
       })
       .catch((err: any) => {
         console.log(err)

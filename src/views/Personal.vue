@@ -26,11 +26,8 @@
         </div>
       </div>
     </Modal>
-    <Col span="8" offset="1">
+    <Col span="8" offset="8">
       <div class="user">
-        <div class="operate" v-if="user.id === userInfo.id">
-          <Button type="info" @click="reviseModal = true">修改信息</Button>
-        </div>
         <Card dis-hover>
           <div slot="title">
             <Row>
@@ -79,13 +76,20 @@
             </Col>
           </Row>
         </Card>
+        <div class="operate" v-if="user.id === userInfo.id">
+          <Button type="info" @click="reviseModal = true">修改信息</Button>
+        </div>
       </div>
     </Col>
-    <Col span="13" offset="1">
+    <Col span="11" offset="1">
       <div class="charts">
         <div class="positive-charts">
           <div id="positive"></div>
         </div>
+      </div>
+    </Col>
+    <Col span="10">
+      <div class="charts">
         <div class="negative-charts">
           <div id="negative"></div>
         </div>
@@ -104,138 +108,81 @@ export default class Personal extends Vue {
   user: any = {}
   reviseUser: any = {}
   reviseModal: boolean = false
-  positiveDataAxis = ['数组', '排序', '链表', '树', '动态规划']
-  positiveData = [32, 24, 13, 10, 0]
-  negativeDataAxis = ['贪心算法', '字典树', '二叉搜索树', '递归', '回溯算法']
-  negativeData = [-1, -1, -3, -8, -12]
-  dataShadow = [40, 40, 40, 40, 40]
-  negativeDataShadow = [10, 10, 10, 10, 10]
 
   negativeOption = {
     title: {
-      text: '题目类别掌握度评分Bottom5',
+      text: '题目类别综合掌握度Bottom5',
     },
-    xAxis: {
-      data: this.negativeDataAxis,
-      axisLabel: {
-        inside: false,
-        textStyle: {
-          color: 'black',
-        },
-      },
-      axisTick: {
-        show: false,
-      },
-      axisLine: {
-        show: false,
-      },
-      z: 10,
+    dataset: {
+      source: [
+        ['score', '分数', '考点'],
+        [-2, -2, '拓扑排序'],
+        [-6, -6, '树状数组'],
+        [-12, -12, '回溯算法'],
+        [-18, -18, '几何'],
+        [-32, -32, '贪心算法'],
+      ],
     },
-    yAxis: {
-      axisLine: {
-        show: false,
-      },
-      axisTick: {
-        show: false,
-      },
-      axisLabel: {
-        textStyle: {
-          color: '#999',
-        },
+    grid: { containLabel: true },
+    xAxis: { name: 'amount' },
+    yAxis: { type: 'category' },
+    visualMap: {
+      orient: 'horizontal',
+      left: 'center',
+      min: -40,
+      max: 0,
+      text: ['掌握度高', '掌握度低'],
+      dimension: 0,
+      inRange: {
+        color: ['#a39aaf', '#463f4e'],
       },
     },
-    dataZoom: [
-      {
-        type: 'inside',
-      },
-    ],
     series: [
       {
         type: 'bar',
-        itemStyle: {
-          normal: { color: 'rgba(0,0,0,0)' },
+        encode: {
+          x: 'amount',
+          y: '考点',
         },
-        barGap: '-100%',
-        barCategoryGap: '40%',
-        data: this.negativeDataShadow,
-        animation: false,
-      },
-      {
-        type: 'bar',
-        itemStyle: {
-          normal: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: '#a39aaf' },
-              { offset: 0.5, color: '#5e556a' },
-              { offset: 1, color: '#463f4e' },
-            ]),
-          },
-        },
-        data: this.negativeData,
       },
     ],
   }
+
   positiveOption = {
     title: {
-      text: '题目类别掌握度评分Top5',
+      text: '题目类别综合掌握度Top5',
     },
-    xAxis: {
-      data: this.positiveDataAxis,
-      axisLabel: {
-        inside: false,
-        textStyle: {
-          color: 'black',
-        },
-      },
-      axisTick: {
-        show: false,
-      },
-      axisLine: {
-        show: false,
-      },
-      z: 10,
+    dataset: {
+      source: [
+        ['score', '分数', '考点'],
+        [2, 2, '树'],
+        [6, 6, '二分查找'],
+        [12, 12, '双指针'],
+        [18, 18, '排序'],
+        [32, 32, '链表'],
+      ],
     },
-    yAxis: {
-      axisLine: {
-        show: false,
-      },
-      axisTick: {
-        show: false,
-      },
-      axisLabel: {
-        textStyle: {
-          color: '#999',
-        },
+    grid: { containLabel: true },
+    xAxis: { name: '分数' },
+    yAxis: { type: 'category' },
+    visualMap: {
+      orient: 'horizontal',
+      left: 'center',
+      dimension: 0,
+      min: 0,
+      max: 40,
+      text: ['掌握度高', '掌握度低'],
+      inRange: {
+        color: ['#a39aaf', '#463f4e'],
       },
     },
-    dataZoom: [
-      {
-        type: 'inside',
-      },
-    ],
     series: [
       {
         type: 'bar',
-        itemStyle: {
-          normal: { color: 'rgba(0,0,0,0)' },
+        encode: {
+          x: '分数',
+          y: '考点',
         },
-        barGap: '-100%',
-        barCategoryGap: '40%',
-        data: this.dataShadow,
-        animation: false,
-      },
-      {
-        type: 'bar',
-        itemStyle: {
-          normal: {
-            color: new echarts.graphic.LinearGradient(0, 0, 0, 1, [
-              { offset: 0, color: '#a39aaf' },
-              { offset: 0.5, color: '#5e556a' },
-              { offset: 1, color: '#463f4e' },
-            ]),
-          },
-        },
-        data: this.positiveData,
       },
     ],
   }
@@ -299,18 +246,19 @@ export default class Personal extends Vue {
   text-align: left;
 }
 .operate {
-  padding-bottom: 10px;
+  text-align: right;
+  padding-top: 10px;
 }
 .charts {
   margin-top: 80px;
   text-align: left;
 }
 #positive {
-  width: 600px;
+  width: 100%;
   height: 400px;
 }
 #negative {
-  width: 600px;
+  width: 100%;
   height: 400px;
 }
 </style>
