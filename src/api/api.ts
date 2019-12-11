@@ -1,55 +1,9 @@
-import axios from 'axios'
-import router from '@/router'
-import { UserQuery } from '@/types/user'
+import axios from './axios'
 import { RankingQuery } from '@/types/ranking'
-
-axios.defaults.baseURL = process.env.VUE_APP_BASE_URL
-axios.interceptors.request.use(
-  function(config) {
-    // @ts-ignore
-    if (window.localStorage.getItem('token')) {
-      // @ts-ignore
-      config.headers['Authorization'] =
-        'Bearer ' + window.localStorage.getItem('token')
-    }
-    return config
-  },
-  function(error) {
-    return Promise.reject(error)
-  }
-)
-
-axios.interceptors.response.use(
-  response => {
-    return response
-  },
-  error => {
-    if (error.response) {
-      switch (error.response.status) {
-        case 401:
-          // @ts-ignore
-          if (!window.localStorage.getItem('times')) {
-            // @ts-ignore
-            window.localStorage.setItem('times', 'done')
-            // @ts-ignore
-            window.localStorage.setItem('token', '')
-            // @ts-ignore
-            window.localStorage.setItem('username', '')
-            // @ts-ignore
-            window.localStorage.setItem('role', '')
-            const lastRoute = router.currentRoute.fullPath
-            router.replace({
-              path: 'login',
-              query: { redirect: lastRoute }, // 将跳转的路由path作为参数，登录成功后跳转到该路由
-            })
-          }
-      }
-    }
-    return Promise.reject(error.response)
-  }
-)
+import user from './modules/user'
 
 export default {
+  user,
   // 获取分类
   getProblems: (data: {}) => axios.get('/api/v1/problems', { params: data }),
   getProblemsDetail: (data: { id: string }) =>
@@ -171,17 +125,6 @@ export default {
     axios.delete(`/api/v1/announcements/${data.id}`),
   // 排名
   getRank: (data: {}) => axios.get('/api/v1/users/ranking', { params: data }),
-  // 注册、登陆、刷新token
-  register: (data: {}) => axios.post('/api/v1/register', data),
-  login: (data: {}) => axios.post('/api/v1/auth', data),
-  refresh: (data: {}) => axios.post('/api/v1/refresh', data),
-  getUserInfo: () => axios.get('/api/v1/me'),
-  updateMyInfo: (data: {}) => axios.put('/api/v1/me', data),
-  createUser: (data: {}) => axios.post('/api/v1/users', data),
-  updateUserInfo: (data: { id: string }) =>
-    axios.put(`/api/v1/users/${data.id}`, data),
-  getOtherUserInfo: (data: { id: string }) =>
-    axios.get(`/api/v1/users/${data.id}`),
   // 问题
   getOwnQuestion: (data: { username: string }) =>
     axios.get(`/api/v1/questions/random?username=${data.username}`),
