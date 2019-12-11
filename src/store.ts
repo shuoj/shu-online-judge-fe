@@ -47,7 +47,7 @@ export default new Vuex.Store({
   actions: {
     login(context, payload) {
       return new Promise((resolve, reject) => {
-        api
+        api.user
           .login(payload)
           .then((res: any) => {
             context.commit('login', {
@@ -65,7 +65,7 @@ export default new Vuex.Store({
       context.commit('logout')
     },
     refresh(context, payload) {
-      api
+      api.user
         .refresh(payload)
         .then((res: any) => {
           context.commit('refresh', {

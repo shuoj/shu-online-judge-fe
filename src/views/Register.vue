@@ -121,7 +121,7 @@ export default class About extends Vue {
   handleSubmit(name: string) {
     ;(this.$refs[name] as HTMLFormElement).validate((valid: any) => {
       if (valid === true) {
-        api
+        api.user
           .register({
             username: this.register.username,
             password: md5(this.register.password),

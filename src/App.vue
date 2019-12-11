@@ -33,8 +33,8 @@ export default class App extends Vue {
 
   mounted() {
     if (window.localStorage.getItem('token')) {
-      api
-        .getUserInfo()
+      api.user
+        .getMyInfo()
         .then((res: any) => {
           const role = res.data.authorities[0].authority
           this.$store.commit('setUserInfo', res.data)

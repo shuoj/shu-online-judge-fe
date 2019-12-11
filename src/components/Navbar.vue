@@ -78,8 +78,8 @@ export default class Navbar extends Vue {
   @Watch('loginStatus')
   handleInfo(status: boolean) {
     if (status) {
-      api
-        .getUserInfo()
+      api.user
+        .getMyInfo()
         .then((res: any) => {
           this.$store.commit('setUserInfo', res.data)
         })
