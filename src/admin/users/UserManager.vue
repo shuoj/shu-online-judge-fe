@@ -159,7 +159,7 @@ export default class UserManager extends Vue {
   }
 
   createUser() {
-    api
+    api.user
       .createUser({
         ...this.newUser,
         password: md5(this.newUser.password),
@@ -179,7 +179,7 @@ export default class UserManager extends Vue {
       ...this.reviseUser,
       authorities: [{ name: this.role }],
     }
-    api.updateUserInfo(user).then(res => {
+    api.user.updateUserInfo(user).then(res => {
       this.reviseUser = {}
       this.getUsers(this.page, this.pageSize)
     })
